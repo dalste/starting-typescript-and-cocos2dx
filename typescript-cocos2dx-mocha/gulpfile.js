@@ -13,7 +13,7 @@ gulp.task('lint', function() {
 var program = tslint.Linter.createProgram("./tsconfig.json");
  
 gulp.src('tssrc/**/*.ts', { base: '.' })
-  .pipe(gulpTslint({ program }));
+  .pipe(gulpTslint({ program })).pipe(gulpTslint.report());
 });
 
 
