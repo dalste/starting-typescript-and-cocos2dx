@@ -1,0 +1,12 @@
+{
+    "files": [
+        "ts/main.ts"
+    ],
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "target": "es5",
+        "module": "none",
+        "outFile":"main.js"
+    }
+
+}
