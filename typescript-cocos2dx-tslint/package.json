@@ -1,0 +1,22 @@
+{
+  "name": "typescript-cocos2dx-base",
+  "version": "1.0.0",
+  "description": "base project for typscript based cocos2dx games",
+  "main": "./tsdist/main.js",
+  "scripts": {
+    "test": "mocha -w"
+  },
+  "keywords": [
+    "typescript",
+    "cocos2dxjs"
+  ],
+  "author": "Steven Daley - www.dalste.co.uk",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-tslint": "^8.0.0",
+    "gulp-typescript": "^3.1.6",
+    "tslint": "^5.2.0",
+    "typescript": "^2.3.2"
+  }
+}

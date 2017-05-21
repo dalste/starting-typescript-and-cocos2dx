@@ -1,6 +1,7 @@
 {
     "files": [
-        "tssrc/main.ts"
+        "tssrc/**/*.ts",
+        "tstest/**/*spec.ts"
     ],
     "compilerOptions": {
         "noImplicitAny": true,
