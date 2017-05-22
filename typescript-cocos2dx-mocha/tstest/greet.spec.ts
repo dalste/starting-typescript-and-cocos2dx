@@ -5,10 +5,7 @@ import sayHello = typescriptbase.sayHello;
 
 describe('SayHello', () => {
 
-    //let person: Person;
-
     beforeEach(() => {
-       // person = new Person();
 
     });
 
