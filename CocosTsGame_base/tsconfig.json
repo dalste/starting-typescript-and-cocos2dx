@@ -1,0 +1,17 @@
+{
+    "files": [
+         "tssrc/Bootstrap.ts"
+    ],
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "target": "es5",
+        "module": "commonjs",
+        
+        "outDir":"tsdist/",
+
+         "sourceMap": true,
+    "jsx": "react",
+    "allowJs": true
+    }
+
+}
