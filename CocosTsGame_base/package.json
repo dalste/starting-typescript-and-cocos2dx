@@ -1,5 +1,5 @@
 {
-  "name": "typescript-cocos2dx-base",
+  "name": "CocosTsGame",
   "version": "1.0.0",
   "description": "base project for typescript based cocos2dx games ( external module )",
   "main": "./tsdist/main.js",

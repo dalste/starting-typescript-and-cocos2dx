@@ -1,5 +1,5 @@
 # starting-typescript-and-cocos2dx
-Supporting material for Tutorial series: Getting started with typescript and cocos2d-x js 
+Supporting material for Tutorial series: Getting started with TypeScript and Cocos2d-x js 
 
 [More tutorials here](http://dalste.co.uk/tutorials)  
 
