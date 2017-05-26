@@ -1,0 +1,29 @@
+{
+  "name": "CocosTsGame",
+  "version": "1.0.0",
+  "description": "base project for typescript based cocos2dx games ( external module )",
+  "main": "./tsdist/main.js",
+  "scripts": {
+    "test": "mocha -w"
+  },
+  "keywords": [
+    "typescript",
+    "cocos2dxjs"
+  ],
+  "author": "Steven Daley - www.dalste.co.uk",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "gulp": "^3.9.1",
+    "gulp-mocha": "^4.3.1",
+    "gulp-tslint": "^8.0.0",
+    "gulp-typescript": "^3.1.6",
+    "gulp-webpack": "^1.5.0",
+    "source-map-loader": "^0.2.1",
+    "ts-loader": "^2.1.0",
+    "tslint": "^5.2.0",
+    "typescript": "^2.3.2",
+    "webpack": "^2.6.0",
+    "webpack-stream": "^3.2.0"
+  }
+}
