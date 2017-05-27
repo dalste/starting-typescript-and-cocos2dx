@@ -12,8 +12,11 @@
     "modules" : ["cocos2d","extensions"],
 
     "jsList" : [
-        "src/resource.js",
-        "src/applicationbundle.js",
-        "src/app.js"
+         "src/jslib/dijon.js",
+         "src/jslib/signals.js",
+         "src/jslib/state-machine.js",
+            "src/resource.js",
+            "src/applicationbundle.js",
+            "src/app.js"
     ]
 }

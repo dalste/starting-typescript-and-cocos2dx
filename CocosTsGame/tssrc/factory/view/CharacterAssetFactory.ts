@@ -8,7 +8,7 @@ import { MockAsset, MockAssetColours } from "./characterassetfactory/MockAsset";
  * @description provides creation options to CharacterAssetFactory
  */
 export class CharacterAssetCreationOptions implements ICreationOptions<CharacterAssetTypes>{
-    _type:CharacterAssetTypes; 
+    private _type:CharacterAssetTypes; 
     constructor(type:CharacterAssetTypes){
             this._type= type;
     }
