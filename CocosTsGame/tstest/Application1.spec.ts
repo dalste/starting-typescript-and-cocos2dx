@@ -17,7 +17,6 @@ describe('Application', () => {
 
         it('should be non null', () => {
             var app = new Application1();
-            app.startUp();
             expect(app).to.not.be.null;
         });
     });
