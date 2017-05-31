@@ -13,3 +13,6 @@ typings/
 #ignore frameworks
 frameworks/
 
+#ignore cocos publish folder
+publish/
+

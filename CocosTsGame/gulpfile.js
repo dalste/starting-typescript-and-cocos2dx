@@ -19,7 +19,7 @@ gulp.task('lint', function () {
 
 gulp.task('test', function () {
 
-    return gulp.src(['./tssrc/**/*.ts','./tstest/**/*.spec.ts'],
+    return gulp.src(['./tslib/**/*.ts','./tssrc/**/*.ts','./tstest/**/*.spec.ts'],
         {
             base: '.'
         })
@@ -55,5 +55,31 @@ gulp.task('webpack', ['typescript'], function(callback) {
             // output options
         }));
         callback();
+    });
+});
+
+
+//ES6
+//import { Server } from 'karma';
+ 
+// ES5
+var karma = require('karma').Server; 
+ 
+
+gulp.task('karma:watch', function(done) {
+    karma.start({
+        configFile: __dirname + '/karma.config.js',
+        singleRun: false,
+    autoWatch: true,
+    }, function() {
+        done();
+    });
+});
+gulp.task('karma', function(done) {
+    karma.start({
+        configFile: __dirname + '/karma.config.js',
+        singleRun: true
+    }, function() {
+        done();
     });
 });
