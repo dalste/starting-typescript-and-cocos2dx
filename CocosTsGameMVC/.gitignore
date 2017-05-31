@@ -1,0 +1,18 @@
+#ignore node modules
+node_modules/
+
+#ignore builds
+tsdist/*
+
+#keep build folder
+!tsdist/.gitkeep 
+
+#ignore typings
+typings/
+
+#ignore frameworks
+frameworks/
+
+#ignore cocos publich folder
+publish/
+
