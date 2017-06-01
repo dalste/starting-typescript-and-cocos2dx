@@ -63,4 +63,12 @@ export default class View implements IView {
     setAsset(node:cc.Node):void{
             this._asset = node;
     }
+    /**
+     * @description displays the view on screen
+     *
+     * @param cc.Node  - optional parent node
+     */
+    show(parent?:cc.Node):void{
+         throw(new Error("View:show is an abstract function. It must be overridden"));
+    }
 }

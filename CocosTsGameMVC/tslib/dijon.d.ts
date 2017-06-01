@@ -97,8 +97,8 @@ declare namespace dijon {
          * @see dijon.System#unmapOutlet
          */
         mapOutlet ( sourceKey:string,
-                              targetKey:string,
-                              outletName:string ):dijon.System;
+                              targetKey?:string,
+                              outletName?:string ):dijon.System;
         /**
          * Retrieve (or create) the object mapped to <code>key</code>
          * @example
@@ -311,10 +311,10 @@ declare namespace dijon {
          * @see dijon.System#unmapHandler
          */
         mapHandler ( eventName:string,
-                               key:string,
-                               handler: string | Callback,
-                               oneShot:boolean ,
-                               passEvent:boolean ):dijon.System; 
+                               key?:string,
+                               handler?: string | Callback,
+                               oneShot?:boolean,
+                               passEvent?:boolean ):dijon.System; 
         /**
          * Unmaps the handler for a specific event/route.
          * @param {String} eventName Name of the event/route
@@ -326,8 +326,8 @@ declare namespace dijon {
          * @see dijon.System#mapHandler
          */
         unmapHandler ( eventName:string,
-                                 key:string,
-                                 handler : string | Callback ):dijon.System;
+                                 key?:string,
+                                 handler? : string | Callback ):dijon.System;
 
         /**
          * calls all handlers mapped to <code>eventName/route</code>

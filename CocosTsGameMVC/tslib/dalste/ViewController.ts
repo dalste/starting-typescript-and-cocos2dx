@@ -15,7 +15,7 @@ export default class ViewController implements IViewController {
 
 
     //inject 
-    public system:dijon.System = undefined;
+    private _system:dijon.System = undefined;
 
     /**
      * function called by the IOC container when this class is instantiated

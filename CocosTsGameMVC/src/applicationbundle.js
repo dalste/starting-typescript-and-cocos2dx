@@ -64,7 +64,7 @@ var CocosTSGame =
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -74,25 +74,42 @@ var CocosTSGame =
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var GameView_1 = __webpack_require__(5);
-var GameController_1 = __webpack_require__(4);
-var GameViewController_1 = __webpack_require__(6);
+var CharacterAssetTypes;
+(function (CharacterAssetTypes) {
+    CharacterAssetTypes[CharacterAssetTypes["PLAYER"] = 0] = "PLAYER";
+    CharacterAssetTypes[CharacterAssetTypes["NPC"] = 1] = "NPC";
+    CharacterAssetTypes[CharacterAssetTypes["PLAYER_MOCK"] = 2] = "PLAYER_MOCK";
+    CharacterAssetTypes[CharacterAssetTypes["NPC_MOCK"] = 3] = "NPC_MOCK";
+})(CharacterAssetTypes = exports.CharacterAssetTypes || (exports.CharacterAssetTypes = {}));
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var GameView_1 = __webpack_require__(8);
+var GameController_1 = __webpack_require__(5);
+var GameViewController_1 = __webpack_require__(9);
 var Application2 = (function () {
     function Application2() {
     }
     Application2.prototype.startUp = function () {
         this._system = new dijon.System();
         /**
-         * map the game controller as a singleton
-         * the game controller will provide application wide functionality
-         */
-        this._system.mapSingleton("GameController", GameController_1.default);
-        var gc = this._system.getObject("GameController");
-        /**
          * map the dijion containner to a global outlet named system so that it may be injected into any class
          * that has the system mapping
          */
-        this._system.mapValue("system", this._system);
+        this._system.mapValue("_system", this._system);
+        this._system.mapOutlet('_system');
+        /**
+      * map the game controller as a singleton
+      * the game controller will provide application wide functionality
+      */
+        this._system.mapSingleton("GameController", GameController_1.default);
+        var gc = this._system.getObject("GameController");
         /**
          * initialise the game view and its contoller
          * first we map our GameView and GameViewController classes to class identifiers holding the same name
@@ -102,7 +119,9 @@ var Application2 = (function () {
         this._system.mapClass("GameView", GameView_1.default);
         this._system.mapClass("GameViewController", GameViewController_1.default);
         this._system.mapOutlet("GameViewController", "GameView", "_viewController");
-        var gv = this._system.getObject("GameView");
+        this._system.mapHandler('App:startupComplete', 'GameController', 'onAppStartupComplete');
+        this._system.notify('App:startup');
+        this._system.notify('App:startupComplete');
     };
     return Application2;
 }());
@@ -110,7 +129,7 @@ exports.default = Application2;
 
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -163,13 +182,21 @@ var View = (function () {
     View.prototype.setAsset = function (node) {
         this._asset = node;
     };
+    /**
+     * @description displays the view on screen
+     *
+     * @param cc.Node  - optional parent node
+     */
+    View.prototype.show = function (parent) {
+        throw (new Error("View:show is an abstract function. It must be overridden"));
+    };
     return View;
 }());
 exports.default = View;
 
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -186,7 +213,7 @@ var ViewController = (function () {
         this._view = undefined;
         this._model = undefined;
         //inject 
-        this.system = undefined;
+        this._system = undefined;
     }
     /**
      * function called by the IOC container when this class is instantiated
@@ -218,13 +245,13 @@ exports.default = ViewController;
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var Application2_1 = __webpack_require__(0);
+var Application2_1 = __webpack_require__(1);
 exports.App = new Application2_1.default();
 /**
  * @desc exposed directly to the globally scoped library variable configured in your webpack options
@@ -239,7 +266,7 @@ exports.start = start;
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -247,43 +274,16 @@ exports.start = start;
 Object.defineProperty(exports, "__esModule", { value: true });
 var GameController = (function () {
     function GameController() {
+        this._system = undefined;
     }
-    GameController.prototype.onEnter = function () {
+    GameController.prototype.onAppStartupComplete = function () {
+        console.log("GameController::onAppStartupComplete");
+        this._gameView = this._system.getObject("GameView");
+        this._gameView.show();
     };
     return GameController;
 }());
 exports.default = GameController;
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var View_1 = __webpack_require__(1);
-var GameView = (function (_super) {
-    __extends(GameView, _super);
-    function GameView() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    GameView.prototype.onInitView = function () {
-        console.log("onInitGameView");
-    };
-    return GameView;
-}(View_1.default));
-exports.default = GameView;
 
 
 /***/ }),
@@ -292,6 +292,55 @@ exports.default = GameView;
 
 "use strict";
 
+Object.defineProperty(exports, "__esModule", { value: true });
+var AssetTypes_1 = __webpack_require__(0);
+var MockAsset_1 = __webpack_require__(7);
+/**
+ * @class CharacterAssetCreationOptions
+ * @description provides creation options to CharacterAssetFactory
+ */
+var CharacterAssetCreationOptions = (function () {
+    function CharacterAssetCreationOptions(type) {
+        this._type = type;
+    }
+    CharacterAssetCreationOptions.prototype.getType = function () {
+        return this._type;
+    };
+    return CharacterAssetCreationOptions;
+}());
+exports.CharacterAssetCreationOptions = CharacterAssetCreationOptions;
+/**
+ * @class CharacterAssetFactory
+ * @param CharacterAssetCreationOptions
+ * Uses the returned type from character creation options to create the appropriate cc.Node derived asset
+ *
+ */
+var CharacterAssetFactory = (function () {
+    function CharacterAssetFactory() {
+    }
+    CharacterAssetFactory.prototype.create = function (options) {
+        switch (options.getType()) {
+            case AssetTypes_1.CharacterAssetTypes.NPC:
+                return new MockAsset_1.MockAsset(AssetTypes_1.CharacterAssetTypes.NPC, {}, 50, MockAsset_1.MockAssetColours.PINK, "NPC");
+            case AssetTypes_1.CharacterAssetTypes.NPC_MOCK:
+                return new MockAsset_1.MockAsset(AssetTypes_1.CharacterAssetTypes.NPC_MOCK, {}, 50, MockAsset_1.MockAssetColours.PINK, "NPC MOCK");
+            case AssetTypes_1.CharacterAssetTypes.PLAYER:
+                return new MockAsset_1.MockAsset(AssetTypes_1.CharacterAssetTypes.NPC, {}, 50, MockAsset_1.MockAssetColours.GREEN, "PLAYER");
+            case AssetTypes_1.CharacterAssetTypes.PLAYER_MOCK:
+                return new MockAsset_1.MockAsset(AssetTypes_1.CharacterAssetTypes.NPC, {}, 50, MockAsset_1.MockAssetColours.GREEN, "PLAYER MOCK");
+        }
+    };
+    return CharacterAssetFactory;
+}());
+exports.CharacterAssetFactory = CharacterAssetFactory;
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -303,7 +352,129 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var ViewController_1 = __webpack_require__(2);
+/**
+ * @description emum providing identifyable colour options for MockAsset
+ */
+var MockAssetColours;
+(function (MockAssetColours) {
+    MockAssetColours[MockAssetColours["RED"] = 0] = "RED";
+    MockAssetColours[MockAssetColours["BLUE"] = 1] = "BLUE";
+    MockAssetColours[MockAssetColours["YELLOW"] = 2] = "YELLOW";
+    MockAssetColours[MockAssetColours["GREEN"] = 3] = "GREEN";
+    MockAssetColours[MockAssetColours["PINK"] = 4] = "PINK";
+    MockAssetColours[MockAssetColours["NONE"] = 5] = "NONE";
+})(MockAssetColours = exports.MockAssetColours || (exports.MockAssetColours = {}));
+;
+/**
+ * @class MockAsset
+ * @description a cc.Node derived class for creating mock assets ,creates a circle with given radius, containing a label with optionalgiven text
+ * Templater option T is for the Type used to describe type generally string | int | enumtype
+ *
+ */
+var MockAsset = (function (_super) {
+    __extends(MockAsset, _super);
+    function MockAsset(type, config, radius, COLOUR, text) {
+        if (radius === void 0) { radius = 20; }
+        if (COLOUR === void 0) { COLOUR = MockAssetColours.BLUE; }
+        if (text === void 0) { text = "Text"; }
+        var _this = _super.call(this) || this;
+        _this._visibleNode = null;
+        _this._objecttype = null;
+        _this.ctor();
+        _this._objecttype = type;
+        _this.setContentSize(radius * 2, radius * 2);
+        _this.setAnchorPoint(0.5, 0.5);
+        _this._circleNode = new cc.DrawNode();
+        _this._circleNode.drawCircle(cc.p(radius, radius), radius, 0, 1, true, 8, _this.getColour(COLOUR));
+        _this.addChild(_this._circleNode);
+        var textF = new ccui.Text();
+        textF.boundingWidth = radius * 2;
+        textF.boundingHeight = 30;
+        textF.attr({
+            textAlign: cc.TEXT_ALIGNMENT_CENTER,
+            string: text,
+            font: "20px Ariel",
+            x: radius
+        });
+        textF.y = radius - textF.height / 8;
+        _this.addChild(textF);
+        return _this;
+    }
+    MockAsset.prototype.getColour = function (colour) {
+        switch (colour) {
+            case MockAssetColours.RED:
+                return new cc.Color(187, 56, 10, 255);
+            case MockAssetColours.GREEN:
+                return new cc.Color(12, 123, 2, 255);
+            case MockAssetColours.BLUE:
+                return new cc.Color(27, 68, 174, 255);
+            case MockAssetColours.PINK:
+                return new cc.Color(211, 62, 109, 255);
+            case MockAssetColours.YELLOW:
+                return new cc.Color(242, 171, 52, 255);
+            case MockAssetColours.NONE:
+                return new cc.Color(255, 255, 255, 255);
+        }
+    };
+    return MockAsset;
+}(cc.Node));
+exports.MockAsset = MockAsset;
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var View_1 = __webpack_require__(2);
+var GameViewScene_1 = __webpack_require__(10);
+var GameView = (function (_super) {
+    __extends(GameView, _super);
+    function GameView() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    GameView.prototype.onInitView = function () {
+        console.log("onInitGameView");
+    };
+    GameView.prototype.show = function (parent) {
+        this.setAsset(new GameViewScene_1.default());
+        cc.director.runScene(this.getAsset());
+    };
+    return GameView;
+}(View_1.default));
+exports.default = GameView;
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var ViewController_1 = __webpack_require__(3);
 var GameViewController = (function (_super) {
     __extends(GameViewController, _super);
     function GameViewController() {
@@ -315,6 +486,105 @@ var GameViewController = (function (_super) {
     return GameViewController;
 }(ViewController_1.default));
 exports.default = GameViewController;
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var GameViewMainLayer_1 = __webpack_require__(11);
+var GameViewScene = (function (_super) {
+    __extends(GameViewScene, _super);
+    function GameViewScene() {
+        var _this = 
+        // 1. super init first
+        _super.call(this) || this;
+        _super.prototype.ctor.call(_this); //always call this for compatibility with cocos2dx JS Javascript class system
+        return _this;
+    }
+    GameViewScene.prototype.onEnter = function () {
+        _super.prototype.onEnter.call(this);
+        console.log("Hello game View Scene");
+        this._mainLayer = new GameViewMainLayer_1.default();
+        this.addChild(this._mainLayer);
+    };
+    return GameViewScene;
+}(cc.Scene));
+exports.default = GameViewScene;
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var AssetTypes_1 = __webpack_require__(0);
+var CharacterAssetFactory_1 = __webpack_require__(6);
+var GameViewMainLayer = (function (_super) {
+    __extends(GameViewMainLayer, _super);
+    function GameViewMainLayer() {
+        var _this = 
+        //////////////////////////////
+        // 1. super init first
+        _super.call(this) || this;
+        _super.prototype.ctor.call(_this); // call the cocos super method in JS  this would be this._super()
+        _this.assetFactory = new CharacterAssetFactory_1.CharacterAssetFactory();
+        /////////////////////////////
+        // 2. add a menu item with "X" image, which is clicked to quit the program
+        //    you may modify it.
+        // ask the window size
+        var size = cc.winSize;
+        /////////////////////////////
+        // 3. add your codes below...
+        // add a label shows "Hello World"
+        // create and initialize a label
+        var helloLabel = new cc.LabelTTF("Hello Game View Layer", "Arial", 38);
+        // position the label on the center of the screen
+        helloLabel.x = size.width / 2;
+        helloLabel.y = size.height / 2 + 200;
+        // add the label as a child to this layer
+        _this.addChild(helloLabel, 5);
+        // add "HelloWorld" splash screen"
+        _this.sprite = new cc.Sprite(res.HelloWorld_png);
+        _this.sprite.attr({
+            x: size.width / 2,
+            y: size.height / 2
+        });
+        _this.addChild(_this.sprite, 0);
+        var co = new CharacterAssetFactory_1.CharacterAssetCreationOptions(AssetTypes_1.CharacterAssetTypes.PLAYER);
+        var ca = _this.assetFactory.create(co);
+        ca.setPosition(10, 20);
+        _this.addChild(ca, 0);
+        return _this;
+    }
+    return GameViewMainLayer;
+}(cc.Layer));
+exports.default = GameViewMainLayer;
 
 
 /***/ })
