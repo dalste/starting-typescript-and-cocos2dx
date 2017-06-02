@@ -10,9 +10,9 @@ import { ModelCallBack,IModel } from "./IModel";
  * 
  */
 export class Model implements IModel{
-        private _modelBindings = {};
+        protected _modelBindings = {};
 
-        private _data = {};
+        protected _data = {};
 
         /**
          * @description constructor will initialise the model data with data provided by config.data if provided
@@ -33,8 +33,8 @@ export class Model implements IModel{
         public getAllDataAsJsonString():string{
             return JSON.stringify(this._data);
         }
-        /**
-         * @description returns the sub data at the path described as a JSON string
+         /**
+         * @description returns the sub data at the path described example "path.to.my.value" as a JSON string
          * @return string the data as a json string
          */
         public getSubDataAsJsonString(path:string):string{

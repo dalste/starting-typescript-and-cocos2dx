@@ -1,11 +1,11 @@
 import { View } from "./../../tslib/dalste/View";
 import { SceneExtensions } from "./../../tslib/dalste/util/SceneExtensions";
-import { GameViewScene } from "./scenes/GameViewScene";
-export class GameView extends View {
+import { SplashScreenViewScene } from "./scenes/SplashScreenViewScene";
+export class SplashScreenView extends View {
 
     onInitView(): void {
-        this.setAsset(new GameViewScene());
-        console.log("onInitGameView");
+        this.setAsset(new SplashScreenViewScene());
+        cc.log("onInitGameView");
     }
 
     show(parent?: cc.Node): void {
@@ -20,18 +20,18 @@ export class GameView extends View {
     }
 
     private onEnterHandler(): void {
-        console.log("GameView::onEnterHandler");
+        cc.log("SplashScreenView::onEnterHandler");
     }
 
     private onEnterTransitionDidFinishHandler(): void {
-        console.log("GameView::onEnterTransitionDidFinishHandler");
+        cc.log("SplashScreenView::onEnterTransitionDidFinishHandler");
     }
 
     private onExitHandler(): void {
-        console.log("GameView::onExitHandler");
+        cc.log("SplashScreenView::onExitHandler");
     }
     
     private onExitTransitionDidStartHandler(): void {
-        console.log("GameView::onExitTransitionDidStartHandler");
+        cc.log("SplashScreenView::onExitTransitionDidStartHandler");
     }
 }

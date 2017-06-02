@@ -1,8 +1,38 @@
 export interface IView {
+    /**
+     * @description returns the main asset for this view
+     * @returns cc.Node 
+     */
     getAsset(): cc.Node;
+
+     /**
+    * @description sets the main asset for this view
+    * @param cc.Node 
+    */
+    setAsset(node: cc.Node): void;
+   /**
+     * @description  called after the view is instantiated, it is here that you should create the views assets 
+     */ 
     onInitView(): void;
+     /**
+     * @description returns the signals.Signal that represents this views eventBus, you may use this Signal to subscribe to view events
+     */
     getEventBus(): signals.Signal;
-    show(parent?:cc.Node):void;
+    /**
+     * @description displays the view on screen
+     *
+     * @param cc.Node  - optional parent node
+     */
+    show(parent?: cc.Node): void;
+
+    /**
+     * @description wraps cocos2d-x cc.Node::addChild -adds a node as a child to this views _asset
+    * @param {cc.Node} child  A child node
+    * @param {number} [localZOrder]  Z order for drawing priority. Please refer to setZOrder(int)
+    * @param {number|string} [tag]  An integer or a name to identify the node easily. Please refer to setTag(int) and setName(string)
+     */
+
+    addChild(child: cc.Node, localZOrder?: number, tag?: string | number): void;
 }
 
 export default IView;

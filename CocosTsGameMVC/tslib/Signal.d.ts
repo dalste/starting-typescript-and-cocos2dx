@@ -74,7 +74,7 @@ declare namespace signals {
          * @see Signal.memorize
          */
         forget ():void;
-   /**
+        /**
          * Remove all bindings from signal and destroy any reference to external objects (destroy Signal object).
          * <p><strong>IMPORTANT:</strong> calling any method on the signal instance after calling dispose will throw errors.</p>
          */

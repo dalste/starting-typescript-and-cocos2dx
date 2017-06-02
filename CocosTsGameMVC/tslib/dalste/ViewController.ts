@@ -6,19 +6,19 @@ import {IModel} from "./IModel";
 /**
  * @description Virtual class - must be subclassed, the onViewReady function must be overriden
  */
-export default class ViewController implements IViewController {
+export class ViewController implements IViewController {
     /**
-     * the view associated with this controller, is assigned in viewReady(view:IView) function
+     * @description the view associated with this controller, is assigned in viewReady(view:IView) function
       */
-    private _view: IView = undefined;
-    private _model: IModel = undefined;
+    protected _view: IView = undefined;
+    protected _model: IModel = undefined;
 
 
     //inject 
-    private _system:dijon.System = undefined;
+    protected  _system:dijon.System = undefined;
 
     /**
-     * function called by the IOC container when this class is instantiated
+     * @description function called by the IOC container when this class is instantiated
      */
     private setup() {
         
@@ -37,7 +37,7 @@ export default class ViewController implements IViewController {
     protected getView(): IView{
         return this._view;
     }
- /**
+    /**
      * @description Virtual function that is called after the view is assigned to teh controllers _view,
      *  it is here that you should initialise listeners and do futher view setup 
      */

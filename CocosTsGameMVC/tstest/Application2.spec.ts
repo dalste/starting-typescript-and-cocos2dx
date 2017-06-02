@@ -2,7 +2,7 @@
   /// <reference path="../typings/modules/chai/index.d.ts" />
 
 import { expect } from 'chai';
-import Application2 from "../tssrc/Application2";
+import {Application2} from "../tssrc/Application2";
 
 //var expect = chai.
 

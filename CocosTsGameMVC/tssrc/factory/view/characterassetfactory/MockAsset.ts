@@ -35,7 +35,7 @@ export class MockAsset<T, U> extends cc.Node {
         this.setContentSize(radius * 2, radius * 2);
         this.setAnchorPoint(0.5, 0.5);
         this._circleNode = new cc.DrawNode();
-        this._circleNode.drawCircle(cc.p(radius, radius), radius, 0, 1, true, 8, this.getColour(COLOUR));
+        this._circleNode.drawDot(cc.p(radius, radius), radius,this.getColour(COLOUR));
         this.addChild(this._circleNode);
 
 

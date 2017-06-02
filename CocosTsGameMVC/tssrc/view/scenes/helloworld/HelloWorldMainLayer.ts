@@ -2,7 +2,7 @@
 import { CharacterAssetTypes } from "./../../../types/AssetTypes";
 import {CharacterAssetFactory, CharacterAssetCreationOptions} from "../../../factory/view/CharacterAssetFactory";
 declare var res:any;
-export default class HelloWorldMainLayer extends  cc.Layer{
+export class HelloWorldMainLayer extends  cc.Layer{
     sprite:cc.Sprite;
     signal: signals.Signal;
     assetFactory:CharacterAssetFactory;
