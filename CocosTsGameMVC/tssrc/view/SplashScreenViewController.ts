@@ -1,48 +1,50 @@
-import {ViewController} from "./../../tslib/dalste/ViewController";
+import { ViewController } from "./../../tslib/dalste/ViewController";
 import { ScreenTypes } from "./../types/ScreenTypes";
 import { ApplicationEvents } from "./../events/ApplicationEvents";
-import  {Display}  from "./../../tslib/dalste/util/Display";
+import { Display } from "./../../tslib/dalste/util/Display";
 
-declare var ccui: any;
-export  class SplashScreenViewController extends ViewController {
+
+export class SplashScreenViewController extends ViewController {
 
 
     //inject
-    private _display: Display=undefined;
+    private _display: Display = undefined;
 
     onViewReady(): void {
-        cc.log("SplashScreenViewController::onSplashScreenViewReady");
+        this.getView().getEventBus().add(this.onViewEvent, this);
+        this.getView().getEnterSignal().add(this.onViewEnter, this);
+        this.getView().getExitSignal().add(this.onViewExit, this);
+        this.getView().getEnterTransitionDidFinishSignal().add(this.onViewEnterTransitionDidFinish, this);
+        this.getView().getExitTransitionDidStartSignal().add(this.onViewExitTransitionDidStart, this);
+    }
 
+    onViewEnter(): void {
+        cc.log("SplashScreenViewController::onViewEnter");
+    }
+
+    onViewEnterTransitionDidFinish(): void {
+        cc.log("SplashScreenViewController::onViewEnterTransitionDidFinish");
+    }
+
+    onViewExit(): void {
+        cc.log("SplashScreenViewController::onViewExit");
+    }
+
+    onViewExitTransitionDidStart(): void {
+        cc.log("SplashScreenViewController::onViewExitTransitionDidStart");
+    }
     
-        var button = new ccui.Button();
-        button.setTitleText("Load Game");
-        button.setTouchEnabled(true);
-        button.addTouchEventListener(this.touchEvent, this);
-        button.setName("mapTestButton");
-        button.setPosition(this._display.middleMiddle().x,this._display.middleMiddle().y);
-      
-        this.getView().addChild(button, 0);
-    }
+    onViewEvent(event: string): void {
 
-    touchEvent (sender:cc.Node, type:any){
-        switch(type){
-            case ccui.Widget.TOUCH_BEGAN:
+        switch (event) {
+            case "playGameButtonPressed":
+                this._system.notify(ApplicationEvents.APP_GOTO_PLAY_SCENE);
                 break;
-            case ccui.Widget.TOUCH_MOVED:
-                break;
-            case ccui.Widget.TOUCH_ENDED:
-                    cc.log(sender.getName() + " pressed");
-                switch(sender.getName()){
-                    case "mapTestButton":
-                    this._system.notify(ApplicationEvents.APP_GOTO_PLAY_SCENE);
-                        break;
-                }
-                break;
-            case ccui.Widget.TOUCH_CANCELED:
-                break;
-
         }
+
     }
+
+
 
 
 }

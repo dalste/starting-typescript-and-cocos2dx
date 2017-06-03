@@ -1,37 +1,77 @@
 import { View } from "./../../tslib/dalste/View";
-import { SceneExtensions } from "./../../tslib/dalste/util/SceneExtensions";
+import { SceneView } from "./../../tslib/dalste/SceneView";
+import { ApplicationEvents } from "./../events/ApplicationEvents";
+import { Display } from "./../../tslib/dalste/util/Display";
+import { IFactory } from "./../factory/IFactory";
+import { CharacterAssetTypes } from "./../types/AssetTypes";
+import { CharacterAssetCreationOptions } from "./../factory/view/CharacterAssetFactory";
+import { SceneExtended } from "./../../tslib/dalste/SceneExtended";
 import { GameViewScene } from "./scenes/GameViewScene";
-export class GameView extends View {
 
-    onInitView(): void {
-        this.setAsset(new GameViewScene());
-        console.log("onInitGameView");
-    }
+declare var ccui: any;
+export class GameView extends SceneView {
+    //inject
+    private _characterAssetFactory:IFactory<CharacterAssetCreationOptions,cc.Node> = null;
+
+    //inject
+    private _display: Display=undefined;
+  
 
     show(parent?: cc.Node): void {
-        var ass = this.getAsset() as SceneExtensions;
-
-        ass.onEnterSignal.add(this.onEnterHandler, this);
-        ass.onEnterTransitionDidFinishSignal.add(this.onEnterTransitionDidFinishHandler, this);
-        ass.onExitSignal.add(this.onExitHandler, this);
-        ass.onExitTransitionDidStartSignal.add(this.onExitTransitionDidStartHandler, this);
-
+        this.setAsset(new GameViewScene());
+        this.initLifecycleListeners();
         cc.director.runScene(this.getAsset());
     }
 
-    private onEnterHandler(): void {
-        console.log("GameView::onEnterHandler");
+    protected onEnterHandler(): void {
+
+        cc.log("GameView:onEnterHandler");
+        var co = new CharacterAssetCreationOptions(CharacterAssetTypes.PLAYER);
+        var ca = this._characterAssetFactory.create(co);
+        ca.setPosition(this._display.middleMiddle().x,this._display.middleMiddle().y);
+
+        this.addChild(ca, 0);
+
+        var button = new ccui.Button();
+        button.setTitleText("Exit Game");
+        button.setTouchEnabled(true);
+        button.addTouchEventListener(this.touchEvent, this);
+        button.setName("exitGameButton");
+        button.setPosition(this._display.topRight().x-50,this._display.topRight().y-50);
+      
+        this.addChild(button, 0);
     }
 
-    private onEnterTransitionDidFinishHandler(): void {
-        console.log("GameView::onEnterTransitionDidFinishHandler");
+    protected touchEvent (sender:cc.Node, type:any){
+        switch(type){
+            case ccui.Widget.TOUCH_BEGAN:
+                break;
+            case ccui.Widget.TOUCH_MOVED:
+                break;
+            case ccui.Widget.TOUCH_ENDED:
+                    cc.log(sender.getName() + " pressed");
+                switch(sender.getName()){
+                    case "exitGameButton":
+                        this._viewEventBus.dispatch("exitGameButtonPressed");
+                        break;
+                }
+                break;
+            case ccui.Widget.TOUCH_CANCELED:
+                break;
+
+        }
     }
 
-    private onExitHandler(): void {
-        console.log("GameView::onExitHandler");
+    protected onEnterTransitionDidFinishHandler(): void {
+        
     }
-    
-    private onExitTransitionDidStartHandler(): void {
-        console.log("GameView::onExitTransitionDidStartHandler");
+
+    protected onExitHandler(): void {
+        cc.log("GameView:onExithandler");
+        this.removeLifeCycleListeners();
+        this.setAsset(null);
+    }
+
+    protected onExitTransitionDidStartHandler(): void {
     }
 }

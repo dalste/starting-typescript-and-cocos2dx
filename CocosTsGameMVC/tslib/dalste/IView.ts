@@ -10,14 +10,35 @@ export interface IView {
     * @param cc.Node 
     */
     setAsset(node: cc.Node): void;
-   /**
-     * @description  called after the view is instantiated, it is here that you should create the views assets 
-     */ 
-    onInitView(): void;
+   
      /**
      * @description returns the signals.Signal that represents this views eventBus, you may use this Signal to subscribe to view events
      */
     getEventBus(): signals.Signal;
+         /**
+     * @description returns the signals.Signal that represents this views main asset onExit event
+     * @see cc.Node:onEnter
+     */
+    getExitSignal(): signals.Signal;
+
+          /**
+     * @description returns the signals.Signal that represents this views main asset onEnter event
+     * @see cc.Node:onEnter
+     */
+    getEnterSignal(): signals.Signal; 
+
+
+    /**
+     * @description returns the signals.Signal that represents this views main asset's onExitTransitionDidStart event
+     * @see cc.Node:onExit
+     */
+    getExitTransitionDidStartSignal(): signals.Signal;
+          /**
+     * @description returns the signals.Signal that represents this views main asset's  onEnterTransitionDidFinish event
+     * @see cc.Node:onEnter
+     */
+    getEnterTransitionDidFinishSignal(): signals.Signal;
+
     /**
      * @description displays the view on screen
      *

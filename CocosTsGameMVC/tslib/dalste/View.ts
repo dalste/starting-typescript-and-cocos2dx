@@ -1,4 +1,5 @@
 
+import { INodeLifeCycleExtensions } from "./INodeLifeCycleExtensions";
 import { ModelCallBack, IModel } from "./IModel";
 import { IView } from "./IView";
 import { IViewController } from "./IViewController";
@@ -19,10 +20,33 @@ export class View implements IView {
 
     /**
      * @description a view will use this signal as an event bus to communicate with its view controller
+     *  typically used for custom UI events
      */
     protected _viewEventBus: signals.Signal;
 
-    //the main asset for this view to contain the views controls
+    /**
+     * @description dispatched when the views asset onEnter event is fired 
+     * @see cc.Node:onEnter
+     */
+    protected _enterSignal:signals.Signal;
+   /**
+     * @description dispatched when the views asset onExit event is fired 
+     * @see cc.Node:onExit
+     */
+    protected _exitSignal:signals.Signal;
+
+    /**
+     * @description dispatched when the views asset onEnter event is fired 
+     * @see cc.Node:onEnter
+     */
+    protected _enterTransitionDidFinishSignal:signals.Signal;
+   /**
+     * @description dispatched when the views asset onExit event is fired 
+     * @see cc.Node:onExit
+     */
+    protected _exitTransitionDidStartSignal:signals.Signal;
+
+    //the identifier for the  main asset for this view to contain the views controls
     protected _asset: cc.Node;
 
     /**
@@ -30,23 +54,110 @@ export class View implements IView {
      */
     setup() {
         this._viewEventBus = new signals.Signal();
-        this.onInitView();
+        this._enterSignal = new signals.Signal();
+        this._exitSignal = new signals.Signal();
+        this._enterTransitionDidFinishSignal = new signals.Signal();
+        this._exitTransitionDidStartSignal = new signals.Signal();
+       
         this._viewController.viewReady(this, this._viewModel);
+    }
+
+
+    initLifecycleListeners(): void {
+        var ass = this.getAsset() as INodeLifeCycleExtensions;
+        ass.onEnterSignal.add(this.onEnter, this);
+        ass.onEnterTransitionDidFinishSignal.add(this.onEnterTransitionDidFinish, this);
+        ass.onExitSignal.add(this.onExit, this);
+        ass.onExitTransitionDidStartSignal.add(this.onExitTransitionDidStart, this);
+
+    }
+
+    removeLifeCycleListeners(): void {
+        var ass = this.getAsset() as INodeLifeCycleExtensions;
+        ass.onEnterSignal.removeAll();
+        ass.onEnterTransitionDidFinishSignal.removeAll();
+        ass.onExitSignal.removeAll();
+        ass.onExitTransitionDidStartSignal.removeAll();
+    }
+
+
+    private onEnter(): void {
+        this.onEnterHandler();
+        this._enterSignal.dispatch();
+    }
+
+    private onExit(): void {
+        this.onExitHandler();
+        this._exitSignal.dispatch();
+    }
+
+    private onEnterTransitionDidFinish(): void {
+        this.onEnterTransitionDidFinishHandler();
+    }
+
+    private onExitTransitionDidStart(): void {
+        this.onExitTransitionDidStartHandler();
+    }
+    
+    protected onEnterHandler(): void {
+
+    }
+
+    protected onEnterTransitionDidFinishHandler(): void {
+
+    }
+
+    protected onExitHandler(): void {
+
+
+    }
+
+    protected onExitTransitionDidStartHandler(): void {
+
     }
 
     /**
      * @description returns the signals.Signal that represents this views eventBus, you may use this Signal to subscribe to view events
+     * 
      */
     getEventBus(): signals.Signal {
         return this._viewEventBus;
     }
 
     /**
-     * @description Virtual function that is called after the view is instantiated, it is here that you should create the views assets 
+     * @description returns the signals.Signal that represents this view onExitevent
+     * @see cc.Node:onExit
      */
-    onInitView(): void {
-        throw (new Error("View:onInitView is an abstract function. It must be overridden"));
+    getExitSignal(): signals.Signal {
+        return this._exitSignal;
     }
+
+          /**
+     * @description returns the signals.Signal that represents this view onEnter event
+     * @see cc.Node:onEnter
+     */
+    getEnterSignal(): signals.Signal {
+        return this._enterSignal;
+    }
+
+/**
+     * @description returns the signals.Signal that represents this views main asset's onExitTransitionDidStart event
+     * @see cc.Node:onExit
+     */
+    getExitTransitionDidStartSignal(): signals.Signal {
+        return this._exitTransitionDidStartSignal;
+    }
+
+          /**
+     * @description returns the signals.Signal that represents this views main asset's  onEnterTransitionDidFinish event
+     * @see cc.Node:onEnter
+     */
+    getEnterTransitionDidFinishSignal(): signals.Signal {
+        return this._enterTransitionDidFinishSignal;
+    }
+
+
+
 
     /**
      * @description returns the main asset for this view

@@ -26,6 +26,14 @@ export class GameController {
         this.onDoNavigation(ScreenTypes.GAMEPLAY_SCREEN);
     }
 
+/**
+     *  handler for the ApplicationEvents.APP_GOTO_SPLASH_SCENE event
+     */
+     onAppGoToSplashScene() {
+        this.onDoNavigation(ScreenTypes.SPLASH_SCREEN);
+    }
+    
+
     /**
      *  handler for the app:doNavigation event
      */

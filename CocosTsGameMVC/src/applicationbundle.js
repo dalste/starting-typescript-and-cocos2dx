@@ -64,7 +64,7 @@ var CocosTSGame =
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 8);
+/******/ 	return __webpack_require__(__webpack_require__.s = 9);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -74,77 +74,104 @@ var CocosTSGame =
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * @description Virtual class - must be subclassed, the onInitView function must be overriden
- */
-var View = (function () {
-    function View() {
-        /**
-         * @description the _viewController will be injected by the IOC container when this view is instantiated
-         */
-        //inject
-        this._viewController = undefined;
-        //inject      
-        this._viewModel = undefined;
+var ApplicationEvents = (function () {
+    function ApplicationEvents() {
     }
-    /**
-     * @description setup. this function is called after the class is instantiaved via the IOC container
-     */
-    View.prototype.setup = function () {
-        this._viewEventBus = new signals.Signal();
-        this.onInitView();
-        this._viewController.viewReady(this, this._viewModel);
-    };
-    /**
-     * @description returns the signals.Signal that represents this views eventBus, you may use this Signal to subscribe to view events
-     */
-    View.prototype.getEventBus = function () {
-        return this._viewEventBus;
-    };
-    /**
-     * @description Virtual function that is called after the view is instantiated, it is here that you should create the views assets
-     */
-    View.prototype.onInitView = function () {
-        throw (new Error("View:onInitView is an abstract function. It must be overridden"));
-    };
-    /**
-     * @description returns the main asset for this view
-     * @returns cc.Node
-     */
-    View.prototype.getAsset = function () {
-        return this._asset;
-    };
-    /**
-    * @description sets the main asset for this view
-    * @param cc.Node
-    */
-    View.prototype.setAsset = function (node) {
-        this._asset = node;
-    };
-    /**
-     * @description adds a node as a child to this views _asset
-    * @param {cc.Node} child  A child node
-    * @param {number} [localZOrder]  Z order for drawing priority. Please refer to setZOrder(int)
-    * @param {number|string} [tag]  An integer or a name to identify the node easily. Please refer to setTag(int) and setName(string)
-     */
-    View.prototype.addChild = function (child, localZOrder, tag) {
-        this._asset.addChild(child, localZOrder, tag);
-    };
-    /**
-     * @description displays the view on screen
-     *
-     * @param cc.Node  - optional parent node
-     */
-    View.prototype.show = function (parent) {
-        throw (new Error("View:show is an abstract function. It must be overridden"));
-    };
-    return View;
+    return ApplicationEvents;
 }());
-exports.View = View;
+ApplicationEvents.APP_STARTUP = "App:startup";
+ApplicationEvents.APP_STARTUP_COMPLETE = "App:startupComplete";
+ApplicationEvents.APP_GOTO_PLAY_SCENE = "App:goto:play:scene";
+ApplicationEvents.APP_GOTO_SPLASH_SCENE = "App:goto:splash:scene";
+exports.ApplicationEvents = ApplicationEvents;
 
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * @class SceneExtensions -  provides subscribable signal wrappers around scene events
+ * onEnter
+ * onEnterTransitionDidFinish
+ * onExit
+ * onExitTransitionDidStart
+ */
+var SceneExtended = (function (_super) {
+    __extends(SceneExtended, _super);
+    function SceneExtended() {
+        var _this = _super.call(this) || this;
+        _super.prototype.ctor.call(_this); //always call this for compatibility with cocos2dx JS Javascript class system
+        _this.onEnterSignal = new signals.Signal();
+        _this.onEnterTransitionDidFinishSignal = new signals.Signal();
+        _this.onExitSignal = new signals.Signal();
+        _this.onExitTransitionDidStartSignal = new signals.Signal();
+        return _this;
+    }
+    SceneExtended.prototype.onEnter = function () {
+        _super.prototype.onEnter.call(this);
+        this.onEnterSignal.dispatch();
+    };
+    SceneExtended.prototype.onEnterTransitionDidFinish = function () {
+        _super.prototype.onEnterTransitionDidFinish.call(this);
+        this.onEnterTransitionDidFinishSignal.dispatch();
+    };
+    SceneExtended.prototype.onExit = function () {
+        this.onExitSignal.dispatch();
+        _super.prototype.onExit.call(this);
+    };
+    SceneExtended.prototype.onExitTransitionDidStart = function () {
+        _super.prototype.onExitTransitionDidStart.call(this);
+        this.onExitTransitionDidStartSignal.dispatch();
+    };
+    return SceneExtended;
+}(cc.Scene));
+exports.SceneExtended = SceneExtended;
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var View_1 = __webpack_require__(7);
+var SceneView = (function (_super) {
+    __extends(SceneView, _super);
+    function SceneView() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return SceneView;
+}(View_1.View));
+exports.SceneView = SceneView;
+
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -193,80 +220,6 @@ exports.ViewController = ViewController;
 
 
 /***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * @class SceneExtensions -  providis subscribable signal wrappers around scene events
- * onEnter
- * onEnterTransitionDidFinish
- * onExit
- * onExitTransitionDidStart
- */
-var SceneExtensions = (function (_super) {
-    __extends(SceneExtensions, _super);
-    function SceneExtensions() {
-        var _this = _super.call(this) || this;
-        _super.prototype.ctor.call(_this); //always call this for compatibility with cocos2dx JS Javascript class system
-        _this.onEnterSignal = new signals.Signal();
-        _this.onEnterTransitionDidFinishSignal = new signals.Signal();
-        _this.onExitSignal = new signals.Signal();
-        _this.onExitTransitionDidStartSignal = new signals.Signal();
-        return _this;
-    }
-    SceneExtensions.prototype.onEnter = function () {
-        _super.prototype.onEnter.call(this);
-        this.onEnterSignal.dispatch();
-    };
-    SceneExtensions.prototype.onEnterTransitionDidFinish = function () {
-        _super.prototype.onEnterTransitionDidFinish.call(this);
-        this.onEnterTransitionDidFinishSignal.dispatch();
-    };
-    SceneExtensions.prototype.onExit = function () {
-        _super.prototype.onExit.call(this);
-        this.onExitSignal.dispatch();
-    };
-    SceneExtensions.prototype.onExitTransitionDidStart = function () {
-        _super.prototype.onExitTransitionDidStart.call(this);
-        this.onExitTransitionDidStartSignal.dispatch();
-    };
-    return SceneExtensions;
-}(cc.Scene));
-exports.SceneExtensions = SceneExtensions;
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var ApplicationEvents = (function () {
-    function ApplicationEvents() {
-    }
-    return ApplicationEvents;
-}());
-ApplicationEvents.APP_STARTUP = "App:startup";
-ApplicationEvents.APP_STARTUP_COMPLETE = "App:startupComplete";
-ApplicationEvents.APP_GOTO_PLAY_SCENE = "App:goto:play:scene";
-exports.ApplicationEvents = ApplicationEvents;
-
-
-/***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -274,7 +227,7 @@ exports.ApplicationEvents = ApplicationEvents;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var AssetTypes_1 = __webpack_require__(5);
-var MockAsset_1 = __webpack_require__(10);
+var MockAsset_1 = __webpack_require__(11);
 /**
  * @class CharacterAssetCreationOptions
  * @description provides creation options to CharacterAssetFactory
@@ -338,13 +291,13 @@ var CharacterAssetTypes;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var ApplicationEvents_1 = __webpack_require__(3);
-var SplashScreenViewController_1 = __webpack_require__(15);
-var SplashScreenView_1 = __webpack_require__(14);
-var Display_1 = __webpack_require__(7);
-var GameView_1 = __webpack_require__(12);
-var GameController_1 = __webpack_require__(9);
-var GameViewController_1 = __webpack_require__(13);
+var ApplicationEvents_1 = __webpack_require__(0);
+var SplashScreenViewController_1 = __webpack_require__(16);
+var SplashScreenView_1 = __webpack_require__(15);
+var Display_1 = __webpack_require__(8);
+var GameView_1 = __webpack_require__(13);
+var GameController_1 = __webpack_require__(10);
+var GameViewController_1 = __webpack_require__(14);
 var CharacterAssetFactory_1 = __webpack_require__(4);
 var Application2 = (function () {
     function Application2() {
@@ -401,6 +354,10 @@ var Application2 = (function () {
          */
         this._system.mapHandler(ApplicationEvents_1.ApplicationEvents.APP_GOTO_PLAY_SCENE, 'GameController', 'onAppGoToPlayScene');
         /**
+         * map the GameController::onAppGoToPlayScene function as a handler for the ApplicationEvents.APP_GOTO_PLAY_SCENE event
+         */
+        this._system.mapHandler(ApplicationEvents_1.ApplicationEvents.APP_GOTO_SPLASH_SCENE, 'GameController', 'onAppGoToSplashScene');
+        /**
          * fire app:startup event
          */
         this._system.notify(ApplicationEvents_1.ApplicationEvents.APP_STARTUP);
@@ -416,6 +373,144 @@ exports.Application2 = Application2;
 
 /***/ }),
 /* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * @description Virtual class - must be subclassed, the onInitView function must be overriden
+ */
+var View = (function () {
+    function View() {
+        /**
+         * @description the _viewController will be injected by the IOC container when this view is instantiated
+         */
+        //inject
+        this._viewController = undefined;
+        //inject      
+        this._viewModel = undefined;
+    }
+    /**
+     * @description setup. this function is called after the class is instantiaved via the IOC container
+     */
+    View.prototype.setup = function () {
+        this._viewEventBus = new signals.Signal();
+        this._enterSignal = new signals.Signal();
+        this._exitSignal = new signals.Signal();
+        this._enterTransitionDidFinishSignal = new signals.Signal();
+        this._exitTransitionDidStartSignal = new signals.Signal();
+        this._viewController.viewReady(this, this._viewModel);
+    };
+    View.prototype.initLifecycleListeners = function () {
+        var ass = this.getAsset();
+        ass.onEnterSignal.add(this.onEnter, this);
+        ass.onEnterTransitionDidFinishSignal.add(this.onEnterTransitionDidFinish, this);
+        ass.onExitSignal.add(this.onExit, this);
+        ass.onExitTransitionDidStartSignal.add(this.onExitTransitionDidStart, this);
+    };
+    View.prototype.removeLifeCycleListeners = function () {
+        var ass = this.getAsset();
+        ass.onEnterSignal.removeAll();
+        ass.onEnterTransitionDidFinishSignal.removeAll();
+        ass.onExitSignal.removeAll();
+        ass.onExitTransitionDidStartSignal.removeAll();
+    };
+    View.prototype.onEnter = function () {
+        this.onEnterHandler();
+        this._enterSignal.dispatch();
+    };
+    View.prototype.onExit = function () {
+        this.onExitHandler();
+        this._exitSignal.dispatch();
+    };
+    View.prototype.onEnterTransitionDidFinish = function () {
+        this.onEnterTransitionDidFinishHandler();
+    };
+    View.prototype.onExitTransitionDidStart = function () {
+        this.onExitTransitionDidStartHandler();
+    };
+    View.prototype.onEnterHandler = function () {
+    };
+    View.prototype.onEnterTransitionDidFinishHandler = function () {
+    };
+    View.prototype.onExitHandler = function () {
+    };
+    View.prototype.onExitTransitionDidStartHandler = function () {
+    };
+    /**
+     * @description returns the signals.Signal that represents this views eventBus, you may use this Signal to subscribe to view events
+     *
+     */
+    View.prototype.getEventBus = function () {
+        return this._viewEventBus;
+    };
+    /**
+     * @description returns the signals.Signal that represents this view onExitevent
+     * @see cc.Node:onExit
+     */
+    View.prototype.getExitSignal = function () {
+        return this._exitSignal;
+    };
+    /**
+* @description returns the signals.Signal that represents this view onEnter event
+* @see cc.Node:onEnter
+*/
+    View.prototype.getEnterSignal = function () {
+        return this._enterSignal;
+    };
+    /**
+         * @description returns the signals.Signal that represents this views main asset's onExitTransitionDidStart event
+         * @see cc.Node:onExit
+         */
+    View.prototype.getExitTransitionDidStartSignal = function () {
+        return this._exitTransitionDidStartSignal;
+    };
+    /**
+* @description returns the signals.Signal that represents this views main asset's  onEnterTransitionDidFinish event
+* @see cc.Node:onEnter
+*/
+    View.prototype.getEnterTransitionDidFinishSignal = function () {
+        return this._enterTransitionDidFinishSignal;
+    };
+    /**
+     * @description returns the main asset for this view
+     * @returns cc.Node
+     */
+    View.prototype.getAsset = function () {
+        return this._asset;
+    };
+    /**
+    * @description sets the main asset for this view
+    * @param cc.Node
+    */
+    View.prototype.setAsset = function (node) {
+        this._asset = node;
+    };
+    /**
+     * @description adds a node as a child to this views _asset
+    * @param {cc.Node} child  A child node
+    * @param {number} [localZOrder]  Z order for drawing priority. Please refer to setZOrder(int)
+    * @param {number|string} [tag]  An integer or a name to identify the node easily. Please refer to setTag(int) and setName(string)
+     */
+    View.prototype.addChild = function (child, localZOrder, tag) {
+        this._asset.addChild(child, localZOrder, tag);
+    };
+    /**
+     * @description displays the view on screen
+     *
+     * @param cc.Node  - optional parent node
+     */
+    View.prototype.show = function (parent) {
+        throw (new Error("View:show is an abstract function. It must be overridden"));
+    };
+    return View;
+}());
+exports.View = View;
+
+
+/***/ }),
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -567,7 +662,7 @@ exports.Display = Display;
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -588,13 +683,13 @@ exports.start = start;
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var ScreenTypes_1 = __webpack_require__(11);
+var ScreenTypes_1 = __webpack_require__(12);
 var GameController = (function () {
     function GameController() {
         //inject
@@ -612,6 +707,12 @@ var GameController = (function () {
      */
     GameController.prototype.onAppGoToPlayScene = function () {
         this.onDoNavigation(ScreenTypes_1.ScreenTypes.GAMEPLAY_SCREEN);
+    };
+    /**
+         *  handler for the ApplicationEvents.APP_GOTO_SPLASH_SCENE event
+         */
+    GameController.prototype.onAppGoToSplashScene = function () {
+        this.onDoNavigation(ScreenTypes_1.ScreenTypes.SPLASH_SCREEN);
     };
     /**
      *  handler for the app:doNavigation event
@@ -636,7 +737,7 @@ exports.GameController = GameController;
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -722,7 +823,7 @@ exports.MockAsset = MockAsset;
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -733,59 +834,6 @@ var ScreenTypes;
     ScreenTypes[ScreenTypes["SPLASH_SCREEN"] = 0] = "SPLASH_SCREEN";
     ScreenTypes[ScreenTypes["GAMEPLAY_SCREEN"] = 1] = "GAMEPLAY_SCREEN";
 })(ScreenTypes = exports.ScreenTypes || (exports.ScreenTypes = {}));
-
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var View_1 = __webpack_require__(0);
-var GameViewScene_1 = __webpack_require__(16);
-var GameView = (function (_super) {
-    __extends(GameView, _super);
-    function GameView() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    GameView.prototype.onInitView = function () {
-        this.setAsset(new GameViewScene_1.GameViewScene());
-        console.log("onInitGameView");
-    };
-    GameView.prototype.show = function (parent) {
-        var ass = this.getAsset();
-        ass.onEnterSignal.add(this.onEnterHandler, this);
-        ass.onEnterTransitionDidFinishSignal.add(this.onEnterTransitionDidFinishHandler, this);
-        ass.onExitSignal.add(this.onExitHandler, this);
-        ass.onExitTransitionDidStartSignal.add(this.onExitTransitionDidStartHandler, this);
-        cc.director.runScene(this.getAsset());
-    };
-    GameView.prototype.onEnterHandler = function () {
-        console.log("GameView::onEnterHandler");
-    };
-    GameView.prototype.onEnterTransitionDidFinishHandler = function () {
-        console.log("GameView::onEnterTransitionDidFinishHandler");
-    };
-    GameView.prototype.onExitHandler = function () {
-        console.log("GameView::onExitHandler");
-    };
-    GameView.prototype.onExitTransitionDidStartHandler = function () {
-        console.log("GameView::onExitTransitionDidStartHandler");
-    };
-    return GameView;
-}(View_1.View));
-exports.GameView = GameView;
 
 
 /***/ }),
@@ -805,12 +853,13 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var ViewController_1 = __webpack_require__(1);
+var SceneView_1 = __webpack_require__(2);
 var AssetTypes_1 = __webpack_require__(5);
 var CharacterAssetFactory_1 = __webpack_require__(4);
-var GameViewController = (function (_super) {
-    __extends(GameViewController, _super);
-    function GameViewController() {
+var GameViewScene_1 = __webpack_require__(17);
+var GameView = (function (_super) {
+    __extends(GameView, _super);
+    function GameView() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         //inject
         _this._characterAssetFactory = null;
@@ -818,16 +867,55 @@ var GameViewController = (function (_super) {
         _this._display = undefined;
         return _this;
     }
-    GameViewController.prototype.onViewReady = function () {
-        console.log("GameViewController::onInitGameView");
+    GameView.prototype.show = function (parent) {
+        this.setAsset(new GameViewScene_1.GameViewScene());
+        this.initLifecycleListeners();
+        cc.director.runScene(this.getAsset());
+    };
+    GameView.prototype.onEnterHandler = function () {
+        cc.log("GameView:onEnterHandler");
         var co = new CharacterAssetFactory_1.CharacterAssetCreationOptions(AssetTypes_1.CharacterAssetTypes.PLAYER);
         var ca = this._characterAssetFactory.create(co);
         ca.setPosition(this._display.middleMiddle().x, this._display.middleMiddle().y);
-        this.getView().addChild(ca, 0);
+        this.addChild(ca, 0);
+        var button = new ccui.Button();
+        button.setTitleText("Exit Game");
+        button.setTouchEnabled(true);
+        button.addTouchEventListener(this.touchEvent, this);
+        button.setName("exitGameButton");
+        button.setPosition(this._display.topRight().x - 50, this._display.topRight().y - 50);
+        this.addChild(button, 0);
     };
-    return GameViewController;
-}(ViewController_1.ViewController));
-exports.GameViewController = GameViewController;
+    GameView.prototype.touchEvent = function (sender, type) {
+        switch (type) {
+            case ccui.Widget.TOUCH_BEGAN:
+                break;
+            case ccui.Widget.TOUCH_MOVED:
+                break;
+            case ccui.Widget.TOUCH_ENDED:
+                cc.log(sender.getName() + " pressed");
+                switch (sender.getName()) {
+                    case "exitGameButton":
+                        this._viewEventBus.dispatch("exitGameButtonPressed");
+                        break;
+                }
+                break;
+            case ccui.Widget.TOUCH_CANCELED:
+                break;
+        }
+    };
+    GameView.prototype.onEnterTransitionDidFinishHandler = function () {
+    };
+    GameView.prototype.onExitHandler = function () {
+        cc.log("GameView:onExithandler");
+        this.removeLifeCycleListeners();
+        this.setAsset(null);
+    };
+    GameView.prototype.onExitTransitionDidStartHandler = function () {
+    };
+    return GameView;
+}(SceneView_1.SceneView));
+exports.GameView = GameView;
 
 
 /***/ }),
@@ -847,40 +935,47 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var View_1 = __webpack_require__(0);
-var SplashScreenViewScene_1 = __webpack_require__(17);
-var SplashScreenView = (function (_super) {
-    __extends(SplashScreenView, _super);
-    function SplashScreenView() {
-        return _super !== null && _super.apply(this, arguments) || this;
+var ViewController_1 = __webpack_require__(3);
+var ApplicationEvents_1 = __webpack_require__(0);
+var GameViewController = (function (_super) {
+    __extends(GameViewController, _super);
+    function GameViewController() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        //inject
+        _this._characterAssetFactory = null;
+        //inject
+        _this._display = undefined;
+        return _this;
     }
-    SplashScreenView.prototype.onInitView = function () {
-        this.setAsset(new SplashScreenViewScene_1.SplashScreenViewScene());
-        cc.log("onInitGameView");
+    GameViewController.prototype.onViewReady = function () {
+        this.getView().getEventBus().add(this.onViewEvent, this);
+        this.getView().getEnterSignal().add(this.onViewEnter, this);
+        this.getView().getExitSignal().add(this.onViewExit, this);
+        this.getView().getEnterTransitionDidFinishSignal().add(this.onViewEnterTransitionDidFinish, this);
+        this.getView().getExitTransitionDidStartSignal().add(this.onViewExitTransitionDidStart, this);
     };
-    SplashScreenView.prototype.show = function (parent) {
-        var ass = this.getAsset();
-        ass.onEnterSignal.add(this.onEnterHandler, this);
-        ass.onEnterTransitionDidFinishSignal.add(this.onEnterTransitionDidFinishHandler, this);
-        ass.onExitSignal.add(this.onExitHandler, this);
-        ass.onExitTransitionDidStartSignal.add(this.onExitTransitionDidStartHandler, this);
-        cc.director.runScene(this.getAsset());
+    GameViewController.prototype.onViewEnter = function () {
+        cc.log("GameViewController::onViewEnter");
     };
-    SplashScreenView.prototype.onEnterHandler = function () {
-        cc.log("SplashScreenView::onEnterHandler");
+    GameViewController.prototype.onViewEnterTransitionDidFinish = function () {
+        cc.log("GameViewController::onViewEnterTransitionDidFinish");
     };
-    SplashScreenView.prototype.onEnterTransitionDidFinishHandler = function () {
-        cc.log("SplashScreenView::onEnterTransitionDidFinishHandler");
+    GameViewController.prototype.onViewExit = function () {
+        cc.log("GameViewController::onViewExit");
     };
-    SplashScreenView.prototype.onExitHandler = function () {
-        cc.log("SplashScreenView::onExitHandler");
+    GameViewController.prototype.onViewExitTransitionDidStart = function () {
+        cc.log("GameViewController::onViewExitTransitionDidStart");
     };
-    SplashScreenView.prototype.onExitTransitionDidStartHandler = function () {
-        cc.log("SplashScreenView::onExitTransitionDidStartHandler");
+    GameViewController.prototype.onViewEvent = function (event) {
+        switch (event) {
+            case "exitGameButtonPressed":
+                this._system.notify(ApplicationEvents_1.ApplicationEvents.APP_GOTO_SPLASH_SCENE);
+                break;
+        }
     };
-    return SplashScreenView;
-}(View_1.View));
-exports.SplashScreenView = SplashScreenView;
+    return GameViewController;
+}(ViewController_1.ViewController));
+exports.GameViewController = GameViewController;
 
 
 /***/ }),
@@ -900,37 +995,52 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var ViewController_1 = __webpack_require__(1);
-var ApplicationEvents_1 = __webpack_require__(3);
-var SplashScreenViewController = (function (_super) {
-    __extends(SplashScreenViewController, _super);
-    function SplashScreenViewController() {
+var SceneView_1 = __webpack_require__(2);
+var SplashScreenViewScene_1 = __webpack_require__(18);
+var SplashScreenView = (function (_super) {
+    __extends(SplashScreenView, _super);
+    function SplashScreenView() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         //inject
         _this._display = undefined;
         return _this;
     }
-    SplashScreenViewController.prototype.onViewReady = function () {
-        cc.log("SplashScreenViewController::onSplashScreenViewReady");
+    SplashScreenView.prototype.show = function (parent) {
+        this.setAsset(new SplashScreenViewScene_1.SplashScreenViewScene());
+        this.initLifecycleListeners();
+        cc.director.runScene(this.getAsset());
+    };
+    SplashScreenView.prototype.onEnterHandler = function () {
+        cc.log("SplashScreenView:onEnterHandler");
         var button = new ccui.Button();
-        button.setTitleText("Load Game");
+        button.setTitleText("Play Game");
         button.setTouchEnabled(true);
         button.addTouchEventListener(this.touchEvent, this);
-        button.setName("mapTestButton");
+        button.setName("playGameButton");
         button.setPosition(this._display.middleMiddle().x, this._display.middleMiddle().y);
-        this.getView().addChild(button, 0);
+        this.addChild(button, 0);
     };
-    SplashScreenViewController.prototype.touchEvent = function (sender, type) {
+    SplashScreenView.prototype.onEnterTransitionDidFinishHandler = function () {
+        cc.log("SplashScreenView::onEnterTransitionDidFinishHandler");
+    };
+    SplashScreenView.prototype.onExitHandler = function () {
+        cc.log("SplashScreenView:onExitHandler");
+        this.removeLifeCycleListeners();
+        this.setAsset(null);
+    };
+    SplashScreenView.prototype.onExitTransitionDidStartHandler = function () {
+        cc.log("SplashScreenView::onExitTransitionDidStartHandler");
+    };
+    SplashScreenView.prototype.touchEvent = function (sender, type) {
         switch (type) {
             case ccui.Widget.TOUCH_BEGAN:
                 break;
             case ccui.Widget.TOUCH_MOVED:
                 break;
             case ccui.Widget.TOUCH_ENDED:
-                cc.log(sender.getName() + " pressed");
                 switch (sender.getName()) {
-                    case "mapTestButton":
-                        this._system.notify(ApplicationEvents_1.ApplicationEvents.APP_GOTO_PLAY_SCENE);
+                    case "playGameButton":
+                        this._viewEventBus.dispatch("playGameButtonPressed");
                         break;
                 }
                 break;
@@ -938,9 +1048,9 @@ var SplashScreenViewController = (function (_super) {
                 break;
         }
     };
-    return SplashScreenViewController;
-}(ViewController_1.ViewController));
-exports.SplashScreenViewController = SplashScreenViewController;
+    return SplashScreenView;
+}(SceneView_1.SceneView));
+exports.SplashScreenView = SplashScreenView;
 
 
 /***/ }),
@@ -960,17 +1070,45 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var SceneExtensions_1 = __webpack_require__(2);
-var GameViewScene = (function (_super) {
-    __extends(GameViewScene, _super);
-    function GameViewScene() {
-        // 1. super init first
-        return _super.call(this) || this;
-        //super.ctor(); //always call this for compatibility with cocos2dx JS Javascript class system
+var ViewController_1 = __webpack_require__(3);
+var ApplicationEvents_1 = __webpack_require__(0);
+var SplashScreenViewController = (function (_super) {
+    __extends(SplashScreenViewController, _super);
+    function SplashScreenViewController() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        //inject
+        _this._display = undefined;
+        return _this;
     }
-    return GameViewScene;
-}(SceneExtensions_1.SceneExtensions));
-exports.GameViewScene = GameViewScene;
+    SplashScreenViewController.prototype.onViewReady = function () {
+        this.getView().getEventBus().add(this.onViewEvent, this);
+        this.getView().getEnterSignal().add(this.onViewEnter, this);
+        this.getView().getExitSignal().add(this.onViewExit, this);
+        this.getView().getEnterTransitionDidFinishSignal().add(this.onViewEnterTransitionDidFinish, this);
+        this.getView().getExitTransitionDidStartSignal().add(this.onViewExitTransitionDidStart, this);
+    };
+    SplashScreenViewController.prototype.onViewEnter = function () {
+        cc.log("SplashScreenViewController::onViewEnter");
+    };
+    SplashScreenViewController.prototype.onViewEnterTransitionDidFinish = function () {
+        cc.log("SplashScreenViewController::onViewEnterTransitionDidFinish");
+    };
+    SplashScreenViewController.prototype.onViewExit = function () {
+        cc.log("SplashScreenViewController::onViewExit");
+    };
+    SplashScreenViewController.prototype.onViewExitTransitionDidStart = function () {
+        cc.log("SplashScreenViewController::onViewExitTransitionDidStart");
+    };
+    SplashScreenViewController.prototype.onViewEvent = function (event) {
+        switch (event) {
+            case "playGameButtonPressed":
+                this._system.notify(ApplicationEvents_1.ApplicationEvents.APP_GOTO_PLAY_SCENE);
+                break;
+        }
+    };
+    return SplashScreenViewController;
+}(ViewController_1.ViewController));
+exports.SplashScreenViewController = SplashScreenViewController;
 
 
 /***/ }),
@@ -990,14 +1128,44 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var SceneExtensions_1 = __webpack_require__(2);
+var SceneExtended_1 = __webpack_require__(1);
+var GameViewScene = (function (_super) {
+    __extends(GameViewScene, _super);
+    function GameViewScene() {
+        // 1. super init first
+        return _super.call(this) || this;
+        //super.ctor(); //always call this for compatibility with cocos2dx JS Javascript class system
+    }
+    return GameViewScene;
+}(SceneExtended_1.SceneExtended));
+exports.GameViewScene = GameViewScene;
+
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var SceneExtended_1 = __webpack_require__(1);
 var SplashScreenViewScene = (function (_super) {
     __extends(SplashScreenViewScene, _super);
     function SplashScreenViewScene() {
         return _super.call(this) || this;
     }
     return SplashScreenViewScene;
-}(SceneExtensions_1.SceneExtensions));
+}(SceneExtended_1.SceneExtended));
 exports.SplashScreenViewScene = SplashScreenViewScene;
 
 

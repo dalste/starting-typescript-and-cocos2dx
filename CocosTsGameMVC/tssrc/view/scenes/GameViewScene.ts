@@ -1,6 +1,6 @@
 import { GameViewMainLayer } from "./gameview/GameViewMainLayer"
-import { SceneExtensions } from "./../../../tslib/dalste/util/SceneExtensions";
-export class GameViewScene extends SceneExtensions {
+import {  SceneExtended } from "./../../../tslib/dalste/SceneExtended";
+export class GameViewScene extends SceneExtended {
     private _mainLayer: GameViewMainLayer;
     constructor() {
         // 1. super init first

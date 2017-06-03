@@ -92,6 +92,12 @@ export  class Application2 implements IApplication {
         this._system.mapHandler( ApplicationEvents.APP_GOTO_PLAY_SCENE, 'GameController', 'onAppGoToPlayScene' );
 
         /**
+         * map the GameController::onAppGoToPlayScene function as a handler for the ApplicationEvents.APP_GOTO_PLAY_SCENE event
+         */
+        this._system.mapHandler( ApplicationEvents.APP_GOTO_SPLASH_SCENE, 'GameController', 'onAppGoToSplashScene' );
+
+
+        /**
          * fire app:startup event
          */
         this._system.notify(ApplicationEvents.APP_STARTUP);
