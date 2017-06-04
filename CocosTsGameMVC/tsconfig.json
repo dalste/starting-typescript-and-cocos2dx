@@ -2,6 +2,7 @@
     
     "compilerOptions": {
         "noImplicitAny": true,
+        "moduleResolution": "node",
         "target": "es5",
         "module": "commonjs",
         
@@ -11,6 +12,7 @@
     "jsx": "react",
     "allowJs": true
     },
+
      "include": [
          
         "tslib/**/*",

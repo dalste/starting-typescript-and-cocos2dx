@@ -1,10 +1,10 @@
-module CES {
+import {Listener} from "./Listener";
     /**
      * The signal can register listeners and invoke the listeners with messages.
      * @class
      */
     export class Signal {
-        private listeners: CES.Listener[]; // Array of callbacks that can accept any kind of params
+        private listeners: Listener[]; // Array of callbacks that can accept any kind of params
 
         constructor() {
             this.listeners = [];
@@ -15,7 +15,7 @@ module CES {
          * @public
          * @param {Function} listener
          */
-        public add(listener: CES.Listener) {
+        public add(listener: Listener) {
             this.listeners.push(listener);
         }
 
@@ -24,7 +24,7 @@ module CES {
          * @public
          * @param {Function} listener
          */
-        public remove(listener: CES.Listener): boolean {
+        public remove(listener: Listener): boolean {
             for(let i = 0; i < this.listeners.length; i++) {
                 if(listener === this.listeners[i]) {
                     this.listeners.splice(i, 1);
@@ -45,4 +45,4 @@ module CES {
             }
         }
     }
-}
+

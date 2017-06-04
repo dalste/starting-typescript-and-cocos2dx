@@ -1,14 +1,16 @@
-module CES {
+
+import { EntityNode } from "./EntityNode";
+import {Entity} from "./Entity"
     /**
      * The entity list is a doubly-linked-list which allows the
      * entities to be added and removed efficiently.
      * @class
      */
     export class EntityList {
-        public head: CES.EntityNode;
-        public tail: CES.EntityNode;
+        public head: EntityNode;
+        public tail: EntityNode;
         public length: number;
-        private entities: { [key: string]: CES.EntityNode; };
+        private entities: { [key: string]: EntityNode; };
         constructor() {
             /**
              * @public
@@ -41,8 +43,8 @@ module CES {
          * @public
          * @param {Entity} entity
          */
-        add(entity: CES.Entity) {
-            let node: CES.EntityNode = new CES.EntityNode(entity);
+        add(entity: Entity) {
+            let node: EntityNode = new EntityNode(entity);
             if(this.head === null) {
                 this.head = this.tail = node;
             } else {
@@ -60,7 +62,7 @@ module CES {
          * @public
          * @param {Entity} entity
          */
-        remove(entity: CES.Entity) {
+        remove(entity: Entity) {
             let node = this.entities[entity.id];
             if(node === undefined) {
                 return;
@@ -87,9 +89,9 @@ module CES {
          * Check if this list has the entity.
          * @public
          * @param {entityId} entity
-         * @return {CES.Entity}
+         * @return {Entity}
          */
-        get(entityId:number): CES.Entity {
+        get(entityId:number): Entity {
 
             if(this.entities[entityId]!= undefined)
                 return this.entities[entityId].entity;
@@ -103,7 +105,7 @@ module CES {
          * @param {Entity} entity
          * @return {Boolean}
          */
-        has(entity: CES.Entity): boolean {
+        has(entity: Entity): boolean {
             return this.entities[entity.id] !== undefined;
         }
 
@@ -122,8 +124,8 @@ module CES {
          * @public
          * @return {Array}
          */
-        toArray(): CES.Entity[] {
-            let array: CES.Entity[] = [];
+        toArray(): Entity[] {
+            let array: Entity[] = [];
 
             for (let node = this.head; node; node = node.next) {
                 array.push(node.entity);
@@ -133,4 +135,3 @@ module CES {
         }
     }
 
-}

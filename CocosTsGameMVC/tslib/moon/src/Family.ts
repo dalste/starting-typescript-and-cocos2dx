@@ -1,13 +1,16 @@
-module CES {
+import {EntityList} from "./EntityList";
+import {Entity} from "./Entity";
+import {Signal} from "./Signal";
+import {Component} from "./Component";
     /**
      * The family is a collection of entities having all the specified components.
      * @class
      */
     export class Family {
         private componentNames: string[];
-        private entities: CES.EntityList;
-        public entityAdded: CES.Signal;
-        public entityRemoved: CES.Signal;
+        private entities: EntityList;
+        public entityAdded: Signal;
+        public entityRemoved: Signal;
 
         /**
          * @constructor
@@ -23,18 +26,18 @@ module CES {
              * A linked list holding the entities;
              * @private
              */
-            this.entities = new CES.EntityList();
+            this.entities = new EntityList();
 
             /**
              * @public
              * @readonly
              */
-            this.entityAdded = new CES.Signal();
+            this.entityAdded = new Signal();
             /**
              * @public
              * @readonly
              */
-            this.entityRemoved = new CES.Signal();
+            this.entityRemoved = new Signal();
         }
 
         /**
@@ -42,7 +45,7 @@ module CES {
          * @public
          * @return {Array}
          */
-        getEntities(): CES.Entity[] {
+        getEntities(): Entity[] {
             return this.entities.toArray();
         }
 
@@ -51,7 +54,7 @@ module CES {
          * @public
          * @param {Entity} entity
          */
-        addEntityIfMatch(entity: CES.Entity) {
+        addEntityIfMatch(entity: Entity) {
             if (!this.entities.has(entity) && this.matchEntity(entity)) {
                 this.entities.add(entity);
                 this.entityAdded.emit(entity);
@@ -64,7 +67,7 @@ module CES {
          * @function
          * @param {Entity} entity
          */
-        removeEntity(entity: CES.Entity) {
+        removeEntity(entity: Entity) {
             if (this.entities.has(entity)) {
                 this.entities.remove(entity);
                 this.entityRemoved.emit(entity);
@@ -77,7 +80,7 @@ module CES {
          * @param {Entity} entity
          * @param {String} componentName
          */
-        onComponentAdded(entity: CES.Entity, componentName: string) {
+        onComponentAdded(entity: Entity, componentName: string) {
             this.addEntityIfMatch(entity);
         }
 
@@ -88,7 +91,7 @@ module CES {
          * @param {String} componentName
          * @param {Component} removedComponent
          */
-        onComponentRemoved(entity: CES.Entity, componentName: string, removedComponent: CES.Component) {
+        onComponentRemoved(entity: Entity, componentName: string, removedComponent: Component) {
             // return if the entity is not in this family
             if (!this.entities.has(entity)) {
                 return;
@@ -109,7 +112,7 @@ module CES {
          * @param {Entity} entity
          * @return {Boolean}
          */
-        private matchEntity(entity: CES.Entity): boolean {
+        private matchEntity(entity: Entity​​): boolean {
             for(let i = 0; i < this.componentNames.length; i++) {
                 if(!entity.hasComponent(this.componentNames[i])) {
                     return false;
@@ -118,4 +121,4 @@ module CES {
             return true;
         }
     }
-}
+

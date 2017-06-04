@@ -1,16 +1,16 @@
-module CES {
+import {World} from "./World";
     /**
      * The system is responsible for updating the entities.
      * @class
      */
     export class System {
-        public world: CES.World;
+        public world: World;
 
         constructor() {
             this.world = null;
         }
 
-        addedToWorld(world: CES.World) {
+        addedToWorld(world: World) {
             this.world = world;
 
         
@@ -29,4 +29,4 @@ module CES {
             throw new Error('Subclassed should override this method');
         }
     }
-}
+

@@ -1,4 +1,9 @@
-module CES {
+import {Family} from "./Family";
+import {System} from "./System";
+import {EntityList} from "./EntityList";
+import {Entity} from "./Entity";
+import {Component} from "./Component";
+import { Signal } from "./Signal";
     /**
      * The world is the container of all the entities and systems.
      * @class
@@ -6,9 +11,9 @@ module CES {
 
     
     export class World {
-        private families: { [key: string]: CES.Family; };
-        private systems: CES.System[];
-        private entities: CES.EntityList;
+        private families: { [key: string]: Family; };
+        private systems: System[];
+        private entities: EntityList;
       
 
         constructor() {
@@ -26,7 +31,7 @@ module CES {
             /**
              * @private
              */
-            this.entities = new CES.EntityList();
+            this.entities = new EntityList();
            // this.systemEventBusSignal = new signals.Signal;
         }
 
@@ -39,7 +44,7 @@ module CES {
          * @public
          * @param {System} system
          */
-        addSystem(system: CES.System): CES.World {
+        addSystem(system: System): World {
             this.systems.push(system);
             system.addedToWorld(this);
             return this;
@@ -50,7 +55,7 @@ module CES {
          * @public
          * @param {System} system
          */
-        removeSystem(system: CES.System) {
+        removeSystem(system: System) {
             for (let i = 0; i < this.systems.length; i++) {
                 if (this.systems[i] === system) {
                     this.systems.splice(i, 1);
@@ -64,7 +69,7 @@ module CES {
          * @public
          * @param {Entity} entity
          */
-        addEntity(entity: CES.Entity) {
+        addEntity(entity: Entity) {
             // try to add the entity into each family
             for (let familyId in this.families) {
                 if(this.families.hasOwnProperty(familyId)) {
@@ -73,10 +78,10 @@ module CES {
             }
             // update the entity-family relationship whenever components are
             // added to or removed from the entities
-            entity.onComponentAdded.add((entity: CES.Entity, componentName: string) => {
+            entity.onComponentAdded.add((entity: Entity, componentName: string) => {
                 this.onComponentAdded(entity, componentName);
             });
-            entity.onComponentRemoved.add((entity: CES.Entity, componentName: string, component: CES.Component) => {
+            entity.onComponentRemoved.add((entity: Entity, componentName: string, component: Component) => {
                 this.onComponentRemoved(entity, componentName, component);
             });
 
@@ -87,9 +92,9 @@ module CES {
          * gets and entity by id
          * @public
          * @param {entityId} entity
-         * @return {CES.Entity}
+         * @return {Entity}
          */
-        get(entityId:number): CES.Entity {
+        get(entityId:number): Entity {
 
           
                 return this.entities.get(entityId);
@@ -101,7 +106,7 @@ module CES {
          * @public
          * @param {Entity} entity
          */
-        removeEntity(entity: CES.Entity) {
+        removeEntity(entity: Entity) {
             // try to remove the entity from each family
             for (let familyId in this.families) {
                 if(this.families.hasOwnProperty(familyId)) {
@@ -119,7 +124,7 @@ module CES {
          * @return {Array} an array of entities.
          */
         getEntities(...componentNames: string[]) {
-            let familyId = CES.World.getFamilyId(componentNames);
+            let familyId = World.getFamilyId(componentNames);
             this.ensureFamilyExists(componentNames);
 
             return this.families[familyId].getEntities();
@@ -145,8 +150,8 @@ module CES {
          * @return {Signal} A signal which is emitted every time an entity with
          *     specified components is added.
          */
-        entityAdded(...componentNames: string[]): CES.Signal {
-            let familyId = CES.World.getFamilyId(componentNames);
+        entityAdded(...componentNames: string[]): Signal {
+            let familyId = World.getFamilyId(componentNames);
             this.ensureFamilyExists(componentNames);
 
             return this.families[familyId].entityAdded;
@@ -161,8 +166,8 @@ module CES {
          * @return {Signal} A signal which is emitted every time an entity with
          *     specified components is removed.
          */
-        entityRemoved(...componentNames: string[]): CES.Signal {
-            let familyId = CES.World.getFamilyId(componentNames);
+        entityRemoved(...componentNames: string[]): Signal {
+            let familyId = World.getFamilyId(componentNames);
             this.ensureFamilyExists(componentNames);
 
             return this.families[familyId].entityRemoved;
@@ -175,10 +180,10 @@ module CES {
          */
         private ensureFamilyExists(components: string[]) {
             var families = this.families;
-            var familyId = CES.World.getFamilyId(components);
+            var familyId = World.getFamilyId(components);
 
             if (!families[familyId]) {
-                families[familyId] = new CES.Family(
+                families[familyId] = new Family(
                     Array.prototype.slice.call(components)
                 );
                 for (var node = this.entities.head; node; node = node.next) {
@@ -204,7 +209,7 @@ module CES {
          * @param {Entity} entity
          * @param {String} componentName
          */
-        private onComponentAdded(entity: CES.Entity, componentName: string) {
+        private onComponentAdded(entity: Entity, componentName: string) {
             for (let familyId in this.families) {
                 if(this.families.hasOwnProperty(familyId)) {
                     this.families[familyId].onComponentAdded(entity, componentName);
@@ -219,7 +224,7 @@ module CES {
          * @param {String} componentName
          * @param {Component} component
          */
-        private onComponentRemoved(entity: CES.Entity, componentName: string, component: CES.Component) {
+        private onComponentRemoved(entity: Entity, componentName: string, component: Component) {
             for (let familyId in this.families) {
                 if(this.families.hasOwnProperty(familyId)) {
                     this.families[familyId].onComponentRemoved(entity, componentName, component);
@@ -227,4 +232,4 @@ module CES {
             }
         }
     }
-}
+

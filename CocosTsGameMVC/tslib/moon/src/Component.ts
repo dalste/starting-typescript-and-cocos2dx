@@ -1,4 +1,4 @@
-module CES {
+
     /**
      * The components is the container of some properties that
      * the entity possesses. It may also contain some methods.
@@ -14,4 +14,4 @@ module CES {
          */
         public name: string
     }
-}
+

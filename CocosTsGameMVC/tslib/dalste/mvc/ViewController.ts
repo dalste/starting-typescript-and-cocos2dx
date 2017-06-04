@@ -7,7 +7,7 @@ import {IModel} from "./IModel";
  * @description Virtual class - must be subclassed, the onViewReady function must be overriden
  * provides base functionality for a view controller , contains properties for respective view and model
  */
-export class ViewController implements IViewController {
+export class ViewController  extends cc.Class implements IViewController {
     /**
      * @description the view associated with this controller, is assigned in viewReady(view:IView) function
       */

@@ -1,19 +1,19 @@
-module CES {
+import {Entity} from "./Entity";
     /**
      * The entity node is a wrapper around an entity, to be added into
      * the entity list.
      * @class
      */
     export class EntityNode {
-        public entity: CES.Entity;
-        public next: CES.EntityNode;
-        public prev: CES.EntityNode;
+        public entity: Entity;
+        public next: EntityNode;
+        public prev: EntityNode;
 
-        constructor(entity: CES.Entity) {
+        constructor(entity: Entity) {
             this.entity = entity;
             this.next = null;
             this.prev = null;
         }
     }
 
-}
+

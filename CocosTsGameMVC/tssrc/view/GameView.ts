@@ -19,10 +19,7 @@ export class GameView extends View {
     }
 
     protected onEnterHandler(): void {
-
         cc.log("GameView:onEnterHandler");
-        
-
         var button = new ccui.Button();
         button.setTitleText("Exit Game");
         button.setTouchEnabled(true);

@@ -13,6 +13,7 @@
   "author": "Steven Daley - www.dalste.co.uk",
   "license": "ISC",
   "devDependencies": {
+    "@types/javascript-state-machine": "^2.4.0",
     "chai": "^3.5.0",
     "gulp": "^3.9.1",
     "gulp-mocha": "^4.3.1",
