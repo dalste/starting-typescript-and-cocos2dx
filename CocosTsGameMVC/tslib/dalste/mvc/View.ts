@@ -1,5 +1,5 @@
 
-import { INodeLifeCycleExtensions } from "./INodeLifeCycleExtensions";
+import { INodeLifecycleExtensions } from "./INodeLifecycleExtensions";
 import { ModelCallBack, IModel } from "./IModel";
 import { IView } from "./IView";
 import { IViewController } from "./IViewController";
@@ -67,7 +67,7 @@ export class View implements IView {
      * 
      */
     initLifecycleListeners(): void {
-        var ass = this.getAsset() as INodeLifeCycleExtensions;
+        var ass = this.getAsset() as INodeLifecycleExtensions;
         ass.onEnterSignal.add(this.onEnter, this);
         ass.onEnterTransitionDidFinishSignal.add(this.onEnterTransitionDidFinish, this);
         ass.onExitSignal.add(this.onExit, this);
@@ -79,7 +79,7 @@ export class View implements IView {
      * 
      */
     removeLifeCycleListeners(): void {
-        var ass = this.getAsset() as INodeLifeCycleExtensions;
+        var ass = this.getAsset() as INodeLifecycleExtensions;
         ass.onEnterSignal.removeAll();
         ass.onEnterTransitionDidFinishSignal.removeAll();
         ass.onExitSignal.removeAll();

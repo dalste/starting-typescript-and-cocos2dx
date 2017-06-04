@@ -1,5 +1,5 @@
 
-import {INodeLifeCycleExtensions} from "./INodeLifeCycleExtensions";
+import {INodeLifecycleExtensions} from "./INodeLifecycleExtensions";
 /**
  * @class NodeExtended -  provides subscribable signal wrappers around node lifecycle events
  * onEnter
@@ -7,7 +7,7 @@ import {INodeLifeCycleExtensions} from "./INodeLifeCycleExtensions";
  * onExit
  * onExitTransitionDidStart
  */
-export class NodeExtended extends cc.Node implements INodeLifeCycleExtensions{
+export class NodeExtended extends cc.Node implements INodeLifecycleExtensions{
 
     /**
      * Event callback that is invoked every time when CCNode enters the 'stage'.
