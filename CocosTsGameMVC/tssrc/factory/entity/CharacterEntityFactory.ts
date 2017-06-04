@@ -1,4 +1,5 @@
 import { IFactory } from "./../IFactory";
+import { PlayerInput } from "./../../component/GameComponents";
 import { CharacterAssetTypes } from "./../../types/AssetTypes";
 import { CharacterAssetCreationOptions } from "./../view/CharacterAssetFactory";
 import { Entity } from "./../../../tslib/moon/src/Entity";
@@ -79,6 +80,10 @@ export class CharacterEntityFactory implements IFactory<CharacterEntityCreationO
 
                 var pc = new Player();
                 e.addComponent(pc);
+
+                
+                var pi = new PlayerInput(); //register for input events
+                e.addComponent(pi);
                 break;
         }
         return e;

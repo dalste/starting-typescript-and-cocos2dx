@@ -1,4 +1,5 @@
 import { ViewController } from "./../../tslib/dalste/mvc/ViewController";
+import { PlayerInputSystem } from "./../system/PlayerInputSystem";
 import { World } from "./../../tslib/moon/src/World";
 import { GameViewSystem } from "./../system/GameViewSystem";
 import { NPCAISystem } from "./../system/NPCAISystem";
@@ -64,10 +65,16 @@ export class GameViewController extends ViewController {
 
          /**
          * create the systems for our world
+         * GameplaySystem - controls the core gameplay logic - creates our npc and player entities upon game startup
+         * NPCAISystem - controlls the AI for entities that have the NPC component
+         * GameViewSystem - controls adding and removing cc.Nodes (wrapped by CocosRenderNode components)to and from the display
+         * PlayerInputSystem - manages a Gesture recogniser that recognises swipe and tap events, 
+         * adds a PlayerInputEvent coponent to all entities that contain a PlayerInput Component
          */
         var gps = this._system.getObject("GameplaySystem");//new GameplaySystem();
         var npcs = new NPCAISystem();
         var gvs = new GameViewSystem(this.getView().getAsset());
+        var pis = new PlayerInputSystem();
 
 
         /**
@@ -75,7 +82,9 @@ export class GameViewController extends ViewController {
          */
         this._world.addSystem(gvs);
         this._world.addSystem(npcs);
+        this._world.addSystem(pis);
         this._world.addSystem(gps);
+     
 
         /**
          * 
@@ -100,6 +109,7 @@ export class GameViewController extends ViewController {
      */
     onViewExit(): void {
         cc.director.getScheduler().unscheduleUpdateForTarget(this);
+        this._world.cleanUp();
         this._world = null;
         cc.log("GameViewController::onViewExit");
     }

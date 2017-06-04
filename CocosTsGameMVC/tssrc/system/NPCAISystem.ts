@@ -32,11 +32,20 @@ export class NPCAISystem extends System {
 
         });
 
+        scope.refreshEntityLists();
+
     }
 
     update(dt: number) {
 
 
+    }
+    /**
+     * do all cleanup here
+     */
+    removedFromWorld():void{
+        super.removedFromWorld();
+        this._renderEntities = null;
     }
 
 

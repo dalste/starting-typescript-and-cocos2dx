@@ -55,5 +55,14 @@ export class GameViewSystem extends System {
 
     }
 
+    /**
+     * do all cleanup here
+     */
+    removedFromWorld():void{
+        super.removedFromWorld();
+        this._renderEntities =null;
+        this._container = null;
+    }
+
 
 }

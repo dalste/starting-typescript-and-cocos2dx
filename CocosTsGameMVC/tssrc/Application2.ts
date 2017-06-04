@@ -82,7 +82,7 @@ export class Application2 implements IApplication {
 
         this._system.mapClass("GameplaySystem", GameplaySystem);
         /**
-        * initialise the splash screen view and its contoller
+        * initialise the splash screen view and its controller
         * first we map our SplashScreenView and SplashScreenViewController classes to class identifiers holding the same name 
         * then we map the SplashScreenViews _viewcontroller to SplashScreenViewController
         * When an instance of game view is created a corresponding instance of SplashScreenViewController is injected into its _viewController property
@@ -93,7 +93,7 @@ export class Application2 implements IApplication {
 
 
         /**
-         * initialise the game view and its contoller
+         * initialise the game view and its controller
          * first we map our GameView and GameViewController classes to class identifiers holding the same name 
          * then we map the GameViews _viewcontroller to GameViewController
          * When an instance of game view is created a corresponding instance of GameViewController is injected into its _viewController property

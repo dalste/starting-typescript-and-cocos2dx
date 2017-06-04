@@ -14,7 +14,7 @@ import { Signal } from "./Signal";
         private families: { [key: string]: Family; };
         private systems: System[];
         private entities: EntityList;
-      
+        
 
         constructor() {
             /**
@@ -33,6 +33,19 @@ import { Signal } from "./Signal";
              */
             this.entities = new EntityList();
            // this.systemEventBusSignal = new signals.Signal;
+        }
+
+        cleanUp():void{
+
+            var entities  = this.entities.toArray();
+              for(var i= entities.length-1; i>0; i--){
+                this.removeEntity(entities[i]);
+            }
+            for(var i= this.systems.length-1; i>0; i--){
+                this.removeSystem(this.systems[i]);
+            }
+
+
         }
 
         dispatchWorldEvent(eventName:string, eventData:any){

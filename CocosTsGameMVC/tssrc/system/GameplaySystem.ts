@@ -1,4 +1,5 @@
 import { GameComponentTypes } from "./../types/GameComponentTypes";
+import { DirectionalSwipeGestureRecogniser } from "./../../tslib/dalste/gestures/DirectionalSwipeGestureRecogniser";
 import { CharacterEntityCreationOptions } from "./../factory/entity/CharacterEntityFactory";
 import { World } from "./../../tslib/moon/src/World";
 import { System } from "./../../tslib/moon/src/System";
@@ -12,6 +13,9 @@ export class GameplaySystem extends System {
     protected _characterEntityFactory: IFactory<CharacterEntityCreationOptions, Entity> = null;
 
     protected _playerEntities: Entity[];
+
+    protected _inputEffectedEntities: Entity[];
+
     setup() {
 
     }
@@ -23,6 +27,7 @@ export class GameplaySystem extends System {
 
     refreshEntityLists() {
         this._playerEntities = this.world.getEntities(GameComponentTypes.PLAYER);
+        this._inputEffectedEntities = this.world.getEntities(GameComponentTypes.PLAYER_INPUT);
     }
 
     addedToWorld(world: World) {
@@ -39,6 +44,29 @@ export class GameplaySystem extends System {
             scope.refreshEntityLists();
 
         });
+
+        this.world.entityAdded(GameComponentTypes.PLAYER_INPUT).add(function (entity: Entity) {
+            scope.refreshEntityLists();
+
+            //handle input events
+            entity.onComponentAdded.add(function (entity: Entity, componentName: string) {
+                switch (componentName) {
+                    case GameComponentTypes.PLAYER_INPUT_EVENT:
+                        //handle player input event here
+                        cc.log("player input event occured");
+                        //remove event component
+                        entity.removeComponent(GameComponentTypes.PLAYER_INPUT_EVENT);
+                        break;
+                }
+            });
+        });
+
+        this.world.entityRemoved(GameComponentTypes.PLAYER_INPUT).add(function (entity: Entity) {
+            scope.refreshEntityLists();
+
+        });
+
+        scope.refreshEntityLists();
 
     }
 
@@ -59,5 +87,14 @@ export class GameplaySystem extends System {
 
     }
 
+    /**
+     * do all cleanup here
+     */
+    removedFromWorld():void{
+        super.removedFromWorld();
+        this._inputEffectedEntities = null;
+        this._playerEntities = null;
+        this._characterEntityFactory = null;
+    }
 
 }
