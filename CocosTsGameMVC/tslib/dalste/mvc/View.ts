@@ -22,7 +22,7 @@ export class View implements IView {
      * @description a view will use this signal as an event bus to communicate with its view controller
      *  typically used for custom UI events
      */
-    protected _viewEventBus: signals.Signal;
+    protected _uiEventBus: signals.Signal;
 
     /**
      * @description dispatched when the views asset onEnter event is fired 
@@ -53,7 +53,7 @@ export class View implements IView {
      * @description setup. this function is called after the class is instantiaved via the IOC container
      */
     setup() {
-        this._viewEventBus = new signals.Signal();
+        this._uiEventBus = new signals.Signal();
         this._enterSignal = new signals.Signal();
         this._exitSignal = new signals.Signal();
         this._enterTransitionDidFinishSignal = new signals.Signal();
@@ -132,11 +132,11 @@ export class View implements IView {
     }
 
     /**
-     * @description returns the signals.Signal that represents this views eventBus, you may use this Signal to subscribe to view events
+     * @description returns the signals.Signal that represents this vie UI  eventBus, you may use this Signal to subscribe to view events
      * 
      */
-    getEventBus(): signals.Signal {
-        return this._viewEventBus;
+    getUIEventBus(): signals.Signal {
+        return this._uiEventBus;
     }
 
     /**

@@ -11,7 +11,7 @@ export class Application1 implements IApplication {
 
     }
     startUp() {
-        console.log("Hello Application1");
+        cc.log("Hello Application1");
         cc.director.runScene(new HelloWorldScene());
     }
 }

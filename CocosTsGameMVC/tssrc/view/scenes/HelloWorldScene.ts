@@ -8,7 +8,7 @@ export class HelloWorldScene extends cc.Scene {
     }
     onEnter() {
         super.onEnter();
-        console.log("Hello World Scene");
+        cc.log("Hello World Scene");
         this._mainLayer = new HelloWorldMainLayer();
         this.addChild(this._mainLayer);
 

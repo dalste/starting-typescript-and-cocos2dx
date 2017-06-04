@@ -1,5 +1,5 @@
 import { GameViewMainLayer } from "./gameview/GameViewMainLayer"
-import {  SceneExtended } from "./../../../tslib/dalste/SceneExtended";
+import {  SceneExtended } from "./../../../tslib/dalste/mvc/SceneExtended";
 export class GameViewScene extends SceneExtended {
     private _mainLayer: GameViewMainLayer;
     constructor() {

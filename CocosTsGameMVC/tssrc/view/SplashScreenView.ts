@@ -1,11 +1,10 @@
-import { View } from "./../../tslib/dalste/View";
+import { View } from "./../../tslib/dalste/mvc/View";
 import { Display } from "./../../tslib/dalste/util/Display";
 import { ApplicationEvents } from "./../events/ApplicationEvents";
-import { SceneView } from "./../../tslib/dalste/SceneView";
-import { SceneExtended } from "./../../tslib/dalste/SceneExtended";
+import { SceneExtended } from "./../../tslib/dalste/mvc/SceneExtended";
 import { SplashScreenViewScene } from "./scenes/SplashScreenViewScene";
 declare var ccui: any;
-export class SplashScreenView extends SceneView {
+export class SplashScreenView extends View {
 
     //inject
     protected _display: Display = undefined;
@@ -52,7 +51,7 @@ export class SplashScreenView extends SceneView {
             case ccui.Widget.TOUCH_ENDED:
                 switch (sender.getName()) {
                     case "playGameButton":
-                        this._viewEventBus.dispatch("playGameButtonPressed");
+                        this.getUIEventBus().dispatch("playGameButtonPressed");
                         break;
                 }
                 break;

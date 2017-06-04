@@ -1,13 +1,13 @@
 
 import {INodeLifeCycleExtensions} from "./INodeLifeCycleExtensions";
 /**
- * @class SceneExtensions -  provides subscribable signal wrappers around scene events
+ * @class NodeExtended -  provides subscribable signal wrappers around node lifecycle events
  * onEnter
  * onEnterTransitionDidFinish
  * onExit
  * onExitTransitionDidStart
  */
-export class SceneExtended extends cc.Scene implements INodeLifeCycleExtensions{
+export class NodeExtended extends cc.Node implements INodeLifeCycleExtensions{
 
     /**
      * Event callback that is invoked every time when CCNode enters the 'stage'.
@@ -51,7 +51,6 @@ export class SceneExtended extends cc.Scene implements INodeLifeCycleExtensions{
 
 
     onExit(): void {
-    
         this.onExitSignal.dispatch();
         super.onExit();
     }

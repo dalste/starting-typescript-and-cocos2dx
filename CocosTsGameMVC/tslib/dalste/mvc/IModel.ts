@@ -1,5 +1,15 @@
+/**
+ * @interface ModelCallBack
+ * describes callback function for binding to changes in the model 
+ * @param oldVal the value before it was modified
+ * @param newVal the modified value 
+ */
 export interface ModelCallBack{(oldVal: any, newVal:any): void};
 
+
+/**
+ * @interface IModel 
+ */
 export interface IModel {
   /**
    * @description sets the given value  at the path ("my.path.to.data") 

@@ -12,7 +12,7 @@ export class HelloWorldMainLayer extends  cc.Layer{
         super();
         super.ctor(); // call the cocos super method in JS  this would be this._super()
 
-        console.log("Hello World Layer");
+        cc.log("Hello World Layer");
         this.assetFactory  = new CharacterAssetFactory();
         /////////////////////////////
         // 2. add a menu item with "X" image, which is clicked to quit the program

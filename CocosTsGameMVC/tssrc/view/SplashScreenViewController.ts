@@ -1,4 +1,4 @@
-import { ViewController } from "./../../tslib/dalste/ViewController";
+import { ViewController } from "./../../tslib/dalste/mvc/ViewController";
 import { ScreenTypes } from "./../types/ScreenTypes";
 import { ApplicationEvents } from "./../events/ApplicationEvents";
 import { Display } from "./../../tslib/dalste/util/Display";
@@ -11,7 +11,7 @@ export class SplashScreenViewController extends ViewController {
     private _display: Display = undefined;
 
     onViewReady(): void {
-        this.getView().getEventBus().add(this.onViewEvent, this);
+        this.getView().getUIEventBus().add(this.onViewEvent, this);
         this.getView().getEnterSignal().add(this.onViewEnter, this);
         this.getView().getExitSignal().add(this.onViewExit, this);
         this.getView().getEnterTransitionDidFinishSignal().add(this.onViewEnterTransitionDidFinish, this);
@@ -33,7 +33,7 @@ export class SplashScreenViewController extends ViewController {
     onViewExitTransitionDidStart(): void {
         cc.log("SplashScreenViewController::onViewExitTransitionDidStart");
     }
-    
+
     onViewEvent(event: string): void {
 
         switch (event) {

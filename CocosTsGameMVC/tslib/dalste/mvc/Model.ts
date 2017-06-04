@@ -8,8 +8,12 @@ import { ModelCallBack,IModel } from "./IModel";
  * model data that we are interested in, clients of the model need not know about the exact 
  * schema of the underlying data
  * 
- * This class ensentially wraps a single data object providing convenience functions to
- * deep set and get values , and deep bind to values
+ * This class esentially wraps a single data object providing convenience functions to
+ * deep set and get values , and  bind to changes in said values
+ * 
+ * @todo add support for deep binding - currently does not support deep binding 
+ * i.e if a bind is applied to an obect and a property of that object is modified, then that binding is not executed
+ *  To execute said binding one must update the entire object
  * 
  * @example
  * var m = new Model();
@@ -18,6 +22,9 @@ import { ModelCallBack,IModel } from "./IModel";
  * cc.log(levelId); //prints 0
  * cc.log(m.getAllDataAsJsonString()); prints: {"levelData":{"levelId":0}}
  *
+ * this.onLevelIdUpdated = function(oldval:T, newval:T){
+ * cc.log("levelData.levelId has been set to "  + newval);
+ * }
  * m.bind("levelData.levelId", this.onLevelIdUpdated,this);
  * //onLevelIdUpdated function called whenever  m.set("levelData.levelId",n); is called
  * 

@@ -1,5 +1,5 @@
 import { ScreenTypes } from "./../types/ScreenTypes"
-import { IView } from "./../../tslib/dalste/IView";
+import { IView } from "./../../tslib/dalste/mvc/IView";
 export class GameController {
 
     //inject

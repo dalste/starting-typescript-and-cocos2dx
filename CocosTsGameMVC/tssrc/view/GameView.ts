@@ -1,13 +1,12 @@
-import { View } from "./../../tslib/dalste/View";
-import { SceneView } from "./../../tslib/dalste/SceneView";
+import { View } from "./../../tslib/dalste/mvc/View";
 import { ApplicationEvents } from "./../events/ApplicationEvents";
 import { Display } from "./../../tslib/dalste/util/Display";
 import { IFactory } from "./../factory/IFactory";
-import { SceneExtended } from "./../../tslib/dalste/SceneExtended";
+import { SceneExtended } from "./../../tslib/dalste/mvc/SceneExtended";
 import { GameViewScene } from "./scenes/GameViewScene";
 
 declare var ccui: any;
-export class GameView extends SceneView {
+export class GameView extends View {
 
     //inject
     private _display: Display=undefined;
@@ -44,7 +43,7 @@ export class GameView extends SceneView {
                     cc.log(sender.getName() + " pressed");
                 switch(sender.getName()){
                     case "exitGameButton":
-                        this._viewEventBus.dispatch("exitGameButtonPressed");
+                        this.getUIEventBus().dispatch("exitGameButtonPressed");
                         break;
                 }
                 break;

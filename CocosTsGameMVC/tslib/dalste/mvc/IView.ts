@@ -12,9 +12,9 @@ export interface IView {
     setAsset(node: cc.Node): void;
    
      /**
-     * @description returns the signals.Signal that represents this views eventBus, you may use this Signal to subscribe to view events
+     * @description returns the signals.Signal that represents this views UI eventBus, you may use this Signal to subscribe to view events
      */
-    getEventBus(): signals.Signal;
+    getUIEventBus(): signals.Signal;
          /**
      * @description returns the signals.Signal that represents this views main asset onExit event
      * @see cc.Node:onEnter
