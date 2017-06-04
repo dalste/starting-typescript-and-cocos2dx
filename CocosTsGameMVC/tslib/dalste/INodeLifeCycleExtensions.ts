@@ -9,32 +9,44 @@
 export interface INodeLifeCycleExtensions extends cc.Node{
 
     /**
-     * Event callback that is invoked every time when CCNode enters the 'stage'.
+     * @description Event callback - invoked every time the CCNode enters the 'stage'.
      */
      onEnterSignal: signals.Signal;
     /**
-     *  Event callback that is invoked every time when CCNode enters the 'stage'.
+     * @description Event callback - invoked every time the enter transition finishes when the CCNode enters the 'stage'.
      */
      onEnterTransitionDidFinishSignal: signals.Signal;
     /**
-     *  Event callback that is called every time the cc.Node leaves the 'stage'.
+     * @description Event callback - invoked every time the cc.Node leaves the 'stage'.
      */
      onExitSignal: signals.Signal;
 
     /**
-     * callback that is called every time the cc.Node leaves the 'stage'.
+     * @description callback invoked every time the exit transition starts when the  cc.Node leaving the 'stage'.
      */
      onExitTransitionDidStartSignal: signals.Signal;
 
-    
+    /**
+     * @description handles the cc.Node onEnter event
+     * @see cc.Node::onEnter
+     */
     onEnter(): void;
 
-
+    /**
+     * @description handles the cc.Node onEnterTransitionDidFinish event
+     * @see cc.Node::onEnterTransitionDidFinish
+     */
     onEnterTransitionDidFinish(): void;
 
-
+  /**
+     * @description handles the cc.Node onExit event
+     * @see cc.Node::onExit
+     */
     onExit(): void;
 
-
+    /**
+     * @description handles the cc.Node onExitTransitionDidStart event
+     * @see cc.Node::onExitTransitionDidStart
+     */
     onExitTransitionDidStart(): void;
 }

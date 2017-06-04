@@ -1,7 +1,8 @@
 declare var ccui: any;
+import { ICreationOptions } from "./../../ICreationOptions";
 
 /**
- * @description emum providing identifyable colour options for MockAsset
+ * @description emum providing identifiable colour options for MockAsset
  */
 export enum MockAssetColours {
     RED,
@@ -16,21 +17,21 @@ export enum MockAssetColours {
 
 /**
  * @class MockAsset
- * @description a cc.Node derived class for creating mock assets ,creates a circle with given radius, containing a label with optionalgiven text
- * Templater option T is for the Type used to describe type generally string | int | enumtype
- * 
+ * @description a cc.Node derived class for creating mock assets ,creates a circle with given radius, containing a label with optional  text
+ * Template option T is for the Type used to describe type generally string | int | enumtype
  */
-export class MockAsset<T, U> extends cc.Node {
+export class MockAsset<T> extends cc.Node {
     _visibleNode: cc.Node= null;
     _objecttype: T = null;
     _circleNode: cc.DrawNode;
 
 
-    constructor(type: T, config: U, radius: number =20, COLOUR: MockAssetColours = MockAssetColours.BLUE, text: string ="Text") {
+    constructor(config: ICreationOptions<T>, radius: number =20, COLOUR: MockAssetColours = MockAssetColours.BLUE, text: string ="Text") {
         super();
         this.ctor();
 
-        this._objecttype = type;
+        this._objecttype = config.getType();
+        this.setName(config.getName());
 
         this.setContentSize(radius * 2, radius * 2);
         this.setAnchorPoint(0.5, 0.5);

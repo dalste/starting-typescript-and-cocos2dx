@@ -35,6 +35,8 @@
     "tslint": "^5.2.0",
     "typescript": "^2.3.2",
     "webpack": "^2.6.0",
-    "webpack-stream": "^3.2.0"
+    "webpack-dev-server": "^2.4.5",
+    "webpack-stream": "^3.2.0",
+    "write-file-webpack-plugin": "^4.0.2"
   }
 }

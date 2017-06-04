@@ -3,15 +3,11 @@ import { SceneView } from "./../../tslib/dalste/SceneView";
 import { ApplicationEvents } from "./../events/ApplicationEvents";
 import { Display } from "./../../tslib/dalste/util/Display";
 import { IFactory } from "./../factory/IFactory";
-import { CharacterAssetTypes } from "./../types/AssetTypes";
-import { CharacterAssetCreationOptions } from "./../factory/view/CharacterAssetFactory";
 import { SceneExtended } from "./../../tslib/dalste/SceneExtended";
 import { GameViewScene } from "./scenes/GameViewScene";
 
 declare var ccui: any;
 export class GameView extends SceneView {
-    //inject
-    private _characterAssetFactory:IFactory<CharacterAssetCreationOptions,cc.Node> = null;
 
     //inject
     private _display: Display=undefined;
@@ -26,11 +22,7 @@ export class GameView extends SceneView {
     protected onEnterHandler(): void {
 
         cc.log("GameView:onEnterHandler");
-        var co = new CharacterAssetCreationOptions(CharacterAssetTypes.PLAYER);
-        var ca = this._characterAssetFactory.create(co);
-        ca.setPosition(this._display.middleMiddle().x,this._display.middleMiddle().y);
-
-        this.addChild(ca, 0);
+        
 
         var button = new ccui.Button();
         button.setTitleText("Exit Game");

@@ -3,10 +3,23 @@ import { ModelCallBack,IModel } from "./IModel";
 
 
 /**
- * @desciprion base class for game and view models 
- * it is recommended that this model be overriden and typesafe accessors created 
- * for each aspect of the model data that we are interested in, the game code need not know about the exact 
+ * @description base class for game and view models 
+ * it is recommended that this model be overridden and typesafe accessors created for each aspect of the 
+ * model data that we are interested in, clients of the model need not know about the exact 
  * schema of the underlying data
+ * 
+ * This class ensentially wraps a single data object providing convenience functions to
+ * deep set and get values , and deep bind to values
+ * 
+ * @example
+ * var m = new Model();
+ * m.set("levelData.levelId",0);
+ * var levelId = m.get("levelData.levelId");
+ * cc.log(levelId); //prints 0
+ * cc.log(m.getAllDataAsJsonString()); prints: {"levelData":{"levelId":0}}
+ *
+ * m.bind("levelData.levelId", this.onLevelIdUpdated,this);
+ * //onLevelIdUpdated function called whenever  m.set("levelData.levelId",n); is called
  * 
  */
 export class Model implements IModel{
@@ -34,7 +47,7 @@ export class Model implements IModel{
             return JSON.stringify(this._data);
         }
          /**
-         * @description returns the sub data at the path described example "path.to.my.value" as a JSON string
+         * @description returns the sub data at the path described. Example: "path.to.my.value" as a JSON string
          * @return string the data as a json string
          */
         public getSubDataAsJsonString(path:string):string{
@@ -44,7 +57,7 @@ export class Model implements IModel{
 
 
         /**
-         * @description copies all propertise from var args into target
+         * @description copies all properties from var args into target
          * @param target 
          * @param varArgs 
          */
@@ -72,8 +85,8 @@ export class Model implements IModel{
         }
 
         /**
-         *@description given and origin object and a path ("my.path.to.data") returns and object conatining 
-         * the child object (objectToSet) at given penultimate of path with a string "member" conatining the name of the property to set
+         *@description given an origin object and a path ("my.path.to.data") returns an object  containing 
+         * the parent object "objectToSet" and string "member" containing the name of the property holding the value  to set referenced by "path"
          * if the path does not exist it is created with object/any objects
          * @param origin the origin object in which the path should traverse
          * @param path the path
@@ -101,8 +114,8 @@ export class Model implements IModel{
         }
 
         /**
-         *@description given and origin object and a path ("my.path.to.data") returns and object conatining 
-         * the child object (objectToGet) at given penultimate of path with a string "member" conatining the name of the property to get
+         *@description given an origin object and a path ("my.path.to.data") returns an object  containing 
+         * the parent object "objectToGet" and string "member" containing the name of the property holding the value to get, referenced by "path"
          * @param origin the origin object in which the path should traverse
          * @param path the path
          * @returns {}  an object with vals  {objectToGet:object, member:string}, returns these can be used to set a value(member)
@@ -125,7 +138,7 @@ export class Model implements IModel{
         }
 
         /**
-         * @description sets the given value  at the path ("my.path.to.data") 
+         * @description sets the provided value at the path ("my.path.to.data") 
          * @param path 
          * @param value 
          */
@@ -157,7 +170,7 @@ export class Model implements IModel{
         }
 
          /**
-         * @description adds a binding to execute func at given scope whenever  the value residing  at the path ("my.path.to.data")  is set via set function
+         * @description adds a binding to execute a callback whenever  the value residing  at the path ("my.path.to.data")  is set via set function
          * @param path 
          * @param func 
          * @param scope
@@ -175,7 +188,7 @@ export class Model implements IModel{
             objectToSetData.objectToSet[objectToSetData.member].add(func, scope);
         }
             /**
-         * @description removes a binding previously added by bind residing  at the path ("my.path.to.data") 
+         * @description removes a binding to the data at given path ("my.path.to.data") 
          * @param path 
          * @param func 
          * @param scope
@@ -197,7 +210,7 @@ export class Model implements IModel{
         }
 
         /**
-         * @determins if given binding already exists
+         * @description determines if given binding already exists
          * @param path 
          * @param func 
          * @param scope 

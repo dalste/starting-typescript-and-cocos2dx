@@ -61,7 +61,7 @@ var CocosTSGame =
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "/";
+/******/ 	__webpack_require__.p = "D:\\starting-typescript-and-cocos2dx\\CocosTsGameMVC/src/";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(__webpack_require__.s = 9);
@@ -72,1102 +72,133 @@ var CocosTSGame =
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var ApplicationEvents = (function () {
-    function ApplicationEvents() {
-    }
-    return ApplicationEvents;
-}());
-ApplicationEvents.APP_STARTUP = "App:startup";
-ApplicationEvents.APP_STARTUP_COMPLETE = "App:startupComplete";
-ApplicationEvents.APP_GOTO_PLAY_SCENE = "App:goto:play:scene";
-ApplicationEvents.APP_GOTO_SPLASH_SCENE = "App:goto:splash:scene";
-exports.ApplicationEvents = ApplicationEvents;
-
+eval("\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nvar ApplicationEvents = (function () {\r\n    function ApplicationEvents() {\r\n    }\r\n    return ApplicationEvents;\r\n}());\r\nApplicationEvents.APP_STARTUP = \"App:startup\";\r\nApplicationEvents.APP_STARTUP_COMPLETE = \"App:startupComplete\";\r\nApplicationEvents.APP_GOTO_PLAY_SCENE = \"App:goto:play:scene\";\r\nApplicationEvents.APP_GOTO_SPLASH_SCENE = \"App:goto:splash:scene\";\r\nexports.ApplicationEvents = ApplicationEvents;\r\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./events/ApplicationEvents.ts\n// module id = 0\n// module chunks = 0\n\n//# sourceURL=webpack:///./events/ApplicationEvents.ts?");
 
 /***/ }),
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * @class SceneExtensions -  provides subscribable signal wrappers around scene events
- * onEnter
- * onEnterTransitionDidFinish
- * onExit
- * onExitTransitionDidStart
- */
-var SceneExtended = (function (_super) {
-    __extends(SceneExtended, _super);
-    function SceneExtended() {
-        var _this = _super.call(this) || this;
-        _super.prototype.ctor.call(_this); //always call this for compatibility with cocos2dx JS Javascript class system
-        _this.onEnterSignal = new signals.Signal();
-        _this.onEnterTransitionDidFinishSignal = new signals.Signal();
-        _this.onExitSignal = new signals.Signal();
-        _this.onExitTransitionDidStartSignal = new signals.Signal();
-        return _this;
-    }
-    SceneExtended.prototype.onEnter = function () {
-        _super.prototype.onEnter.call(this);
-        this.onEnterSignal.dispatch();
-    };
-    SceneExtended.prototype.onEnterTransitionDidFinish = function () {
-        _super.prototype.onEnterTransitionDidFinish.call(this);
-        this.onEnterTransitionDidFinishSignal.dispatch();
-    };
-    SceneExtended.prototype.onExit = function () {
-        this.onExitSignal.dispatch();
-        _super.prototype.onExit.call(this);
-    };
-    SceneExtended.prototype.onExitTransitionDidStart = function () {
-        _super.prototype.onExitTransitionDidStart.call(this);
-        this.onExitTransitionDidStartSignal.dispatch();
-    };
-    return SceneExtended;
-}(cc.Scene));
-exports.SceneExtended = SceneExtended;
-
+eval("\r\nvar __extends = (this && this.__extends) || (function () {\r\n    var extendStatics = Object.setPrototypeOf ||\r\n        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||\r\n        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };\r\n    return function (d, b) {\r\n        extendStatics(d, b);\r\n        function __() { this.constructor = d; }\r\n        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());\r\n    };\r\n})();\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n/**\r\n * @class SceneExtensions -  provides subscribable signal wrappers around scene events\r\n * onEnter\r\n * onEnterTransitionDidFinish\r\n * onExit\r\n * onExitTransitionDidStart\r\n */\r\nvar SceneExtended = (function (_super) {\r\n    __extends(SceneExtended, _super);\r\n    function SceneExtended() {\r\n        var _this = _super.call(this) || this;\r\n        _super.prototype.ctor.call(_this); //always call this for compatibility with cocos2dx JS Javascript class system\r\n        _this.onEnterSignal = new signals.Signal();\r\n        _this.onEnterTransitionDidFinishSignal = new signals.Signal();\r\n        _this.onExitSignal = new signals.Signal();\r\n        _this.onExitTransitionDidStartSignal = new signals.Signal();\r\n        return _this;\r\n    }\r\n    SceneExtended.prototype.onEnter = function () {\r\n        _super.prototype.onEnter.call(this);\r\n        this.onEnterSignal.dispatch();\r\n    };\r\n    SceneExtended.prototype.onEnterTransitionDidFinish = function () {\r\n        _super.prototype.onEnterTransitionDidFinish.call(this);\r\n        this.onEnterTransitionDidFinishSignal.dispatch();\r\n    };\r\n    SceneExtended.prototype.onExit = function () {\r\n        this.onExitSignal.dispatch();\r\n        _super.prototype.onExit.call(this);\r\n    };\r\n    SceneExtended.prototype.onExitTransitionDidStart = function () {\r\n        _super.prototype.onExitTransitionDidStart.call(this);\r\n        this.onExitTransitionDidStartSignal.dispatch();\r\n    };\r\n    return SceneExtended;\r\n}(cc.Scene));\r\nexports.SceneExtended = SceneExtended;\r\n\n\n//////////////////\n// WEBPACK FOOTER\n// ../tslib/dalste/SceneExtended.ts\n// module id = 1\n// module chunks = 0\n\n//# sourceURL=webpack:///../tslib/dalste/SceneExtended.ts?");
 
 /***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var View_1 = __webpack_require__(7);
-var SceneView = (function (_super) {
-    __extends(SceneView, _super);
-    function SceneView() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    return SceneView;
-}(View_1.View));
-exports.SceneView = SceneView;
-
+eval("\r\nvar __extends = (this && this.__extends) || (function () {\r\n    var extendStatics = Object.setPrototypeOf ||\r\n        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||\r\n        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };\r\n    return function (d, b) {\r\n        extendStatics(d, b);\r\n        function __() { this.constructor = d; }\r\n        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());\r\n    };\r\n})();\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nvar View_1 = __webpack_require__(7);\r\nvar SceneView = (function (_super) {\r\n    __extends(SceneView, _super);\r\n    function SceneView() {\r\n        return _super !== null && _super.apply(this, arguments) || this;\r\n    }\r\n    return SceneView;\r\n}(View_1.View));\r\nexports.SceneView = SceneView;\r\n\n\n//////////////////\n// WEBPACK FOOTER\n// ../tslib/dalste/SceneView.ts\n// module id = 2\n// module chunks = 0\n\n//# sourceURL=webpack:///../tslib/dalste/SceneView.ts?");
 
 /***/ }),
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * @description Virtual class - must be subclassed, the onViewReady function must be overriden
- */
-var ViewController = (function () {
-    function ViewController() {
-        /**
-         * @description the view associated with this controller, is assigned in viewReady(view:IView) function
-          */
-        this._view = undefined;
-        this._model = undefined;
-        //inject 
-        this._system = undefined;
-    }
-    /**
-     * @description function called by the IOC container when this class is instantiated
-     */
-    ViewController.prototype.setup = function () {
-    };
-    /**
-     * @description only override if you need to, this function assigns the associated view to _view class variable and calls onViewReady()
-     * @param view:IView
-     */
-    ViewController.prototype.viewReady = function (view, model) {
-        this._view = view;
-        this._model = model;
-        this.onViewReady();
-    };
-    ViewController.prototype.getView = function () {
-        return this._view;
-    };
-    /**
-     * @description Virtual function that is called after the view is assigned to teh controllers _view,
-     *  it is here that you should initialise listeners and do futher view setup
-     */
-    ViewController.prototype.onViewReady = function () {
-        throw (new Error("ViewController:onViewReady is an abstract function. It must be overridden"));
-    };
-    return ViewController;
-}());
-exports.ViewController = ViewController;
-
+eval("\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n/**\r\n * @description Virtual class - must be subclassed, the onViewReady function must be overriden\r\n * provides base functionality for a view controller , contains properties for respective view and model\r\n */\r\nvar ViewController = (function () {\r\n    function ViewController() {\r\n        /**\r\n         * @description the view associated with this controller, is assigned in viewReady(view:IView) function\r\n          */\r\n        this._view = undefined;\r\n        this._model = undefined;\r\n        //inject \r\n        this._system = undefined;\r\n    }\r\n    /**\r\n     * @description function called by the IOC container when this class is instantiated\r\n     */\r\n    ViewController.prototype.setup = function () {\r\n    };\r\n    /**\r\n     * @description only override if you need to, this function assigns the associated view and model to respective _view/_model  class variables and calls onViewReady()\r\n     * @param view:IView\r\n     */\r\n    ViewController.prototype.viewReady = function (view, model) {\r\n        this._view = view;\r\n        this._model = model;\r\n        this.onViewReady();\r\n    };\r\n    ViewController.prototype.getView = function () {\r\n        return this._view;\r\n    };\r\n    /**\r\n     * @description Virtual function that is called after the view is assigned to the controllers _view,\r\n     *  it is here that you should initialise listeners and do futher view setup\r\n     */\r\n    ViewController.prototype.onViewReady = function () {\r\n        throw (new Error(\"ViewController:onViewReady is an abstract function. It must be overridden\"));\r\n    };\r\n    return ViewController;\r\n}());\r\nexports.ViewController = ViewController;\r\n\n\n//////////////////\n// WEBPACK FOOTER\n// ../tslib/dalste/ViewController.ts\n// module id = 3\n// module chunks = 0\n\n//# sourceURL=webpack:///../tslib/dalste/ViewController.ts?");
 
 /***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var AssetTypes_1 = __webpack_require__(5);
-var MockAsset_1 = __webpack_require__(11);
-/**
- * @class CharacterAssetCreationOptions
- * @description provides creation options to CharacterAssetFactory
- */
-var CharacterAssetCreationOptions = (function () {
-    function CharacterAssetCreationOptions(type) {
-        this._type = type;
-    }
-    CharacterAssetCreationOptions.prototype.getType = function () {
-        return this._type;
-    };
-    return CharacterAssetCreationOptions;
-}());
-exports.CharacterAssetCreationOptions = CharacterAssetCreationOptions;
-/**
- * @class CharacterAssetFactory
- * @param CharacterAssetCreationOptions
- * Uses the returned type from character creation options to create the appropriate cc.Node derived asset
- *
- */
-var CharacterAssetFactory = (function () {
-    function CharacterAssetFactory() {
-    }
-    CharacterAssetFactory.prototype.create = function (options) {
-        switch (options.getType()) {
-            case AssetTypes_1.CharacterAssetTypes.NPC:
-                return new MockAsset_1.MockAsset(AssetTypes_1.CharacterAssetTypes.NPC, {}, 50, MockAsset_1.MockAssetColours.PINK, "NPC");
-            case AssetTypes_1.CharacterAssetTypes.NPC_MOCK:
-                return new MockAsset_1.MockAsset(AssetTypes_1.CharacterAssetTypes.NPC_MOCK, {}, 50, MockAsset_1.MockAssetColours.PINK, "NPC MOCK");
-            case AssetTypes_1.CharacterAssetTypes.PLAYER:
-                return new MockAsset_1.MockAsset(AssetTypes_1.CharacterAssetTypes.NPC, {}, 50, MockAsset_1.MockAssetColours.GREEN, "PLAYER");
-            case AssetTypes_1.CharacterAssetTypes.PLAYER_MOCK:
-                return new MockAsset_1.MockAsset(AssetTypes_1.CharacterAssetTypes.NPC, {}, 50, MockAsset_1.MockAssetColours.GREEN, "PLAYER MOCK");
-        }
-    };
-    return CharacterAssetFactory;
-}());
-exports.CharacterAssetFactory = CharacterAssetFactory;
-
+eval("\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nvar AssetTypes_1 = __webpack_require__(5);\r\nvar MockAsset_1 = __webpack_require__(11);\r\n/**\r\n * @class CharacterAssetCreationOptions\r\n * @description provides creation options to CharacterAssetFactory\r\n */\r\nvar CharacterAssetCreationOptions = (function () {\r\n    /**\r\n     *\r\n     * @param type - the type of object to create\r\n     * @param name -the name assigned to the cc.node see cc.node.name\r\n     */\r\n    function CharacterAssetCreationOptions(type, name) {\r\n        this._type = type;\r\n        this._name = name;\r\n    }\r\n    CharacterAssetCreationOptions.prototype.getType = function () {\r\n        return this._type;\r\n    };\r\n    CharacterAssetCreationOptions.prototype.getName = function () {\r\n        return this._name;\r\n    };\r\n    return CharacterAssetCreationOptions;\r\n}());\r\nexports.CharacterAssetCreationOptions = CharacterAssetCreationOptions;\r\n/**\r\n * @class CharacterAssetFactory\r\n * @param CharacterAssetCreationOptions\r\n * Uses the returned type from character creation options to create the appropriate cc.Node derived asset\r\n *\r\n */\r\nvar CharacterAssetFactory = (function () {\r\n    function CharacterAssetFactory() {\r\n    }\r\n    CharacterAssetFactory.prototype.create = function (options) {\r\n        switch (options.getType()) {\r\n            case AssetTypes_1.CharacterAssetTypes.NPC:\r\n                return new MockAsset_1.MockAsset(options, 50, MockAsset_1.MockAssetColours.PINK, \"NPC\");\r\n            case AssetTypes_1.CharacterAssetTypes.NPC_MOCK:\r\n                return new MockAsset_1.MockAsset(options, 50, MockAsset_1.MockAssetColours.PINK, \"NPC MOCK\");\r\n            case AssetTypes_1.CharacterAssetTypes.PLAYER:\r\n                return new MockAsset_1.MockAsset(options, 50, MockAsset_1.MockAssetColours.GREEN, \"PLAYER\");\r\n            case AssetTypes_1.CharacterAssetTypes.PLAYER_MOCK:\r\n                return new MockAsset_1.MockAsset(options, 50, MockAsset_1.MockAssetColours.GREEN, \"PLAYER MOCK\");\r\n        }\r\n    };\r\n    return CharacterAssetFactory;\r\n}());\r\nexports.CharacterAssetFactory = CharacterAssetFactory;\r\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./factory/view/CharacterAssetFactory.ts\n// module id = 4\n// module chunks = 0\n\n//# sourceURL=webpack:///./factory/view/CharacterAssetFactory.ts?");
 
 /***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var CharacterAssetTypes;
-(function (CharacterAssetTypes) {
-    CharacterAssetTypes[CharacterAssetTypes["PLAYER"] = 0] = "PLAYER";
-    CharacterAssetTypes[CharacterAssetTypes["NPC"] = 1] = "NPC";
-    CharacterAssetTypes[CharacterAssetTypes["PLAYER_MOCK"] = 2] = "PLAYER_MOCK";
-    CharacterAssetTypes[CharacterAssetTypes["NPC_MOCK"] = 3] = "NPC_MOCK";
-})(CharacterAssetTypes = exports.CharacterAssetTypes || (exports.CharacterAssetTypes = {}));
-
+eval("\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nvar CharacterAssetTypes;\r\n(function (CharacterAssetTypes) {\r\n    CharacterAssetTypes[CharacterAssetTypes[\"PLAYER\"] = 0] = \"PLAYER\";\r\n    CharacterAssetTypes[CharacterAssetTypes[\"NPC\"] = 1] = \"NPC\";\r\n    CharacterAssetTypes[CharacterAssetTypes[\"PLAYER_MOCK\"] = 2] = \"PLAYER_MOCK\";\r\n    CharacterAssetTypes[CharacterAssetTypes[\"NPC_MOCK\"] = 3] = \"NPC_MOCK\";\r\n})(CharacterAssetTypes = exports.CharacterAssetTypes || (exports.CharacterAssetTypes = {}));\r\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./types/AssetTypes.ts\n// module id = 5\n// module chunks = 0\n\n//# sourceURL=webpack:///./types/AssetTypes.ts?");
 
 /***/ }),
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var ApplicationEvents_1 = __webpack_require__(0);
-var SplashScreenViewController_1 = __webpack_require__(16);
-var SplashScreenView_1 = __webpack_require__(15);
-var Display_1 = __webpack_require__(8);
-var GameView_1 = __webpack_require__(13);
-var GameController_1 = __webpack_require__(10);
-var GameViewController_1 = __webpack_require__(14);
-var CharacterAssetFactory_1 = __webpack_require__(4);
-var Application2 = (function () {
-    function Application2() {
-    }
-    Application2.prototype.startUp = function () {
-        this._system = new dijon.System();
-        this._system.autoMapOutlets = true;
-        /**
-         * map the dijion containner to a global outlet named _system so that it may be injected into any class
-         * that has the "_system" mapping
-         */
-        this._system.mapValue("_system", this._system);
-        //this._system.mapOutlet('_system');
-        /**
-         * map the game controller as a singleton
-         * the game controller will provide application wide functionality
-         */
-        this._system.mapSingleton("GameController", GameController_1.GameController);
-        var gc = this._system.getObject("GameController");
-        /**
-         * map the character asset factory as a singleton
-         *
-         */
-        this._system.mapSingleton("_characterAssetFactory", CharacterAssetFactory_1.CharacterAssetFactory);
-        /**
-        * map the display utility class as a singleton
-        *
-        */
-        this._system.mapSingleton("_display", Display_1.Display);
-        /**
-         * initialise the splash screen view and its contoller
-         * first we map our SplashScreenView and SplashScreenViewController classes to class identifiers holding the same name
-         * then we map the SplashScreenViews _viewcontroller to SplashScreenViewController
-         * When an instance of game view is created a corresponding instance of SplashScreenViewController is injected into its _viewController property
-         */
-        this._system.mapClass("SplashScreenView", SplashScreenView_1.SplashScreenView);
-        this._system.mapClass("SplashScreenViewController", SplashScreenViewController_1.SplashScreenViewController);
-        this._system.mapOutlet("SplashScreenViewController", "SplashScreenView", "_viewController");
-        /**
-         * initialise the game view and its contoller
-         * first we map our GameView and GameViewController classes to class identifiers holding the same name
-         * then we map the GameViews _viewcontroller to GameViewController
-         * When an instance of game view is created a corresponding instance of GameViewController is injected into its _viewController property
-         */
-        this._system.mapClass("GameView", GameView_1.GameView);
-        this._system.mapClass("GameViewController", GameViewController_1.GameViewController);
-        this._system.mapOutlet("GameViewController", "GameView", "_viewController");
-        /**
-         * map the GameController::onAppStartupComplete function as a handler for the ApplicationEvents.APP_STARTUP_COMPLETE event
-         */
-        this._system.mapHandler(ApplicationEvents_1.ApplicationEvents.APP_STARTUP_COMPLETE, 'GameController', 'onAppStartupComplete');
-        /**
-         * map the GameController::onAppGoToPlayScene function as a handler for the ApplicationEvents.APP_GOTO_PLAY_SCENE event
-         */
-        this._system.mapHandler(ApplicationEvents_1.ApplicationEvents.APP_GOTO_PLAY_SCENE, 'GameController', 'onAppGoToPlayScene');
-        /**
-         * map the GameController::onAppGoToPlayScene function as a handler for the ApplicationEvents.APP_GOTO_PLAY_SCENE event
-         */
-        this._system.mapHandler(ApplicationEvents_1.ApplicationEvents.APP_GOTO_SPLASH_SCENE, 'GameController', 'onAppGoToSplashScene');
-        /**
-         * fire app:startup event
-         */
-        this._system.notify(ApplicationEvents_1.ApplicationEvents.APP_STARTUP);
-        /**
-      * fire app:startupComplete event
-      */
-        this._system.notify(ApplicationEvents_1.ApplicationEvents.APP_STARTUP_COMPLETE);
-    };
-    return Application2;
-}());
-exports.Application2 = Application2;
-
+eval("\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nvar ApplicationEvents_1 = __webpack_require__(0);\r\nvar SplashScreenViewController_1 = __webpack_require__(16);\r\nvar SplashScreenView_1 = __webpack_require__(15);\r\nvar Display_1 = __webpack_require__(8);\r\nvar GameView_1 = __webpack_require__(13);\r\nvar GameController_1 = __webpack_require__(10);\r\nvar GameViewController_1 = __webpack_require__(14);\r\nvar CharacterAssetFactory_1 = __webpack_require__(4);\r\nvar Application2 = (function () {\r\n    function Application2() {\r\n    }\r\n    Application2.prototype.startUp = function () {\r\n        this._system = new dijon.System();\r\n        this._system.autoMapOutlets = true;\r\n        /**\r\n         * map the dijion containner to a global outlet named _system so that it may be injected into any class\r\n         * that has the \"_system\" mapping\r\n         */\r\n        this._system.mapValue(\"_system\", this._system);\r\n        //this._system.mapOutlet('_system');\r\n        /**\r\n         * map the game controller as a singleton\r\n         * the game controller will provide application wide functionality\r\n         */\r\n        this._system.mapSingleton(\"GameController\", GameController_1.GameController);\r\n        var gc = this._system.getObject(\"GameController\");\r\n        /**\r\n         * map the character asset factory as a singleton\r\n         *\r\n         */\r\n        this._system.mapSingleton(\"_characterAssetFactory\", CharacterAssetFactory_1.CharacterAssetFactory);\r\n        /**\r\n        * map the display utility class as a singleton\r\n        *\r\n        */\r\n        this._system.mapSingleton(\"_display\", Display_1.Display);\r\n        /**\r\n         * initialise the splash screen view and its contoller\r\n         * first we map our SplashScreenView and SplashScreenViewController classes to class identifiers holding the same name\r\n         * then we map the SplashScreenViews _viewcontroller to SplashScreenViewController\r\n         * When an instance of game view is created a corresponding instance of SplashScreenViewController is injected into its _viewController property\r\n         */\r\n        this._system.mapClass(\"SplashScreenView\", SplashScreenView_1.SplashScreenView);\r\n        this._system.mapClass(\"SplashScreenViewController\", SplashScreenViewController_1.SplashScreenViewController);\r\n        this._system.mapOutlet(\"SplashScreenViewController\", \"SplashScreenView\", \"_viewController\");\r\n        /**\r\n         * initialise the game view and its contoller\r\n         * first we map our GameView and GameViewController classes to class identifiers holding the same name\r\n         * then we map the GameViews _viewcontroller to GameViewController\r\n         * When an instance of game view is created a corresponding instance of GameViewController is injected into its _viewController property\r\n         */\r\n        this._system.mapClass(\"GameView\", GameView_1.GameView);\r\n        this._system.mapClass(\"GameViewController\", GameViewController_1.GameViewController);\r\n        this._system.mapOutlet(\"GameViewController\", \"GameView\", \"_viewController\");\r\n        /**\r\n         * map the GameController::onAppStartupComplete function as a handler for the ApplicationEvents.APP_STARTUP_COMPLETE event\r\n         */\r\n        this._system.mapHandler(ApplicationEvents_1.ApplicationEvents.APP_STARTUP_COMPLETE, 'GameController', 'onAppStartupComplete');\r\n        /**\r\n         * map the GameController::onAppGoToPlayScene function as a handler for the ApplicationEvents.APP_GOTO_PLAY_SCENE event\r\n         */\r\n        this._system.mapHandler(ApplicationEvents_1.ApplicationEvents.APP_GOTO_PLAY_SCENE, 'GameController', 'onAppGoToPlayScene');\r\n        /**\r\n         * map the GameController::onAppGoToPlayScene function as a handler for the ApplicationEvents.APP_GOTO_PLAY_SCENE event\r\n         */\r\n        this._system.mapHandler(ApplicationEvents_1.ApplicationEvents.APP_GOTO_SPLASH_SCENE, 'GameController', 'onAppGoToSplashScene');\r\n        /**\r\n         * fire app:startup event\r\n         */\r\n        this._system.notify(ApplicationEvents_1.ApplicationEvents.APP_STARTUP);\r\n        /**\r\n      * fire app:startupComplete event\r\n      */\r\n        this._system.notify(ApplicationEvents_1.ApplicationEvents.APP_STARTUP_COMPLETE);\r\n    };\r\n    return Application2;\r\n}());\r\nexports.Application2 = Application2;\r\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./Application2.ts\n// module id = 6\n// module chunks = 0\n\n//# sourceURL=webpack:///./Application2.ts?");
 
 /***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * @description Virtual class - must be subclassed, the onInitView function must be overriden
- */
-var View = (function () {
-    function View() {
-        /**
-         * @description the _viewController will be injected by the IOC container when this view is instantiated
-         */
-        //inject
-        this._viewController = undefined;
-        //inject      
-        this._viewModel = undefined;
-    }
-    /**
-     * @description setup. this function is called after the class is instantiaved via the IOC container
-     */
-    View.prototype.setup = function () {
-        this._viewEventBus = new signals.Signal();
-        this._enterSignal = new signals.Signal();
-        this._exitSignal = new signals.Signal();
-        this._enterTransitionDidFinishSignal = new signals.Signal();
-        this._exitTransitionDidStartSignal = new signals.Signal();
-        this._viewController.viewReady(this, this._viewModel);
-    };
-    View.prototype.initLifecycleListeners = function () {
-        var ass = this.getAsset();
-        ass.onEnterSignal.add(this.onEnter, this);
-        ass.onEnterTransitionDidFinishSignal.add(this.onEnterTransitionDidFinish, this);
-        ass.onExitSignal.add(this.onExit, this);
-        ass.onExitTransitionDidStartSignal.add(this.onExitTransitionDidStart, this);
-    };
-    View.prototype.removeLifeCycleListeners = function () {
-        var ass = this.getAsset();
-        ass.onEnterSignal.removeAll();
-        ass.onEnterTransitionDidFinishSignal.removeAll();
-        ass.onExitSignal.removeAll();
-        ass.onExitTransitionDidStartSignal.removeAll();
-    };
-    View.prototype.onEnter = function () {
-        this.onEnterHandler();
-        this._enterSignal.dispatch();
-    };
-    View.prototype.onExit = function () {
-        this.onExitHandler();
-        this._exitSignal.dispatch();
-    };
-    View.prototype.onEnterTransitionDidFinish = function () {
-        this.onEnterTransitionDidFinishHandler();
-    };
-    View.prototype.onExitTransitionDidStart = function () {
-        this.onExitTransitionDidStartHandler();
-    };
-    View.prototype.onEnterHandler = function () {
-    };
-    View.prototype.onEnterTransitionDidFinishHandler = function () {
-    };
-    View.prototype.onExitHandler = function () {
-    };
-    View.prototype.onExitTransitionDidStartHandler = function () {
-    };
-    /**
-     * @description returns the signals.Signal that represents this views eventBus, you may use this Signal to subscribe to view events
-     *
-     */
-    View.prototype.getEventBus = function () {
-        return this._viewEventBus;
-    };
-    /**
-     * @description returns the signals.Signal that represents this view onExitevent
-     * @see cc.Node:onExit
-     */
-    View.prototype.getExitSignal = function () {
-        return this._exitSignal;
-    };
-    /**
-* @description returns the signals.Signal that represents this view onEnter event
-* @see cc.Node:onEnter
-*/
-    View.prototype.getEnterSignal = function () {
-        return this._enterSignal;
-    };
-    /**
-         * @description returns the signals.Signal that represents this views main asset's onExitTransitionDidStart event
-         * @see cc.Node:onExit
-         */
-    View.prototype.getExitTransitionDidStartSignal = function () {
-        return this._exitTransitionDidStartSignal;
-    };
-    /**
-* @description returns the signals.Signal that represents this views main asset's  onEnterTransitionDidFinish event
-* @see cc.Node:onEnter
-*/
-    View.prototype.getEnterTransitionDidFinishSignal = function () {
-        return this._enterTransitionDidFinishSignal;
-    };
-    /**
-     * @description returns the main asset for this view
-     * @returns cc.Node
-     */
-    View.prototype.getAsset = function () {
-        return this._asset;
-    };
-    /**
-    * @description sets the main asset for this view
-    * @param cc.Node
-    */
-    View.prototype.setAsset = function (node) {
-        this._asset = node;
-    };
-    /**
-     * @description adds a node as a child to this views _asset
-    * @param {cc.Node} child  A child node
-    * @param {number} [localZOrder]  Z order for drawing priority. Please refer to setZOrder(int)
-    * @param {number|string} [tag]  An integer or a name to identify the node easily. Please refer to setTag(int) and setName(string)
-     */
-    View.prototype.addChild = function (child, localZOrder, tag) {
-        this._asset.addChild(child, localZOrder, tag);
-    };
-    /**
-     * @description displays the view on screen
-     *
-     * @param cc.Node  - optional parent node
-     */
-    View.prototype.show = function (parent) {
-        throw (new Error("View:show is an abstract function. It must be overridden"));
-    };
-    return View;
-}());
-exports.View = View;
-
+eval("\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n/**\r\n * @description Virtual class - must be subclassed, the show  function must be overriden\r\n */\r\nvar View = (function () {\r\n    function View() {\r\n        /**\r\n         * @description the _viewController will be injected by the IOC container when this view is instantiated\r\n         */\r\n        //inject\r\n        this._viewController = undefined;\r\n        //inject      \r\n        this._viewModel = undefined;\r\n    }\r\n    /**\r\n     * @description setup. this function is called after the class is instantiaved via the IOC container\r\n     */\r\n    View.prototype.setup = function () {\r\n        this._viewEventBus = new signals.Signal();\r\n        this._enterSignal = new signals.Signal();\r\n        this._exitSignal = new signals.Signal();\r\n        this._enterTransitionDidFinishSignal = new signals.Signal();\r\n        this._exitTransitionDidStartSignal = new signals.Signal();\r\n        this._viewController.viewReady(this, this._viewModel);\r\n    };\r\n    /**\r\n     * @description adds lifecycle listeners to this views (INodeLifeCycleExtensions) asset\r\n     *\r\n     */\r\n    View.prototype.initLifecycleListeners = function () {\r\n        var ass = this.getAsset();\r\n        ass.onEnterSignal.add(this.onEnter, this);\r\n        ass.onEnterTransitionDidFinishSignal.add(this.onEnterTransitionDidFinish, this);\r\n        ass.onExitSignal.add(this.onExit, this);\r\n        ass.onExitTransitionDidStartSignal.add(this.onExitTransitionDidStart, this);\r\n    };\r\n    /**\r\n     * @description removes lifecycle listeners to this views (INodeLifeCycleExtensions) asset\r\n     *\r\n     */\r\n    View.prototype.removeLifeCycleListeners = function () {\r\n        var ass = this.getAsset();\r\n        ass.onEnterSignal.removeAll();\r\n        ass.onEnterTransitionDidFinishSignal.removeAll();\r\n        ass.onExitSignal.removeAll();\r\n        ass.onExitTransitionDidStartSignal.removeAll();\r\n    };\r\n    View.prototype.onEnter = function () {\r\n        this.onEnterHandler();\r\n        this._enterSignal.dispatch();\r\n    };\r\n    View.prototype.onExit = function () {\r\n        this.onExitHandler();\r\n        this._exitSignal.dispatch();\r\n    };\r\n    View.prototype.onEnterTransitionDidFinish = function () {\r\n        this.onEnterTransitionDidFinishHandler();\r\n    };\r\n    View.prototype.onExitTransitionDidStart = function () {\r\n        this.onExitTransitionDidStartHandler();\r\n    };\r\n    /**\r\n     * @description optionally override  to handle the views main asset's (cc.Node) onEnter life cycle event\r\n     */\r\n    View.prototype.onEnterHandler = function () {\r\n    };\r\n    /**\r\n     * @description optionally override  to handle the views main asset's (cc.Node) onEnterTransitionDidFinish life cycle event\r\n     */\r\n    View.prototype.onEnterTransitionDidFinishHandler = function () {\r\n    };\r\n    /**\r\n     * @description optionally override  to handle the views main asset's (cc.Node) onExit life cycle event\r\n     */\r\n    View.prototype.onExitHandler = function () {\r\n    };\r\n    /**\r\n     * @description optionally override  to handle the views main asset's (cc.Node) onExitTransitionDidStart life cycle event\r\n     */\r\n    View.prototype.onExitTransitionDidStartHandler = function () {\r\n    };\r\n    /**\r\n     * @description returns the signals.Signal that represents this views eventBus, you may use this Signal to subscribe to view events\r\n     *\r\n     */\r\n    View.prototype.getEventBus = function () {\r\n        return this._viewEventBus;\r\n    };\r\n    /**\r\n     * @description returns the signals.Signal that represents this view onExitevent\r\n     * @see cc.Node:onExit\r\n     */\r\n    View.prototype.getExitSignal = function () {\r\n        return this._exitSignal;\r\n    };\r\n    /**\r\n* @description returns the signals.Signal that represents this view onEnter event\r\n* @see cc.Node:onEnter\r\n*/\r\n    View.prototype.getEnterSignal = function () {\r\n        return this._enterSignal;\r\n    };\r\n    /**\r\n         * @description returns the signals.Signal that represents this views main asset's onExitTransitionDidStart event\r\n         * @see cc.Node:onExit\r\n         */\r\n    View.prototype.getExitTransitionDidStartSignal = function () {\r\n        return this._exitTransitionDidStartSignal;\r\n    };\r\n    /**\r\n     * @description returns the signals.Signal that represents this views main asset's  onEnterTransitionDidFinish event\r\n     * @see cc.Node:onEnter\r\n     */\r\n    View.prototype.getEnterTransitionDidFinishSignal = function () {\r\n        return this._enterTransitionDidFinishSignal;\r\n    };\r\n    /**\r\n     * @description returns the main asset for this view\r\n     * @returns cc.Node\r\n     */\r\n    View.prototype.getAsset = function () {\r\n        return this._asset;\r\n    };\r\n    /**\r\n    * @description sets the main asset for this view\r\n    * @param cc.Node\r\n    */\r\n    View.prototype.setAsset = function (node) {\r\n        this._asset = node;\r\n    };\r\n    /**\r\n     * @description adds a node as a child to this views _asset\r\n    * @param {cc.Node} child  A child node\r\n    * @param {number} [localZOrder]  Z order for drawing priority. Please refer to setZOrder(int)\r\n    * @param {number|string} [tag]  An integer or a name to identify the node easily. Please refer to setTag(int) and setName(string)\r\n     */\r\n    View.prototype.addChild = function (child, localZOrder, tag) {\r\n        this._asset.addChild(child, localZOrder, tag);\r\n    };\r\n    /**\r\n     * @description displays the view on screen (pure virtual/abstract function) - must be overriden\r\n     *\r\n     * @param cc.Node  - optional parent node\r\n     */\r\n    View.prototype.show = function (parent) {\r\n        throw (new Error(\"View:show is an abstract function. It must be overridden\"));\r\n    };\r\n    return View;\r\n}());\r\nexports.View = View;\r\n\n\n//////////////////\n// WEBPACK FOOTER\n// ../tslib/dalste/View.ts\n// module id = 7\n// module chunks = 0\n\n//# sourceURL=webpack:///../tslib/dalste/View.ts?");
 
 /***/ }),
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * @description utility class for obtaining information about the the cocos2d-x display
- *
- */
-var Display = (function () {
-    function Display() {
-    }
-    /**
-     * @returns {cc.Point} - the top left of the visible portion of the screen
-     */
-    Display.prototype.topLeft = function () {
-        var porigin = cc.director.getVisibleOrigin();
-        var sz = cc.director.getVisibleSize();
-        return cc.p(porigin.x, porigin.y + sz.height);
-    };
-    /**
-     * @returns {cc.Point} - the top right of the visible portion of the screen
-     */
-    Display.prototype.topRight = function () {
-        var porigin = cc.director.getVisibleOrigin();
-        var sz = cc.director.getVisibleSize();
-        return cc.p(porigin.x + sz.width, porigin.y + sz.height);
-    };
-    /**
-     * @returns {cc.Point} - the top middle of the visible portion of the screen
-     */
-    Display.prototype.topMiddle = function () {
-        var porigin = cc.director.getVisibleOrigin();
-        var sz = cc.director.getVisibleSize();
-        return cc.p(porigin.x + (sz.width / 2), porigin.y + sz.height);
-    };
-    /**
-     * @returns {cc.Point} - the middle left of the visible portion of the screen
-     */
-    Display.prototype.middleLeft = function () {
-        var porigin = cc.director.getVisibleOrigin();
-        var sz = cc.director.getVisibleSize();
-        return cc.p(porigin.x, porigin.y + (sz.height / 2));
-    };
-    /**
-     * @returns {cc.Point} - the middle middle of the visible portion of the screen
-     */
-    Display.prototype.middleMiddle = function () {
-        var porigin = cc.director.getVisibleOrigin();
-        var sz = cc.director.getVisibleSize();
-        return cc.p(porigin.x + (sz.width / 2), porigin.y + (sz.height / 2));
-    };
-    /**
-   * @returns {cc.Point} - the middle right of the visible portion of the screen
-   */
-    Display.prototype.middleRight = function () {
-        var porigin = cc.director.getVisibleOrigin();
-        var sz = cc.director.getVisibleSize();
-        return cc.p(porigin.x + (sz.width), porigin.y + (sz.height / 2));
-    };
-    /**
-     * @returns {cc.Point} - the bottom left of the visible portion of the screen
-     */
-    Display.prototype.bottomLeft = function () {
-        return cc.director.getVisibleOrigin();
-    };
-    /**
-     * @returns {cc.Point} - the bottom middle of the visible portion of the screen
-     */
-    Display.prototype.bottomMiddle = function () {
-        var porigin = cc.director.getVisibleOrigin();
-        var sz = cc.director.getVisibleSize();
-        return cc.p(porigin.x + (sz.width / 2), porigin.y);
-    };
-    /**
-     * @returns {cc.Point} - the bottom right of the visible portion of the screen
-     */
-    Display.prototype.bottomRight = function () {
-        var porigin = cc.director.getVisibleOrigin();
-        var sz = cc.director.getVisibleSize();
-        return cc.p(porigin.x + (sz.width), porigin.y);
-    };
-    /**
-     * @returns {Number} - the height of the visible portion of the screen
-     */
-    Display.prototype.screenHeight = function () {
-        var sz = cc.director.getVisibleSize();
-        return sz.height;
-    };
-    /**
-    * @returns {Number} - the width of the visible portion of the screen
-    */
-    Display.prototype.screenWidth = function () {
-        var sz = cc.director.getVisibleSize();
-        return sz.width;
-    };
-    /**
-     * @returns {Number} - the design resolution height
-     */
-    Display.prototype.designResolutionHeight = function () {
-        var sz = cc.view.getDesignResolutionSize();
-        return sz.height;
-    };
-    /**
-     * @returns {Number} - the design resolution width
-     */
-    Display.prototype.designResolutionWidth = function () {
-        var sz = cc.view.getDesignResolutionSize();
-        return sz.width;
-    };
-    /**
-     * @param {Number} id - the constant representing the desired position on screen for example Display.BOTTOM_RIGHT | Display.MIDDLE_LEFT etc.
-     * @returns {Number} - the design resolution width
-     */
-    Display.prototype.getPosition = function (id) {
-        switch (id) {
-            case Display.BOTTOM_RIGHT:
-                return this.bottomRight();
-            case Display.BOTTOM_MIDDLE:
-                return this.bottomMiddle();
-            case Display.BOTTOM_LEFT:
-                return this.bottomLeft();
-            case Display.MIDDLE_RIGHT:
-                return this.middleRight();
-            case Display.MIDDLE_MIDDLE:
-                return this.middleMiddle();
-            case Display.MIDDLE_LEFT:
-                return this.middleLeft();
-            case Display.TOP_MIDDLE:
-                return this.topMiddle();
-            case Display.TOP_RIGHT:
-                return this.topRight();
-            case Display.TOP_LEFT:
-                return this.topLeft();
-        }
-    };
-    return Display;
-}());
-Display.BOTTOM_RIGHT = 0;
-Display.BOTTOM_MIDDLE = 1;
-Display.BOTTOM_LEFT = 2;
-Display.MIDDLE_RIGHT = 3;
-Display.MIDDLE_MIDDLE = 4;
-Display.MIDDLE_LEFT = 5;
-Display.TOP_MIDDLE = 6;
-Display.TOP_RIGHT = 7;
-Display.TOP_LEFT = 8;
-exports.Display = Display;
-
+eval("\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n/**\r\n * @description utility class for obtaining information about the the cocos2d-x display\r\n *\r\n */\r\nvar Display = (function () {\r\n    function Display() {\r\n    }\r\n    /**\r\n     * @returns {cc.Point} - the top left of the visible portion of the screen\r\n     */\r\n    Display.prototype.topLeft = function () {\r\n        var porigin = cc.director.getVisibleOrigin();\r\n        var sz = cc.director.getVisibleSize();\r\n        return cc.p(porigin.x, porigin.y + sz.height);\r\n    };\r\n    /**\r\n     * @returns {cc.Point} - the top right of the visible portion of the screen\r\n     */\r\n    Display.prototype.topRight = function () {\r\n        var porigin = cc.director.getVisibleOrigin();\r\n        var sz = cc.director.getVisibleSize();\r\n        return cc.p(porigin.x + sz.width, porigin.y + sz.height);\r\n    };\r\n    /**\r\n     * @returns {cc.Point} - the top middle of the visible portion of the screen\r\n     */\r\n    Display.prototype.topMiddle = function () {\r\n        var porigin = cc.director.getVisibleOrigin();\r\n        var sz = cc.director.getVisibleSize();\r\n        return cc.p(porigin.x + (sz.width / 2), porigin.y + sz.height);\r\n    };\r\n    /**\r\n     * @returns {cc.Point} - the middle left of the visible portion of the screen\r\n     */\r\n    Display.prototype.middleLeft = function () {\r\n        var porigin = cc.director.getVisibleOrigin();\r\n        var sz = cc.director.getVisibleSize();\r\n        return cc.p(porigin.x, porigin.y + (sz.height / 2));\r\n    };\r\n    /**\r\n     * @returns {cc.Point} - the middle middle of the visible portion of the screen\r\n     */\r\n    Display.prototype.middleMiddle = function () {\r\n        var porigin = cc.director.getVisibleOrigin();\r\n        var sz = cc.director.getVisibleSize();\r\n        return cc.p(porigin.x + (sz.width / 2), porigin.y + (sz.height / 2));\r\n    };\r\n    /**\r\n   * @returns {cc.Point} - the middle right of the visible portion of the screen\r\n   */\r\n    Display.prototype.middleRight = function () {\r\n        var porigin = cc.director.getVisibleOrigin();\r\n        var sz = cc.director.getVisibleSize();\r\n        return cc.p(porigin.x + (sz.width), porigin.y + (sz.height / 2));\r\n    };\r\n    /**\r\n     * @returns {cc.Point} - the bottom left of the visible portion of the screen\r\n     */\r\n    Display.prototype.bottomLeft = function () {\r\n        return cc.director.getVisibleOrigin();\r\n    };\r\n    /**\r\n     * @returns {cc.Point} - the bottom middle of the visible portion of the screen\r\n     */\r\n    Display.prototype.bottomMiddle = function () {\r\n        var porigin = cc.director.getVisibleOrigin();\r\n        var sz = cc.director.getVisibleSize();\r\n        return cc.p(porigin.x + (sz.width / 2), porigin.y);\r\n    };\r\n    /**\r\n     * @returns {cc.Point} - the bottom right of the visible portion of the screen\r\n     */\r\n    Display.prototype.bottomRight = function () {\r\n        var porigin = cc.director.getVisibleOrigin();\r\n        var sz = cc.director.getVisibleSize();\r\n        return cc.p(porigin.x + (sz.width), porigin.y);\r\n    };\r\n    /**\r\n     * @returns {Number} - the height of the visible portion of the screen\r\n     */\r\n    Display.prototype.screenHeight = function () {\r\n        var sz = cc.director.getVisibleSize();\r\n        return sz.height;\r\n    };\r\n    /**\r\n    * @returns {Number} - the width of the visible portion of the screen\r\n    */\r\n    Display.prototype.screenWidth = function () {\r\n        var sz = cc.director.getVisibleSize();\r\n        return sz.width;\r\n    };\r\n    /**\r\n     * @returns {Number} - the design resolution height\r\n     */\r\n    Display.prototype.designResolutionHeight = function () {\r\n        var sz = cc.view.getDesignResolutionSize();\r\n        return sz.height;\r\n    };\r\n    /**\r\n     * @returns {Number} - the design resolution width\r\n     */\r\n    Display.prototype.designResolutionWidth = function () {\r\n        var sz = cc.view.getDesignResolutionSize();\r\n        return sz.width;\r\n    };\r\n    /**\r\n     * @param {Number} id - the constant representing the desired position on screen for example Display.BOTTOM_RIGHT | Display.MIDDLE_LEFT etc.\r\n     * @returns {Number} - the design resolution width\r\n     */\r\n    Display.prototype.getPosition = function (id) {\r\n        switch (id) {\r\n            case Display.BOTTOM_RIGHT:\r\n                return this.bottomRight();\r\n            case Display.BOTTOM_MIDDLE:\r\n                return this.bottomMiddle();\r\n            case Display.BOTTOM_LEFT:\r\n                return this.bottomLeft();\r\n            case Display.MIDDLE_RIGHT:\r\n                return this.middleRight();\r\n            case Display.MIDDLE_MIDDLE:\r\n                return this.middleMiddle();\r\n            case Display.MIDDLE_LEFT:\r\n                return this.middleLeft();\r\n            case Display.TOP_MIDDLE:\r\n                return this.topMiddle();\r\n            case Display.TOP_RIGHT:\r\n                return this.topRight();\r\n            case Display.TOP_LEFT:\r\n                return this.topLeft();\r\n        }\r\n    };\r\n    return Display;\r\n}());\r\nDisplay.BOTTOM_RIGHT = 0;\r\nDisplay.BOTTOM_MIDDLE = 1;\r\nDisplay.BOTTOM_LEFT = 2;\r\nDisplay.MIDDLE_RIGHT = 3;\r\nDisplay.MIDDLE_MIDDLE = 4;\r\nDisplay.MIDDLE_LEFT = 5;\r\nDisplay.TOP_MIDDLE = 6;\r\nDisplay.TOP_RIGHT = 7;\r\nDisplay.TOP_LEFT = 8;\r\nexports.Display = Display;\r\n\n\n//////////////////\n// WEBPACK FOOTER\n// ../tslib/dalste/util/Display.ts\n// module id = 8\n// module chunks = 0\n\n//# sourceURL=webpack:///../tslib/dalste/util/Display.ts?");
 
 /***/ }),
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var Application2_1 = __webpack_require__(6);
-exports.App = new Application2_1.Application2();
-/**
- * @desc exposed directly to the globally scoped library variable configured in your webpack options
- * called by the cocos2dx entry scene
- * @see webpackconfig.js  {library:"CocosTSGame"}
- *
- */
-function start() {
-    exports.App.startUp();
-}
-exports.start = start;
-
+eval("\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nvar Application2_1 = __webpack_require__(6);\r\nexports.App = new Application2_1.Application2();\r\n/**\r\n * @desc exposed directly to the globally scoped library variable configured in your webpack options\r\n * called by the cocos2dx entry scene\r\n * @see webpackconfig.js  {library:\"CocosTSGame\"}\r\n *\r\n */\r\nfunction start() {\r\n    exports.App.startUp();\r\n}\r\nexports.start = start;\r\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./Bootstrap.ts\n// module id = 9\n// module chunks = 0\n\n//# sourceURL=webpack:///./Bootstrap.ts?");
 
 /***/ }),
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var ScreenTypes_1 = __webpack_require__(12);
-var GameController = (function () {
-    function GameController() {
-        //inject
-        this._system = undefined;
-    }
-    /**
-     *  handler for the ApplicationEvents.APP_STARTUP_COMPLETE event
-     */
-    GameController.prototype.onAppStartupComplete = function () {
-        console.log("GameController::onAppStartupComplete");
-        this.onDoNavigation(ScreenTypes_1.ScreenTypes.SPLASH_SCREEN);
-    };
-    /**
-     *  handler for the ApplicationEvents.APP_GOTO_PLAY_SCENE event
-     */
-    GameController.prototype.onAppGoToPlayScene = function () {
-        this.onDoNavigation(ScreenTypes_1.ScreenTypes.GAMEPLAY_SCREEN);
-    };
-    /**
-         *  handler for the ApplicationEvents.APP_GOTO_SPLASH_SCENE event
-         */
-    GameController.prototype.onAppGoToSplashScene = function () {
-        this.onDoNavigation(ScreenTypes_1.ScreenTypes.SPLASH_SCREEN);
-    };
-    /**
-     *  handler for the app:doNavigation event
-     */
-    GameController.prototype.onDoNavigation = function (gotoScreen) {
-        switch (gotoScreen) {
-            case ScreenTypes_1.ScreenTypes.SPLASH_SCREEN:
-                if (this._splashScreenView == null)
-                    this._splashScreenView = this._system.getObject("SplashScreenView");
-                this._splashScreenView.show();
-                break;
-            case ScreenTypes_1.ScreenTypes.GAMEPLAY_SCREEN:
-                if (this._gameView == null)
-                    this._gameView = this._system.getObject("GameView");
-                this._gameView.show();
-                break;
-        }
-    };
-    return GameController;
-}());
-exports.GameController = GameController;
-
+eval("\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nvar ScreenTypes_1 = __webpack_require__(12);\r\nvar GameController = (function () {\r\n    function GameController() {\r\n        //inject\r\n        this._system = undefined;\r\n    }\r\n    /**\r\n     *  handler for the ApplicationEvents.APP_STARTUP_COMPLETE event\r\n     */\r\n    GameController.prototype.onAppStartupComplete = function () {\r\n        console.log(\"GameController::onAppStartupComplete\");\r\n        this.onDoNavigation(ScreenTypes_1.ScreenTypes.SPLASH_SCREEN);\r\n    };\r\n    /**\r\n     *  handler for the ApplicationEvents.APP_GOTO_PLAY_SCENE event\r\n     */\r\n    GameController.prototype.onAppGoToPlayScene = function () {\r\n        this.onDoNavigation(ScreenTypes_1.ScreenTypes.GAMEPLAY_SCREEN);\r\n    };\r\n    /**\r\n         *  handler for the ApplicationEvents.APP_GOTO_SPLASH_SCENE event\r\n         */\r\n    GameController.prototype.onAppGoToSplashScene = function () {\r\n        this.onDoNavigation(ScreenTypes_1.ScreenTypes.SPLASH_SCREEN);\r\n    };\r\n    /**\r\n     *  handler for the app:doNavigation event\r\n     */\r\n    GameController.prototype.onDoNavigation = function (gotoScreen) {\r\n        switch (gotoScreen) {\r\n            case ScreenTypes_1.ScreenTypes.SPLASH_SCREEN:\r\n                if (this._splashScreenView == null)\r\n                    this._splashScreenView = this._system.getObject(\"SplashScreenView\");\r\n                this._splashScreenView.show();\r\n                break;\r\n            case ScreenTypes_1.ScreenTypes.GAMEPLAY_SCREEN:\r\n                if (this._gameView == null)\r\n                    this._gameView = this._system.getObject(\"GameView\");\r\n                this._gameView.show();\r\n                break;\r\n        }\r\n    };\r\n    return GameController;\r\n}());\r\nexports.GameController = GameController;\r\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./controller/GameController.ts\n// module id = 10\n// module chunks = 0\n\n//# sourceURL=webpack:///./controller/GameController.ts?");
 
 /***/ }),
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * @description emum providing identifyable colour options for MockAsset
- */
-var MockAssetColours;
-(function (MockAssetColours) {
-    MockAssetColours[MockAssetColours["RED"] = 0] = "RED";
-    MockAssetColours[MockAssetColours["BLUE"] = 1] = "BLUE";
-    MockAssetColours[MockAssetColours["YELLOW"] = 2] = "YELLOW";
-    MockAssetColours[MockAssetColours["GREEN"] = 3] = "GREEN";
-    MockAssetColours[MockAssetColours["PINK"] = 4] = "PINK";
-    MockAssetColours[MockAssetColours["NONE"] = 5] = "NONE";
-})(MockAssetColours = exports.MockAssetColours || (exports.MockAssetColours = {}));
-;
-/**
- * @class MockAsset
- * @description a cc.Node derived class for creating mock assets ,creates a circle with given radius, containing a label with optionalgiven text
- * Templater option T is for the Type used to describe type generally string | int | enumtype
- *
- */
-var MockAsset = (function (_super) {
-    __extends(MockAsset, _super);
-    function MockAsset(type, config, radius, COLOUR, text) {
-        if (radius === void 0) { radius = 20; }
-        if (COLOUR === void 0) { COLOUR = MockAssetColours.BLUE; }
-        if (text === void 0) { text = "Text"; }
-        var _this = _super.call(this) || this;
-        _this._visibleNode = null;
-        _this._objecttype = null;
-        _this.ctor();
-        _this._objecttype = type;
-        _this.setContentSize(radius * 2, radius * 2);
-        _this.setAnchorPoint(0.5, 0.5);
-        _this._circleNode = new cc.DrawNode();
-        _this._circleNode.drawDot(cc.p(radius, radius), radius, _this.getColour(COLOUR));
-        _this.addChild(_this._circleNode);
-        var textF = new ccui.Text();
-        textF.boundingWidth = radius * 2;
-        textF.boundingHeight = 30;
-        textF.attr({
-            textAlign: cc.TEXT_ALIGNMENT_CENTER,
-            string: text,
-            font: "20px Ariel",
-            x: radius
-        });
-        textF.y = radius - textF.height / 8;
-        _this.addChild(textF);
-        return _this;
-    }
-    MockAsset.prototype.getColour = function (colour) {
-        switch (colour) {
-            case MockAssetColours.RED:
-                return new cc.Color(187, 56, 10, 255);
-            case MockAssetColours.GREEN:
-                return new cc.Color(12, 123, 2, 255);
-            case MockAssetColours.BLUE:
-                return new cc.Color(27, 68, 174, 255);
-            case MockAssetColours.PINK:
-                return new cc.Color(211, 62, 109, 255);
-            case MockAssetColours.YELLOW:
-                return new cc.Color(242, 171, 52, 255);
-            case MockAssetColours.NONE:
-                return new cc.Color(255, 255, 255, 255);
-        }
-    };
-    return MockAsset;
-}(cc.Node));
-exports.MockAsset = MockAsset;
-
+eval("\r\nvar __extends = (this && this.__extends) || (function () {\r\n    var extendStatics = Object.setPrototypeOf ||\r\n        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||\r\n        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };\r\n    return function (d, b) {\r\n        extendStatics(d, b);\r\n        function __() { this.constructor = d; }\r\n        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());\r\n    };\r\n})();\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n/**\r\n * @description emum providing identifiable colour options for MockAsset\r\n */\r\nvar MockAssetColours;\r\n(function (MockAssetColours) {\r\n    MockAssetColours[MockAssetColours[\"RED\"] = 0] = \"RED\";\r\n    MockAssetColours[MockAssetColours[\"BLUE\"] = 1] = \"BLUE\";\r\n    MockAssetColours[MockAssetColours[\"YELLOW\"] = 2] = \"YELLOW\";\r\n    MockAssetColours[MockAssetColours[\"GREEN\"] = 3] = \"GREEN\";\r\n    MockAssetColours[MockAssetColours[\"PINK\"] = 4] = \"PINK\";\r\n    MockAssetColours[MockAssetColours[\"NONE\"] = 5] = \"NONE\";\r\n})(MockAssetColours = exports.MockAssetColours || (exports.MockAssetColours = {}));\r\n;\r\n/**\r\n * @class MockAsset\r\n * @description a cc.Node derived class for creating mock assets ,creates a circle with given radius, containing a label with optional  text\r\n * Template option T is for the Type used to describe type generally string | int | enumtype\r\n */\r\nvar MockAsset = (function (_super) {\r\n    __extends(MockAsset, _super);\r\n    function MockAsset(config, radius, COLOUR, text) {\r\n        if (radius === void 0) { radius = 20; }\r\n        if (COLOUR === void 0) { COLOUR = MockAssetColours.BLUE; }\r\n        if (text === void 0) { text = \"Text\"; }\r\n        var _this = _super.call(this) || this;\r\n        _this._visibleNode = null;\r\n        _this._objecttype = null;\r\n        _this.ctor();\r\n        _this._objecttype = config.getType();\r\n        _this.setName(config.getName());\r\n        _this.setContentSize(radius * 2, radius * 2);\r\n        _this.setAnchorPoint(0.5, 0.5);\r\n        _this._circleNode = new cc.DrawNode();\r\n        _this._circleNode.drawDot(cc.p(radius, radius), radius, _this.getColour(COLOUR));\r\n        _this.addChild(_this._circleNode);\r\n        var textF = new ccui.Text();\r\n        textF.boundingWidth = radius * 2;\r\n        textF.boundingHeight = 30;\r\n        textF.attr({\r\n            textAlign: cc.TEXT_ALIGNMENT_CENTER,\r\n            string: text,\r\n            font: \"20px Ariel\",\r\n            x: radius\r\n        });\r\n        textF.y = radius - textF.height / 8;\r\n        _this.addChild(textF);\r\n        return _this;\r\n    }\r\n    MockAsset.prototype.getColour = function (colour) {\r\n        switch (colour) {\r\n            case MockAssetColours.RED:\r\n                return new cc.Color(187, 56, 10, 255);\r\n            case MockAssetColours.GREEN:\r\n                return new cc.Color(12, 123, 2, 255);\r\n            case MockAssetColours.BLUE:\r\n                return new cc.Color(27, 68, 174, 255);\r\n            case MockAssetColours.PINK:\r\n                return new cc.Color(211, 62, 109, 255);\r\n            case MockAssetColours.YELLOW:\r\n                return new cc.Color(242, 171, 52, 255);\r\n            case MockAssetColours.NONE:\r\n                return new cc.Color(255, 255, 255, 255);\r\n        }\r\n    };\r\n    return MockAsset;\r\n}(cc.Node));\r\nexports.MockAsset = MockAsset;\r\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./factory/view/characterassetfactory/MockAsset.ts\n// module id = 11\n// module chunks = 0\n\n//# sourceURL=webpack:///./factory/view/characterassetfactory/MockAsset.ts?");
 
 /***/ }),
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var ScreenTypes;
-(function (ScreenTypes) {
-    ScreenTypes[ScreenTypes["SPLASH_SCREEN"] = 0] = "SPLASH_SCREEN";
-    ScreenTypes[ScreenTypes["GAMEPLAY_SCREEN"] = 1] = "GAMEPLAY_SCREEN";
-})(ScreenTypes = exports.ScreenTypes || (exports.ScreenTypes = {}));
-
+eval("\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nvar ScreenTypes;\r\n(function (ScreenTypes) {\r\n    ScreenTypes[ScreenTypes[\"SPLASH_SCREEN\"] = 0] = \"SPLASH_SCREEN\";\r\n    ScreenTypes[ScreenTypes[\"GAMEPLAY_SCREEN\"] = 1] = \"GAMEPLAY_SCREEN\";\r\n})(ScreenTypes = exports.ScreenTypes || (exports.ScreenTypes = {}));\r\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./types/ScreenTypes.ts\n// module id = 12\n// module chunks = 0\n\n//# sourceURL=webpack:///./types/ScreenTypes.ts?");
 
 /***/ }),
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var SceneView_1 = __webpack_require__(2);
-var AssetTypes_1 = __webpack_require__(5);
-var CharacterAssetFactory_1 = __webpack_require__(4);
-var GameViewScene_1 = __webpack_require__(17);
-var GameView = (function (_super) {
-    __extends(GameView, _super);
-    function GameView() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        //inject
-        _this._characterAssetFactory = null;
-        //inject
-        _this._display = undefined;
-        return _this;
-    }
-    GameView.prototype.show = function (parent) {
-        this.setAsset(new GameViewScene_1.GameViewScene());
-        this.initLifecycleListeners();
-        cc.director.runScene(this.getAsset());
-    };
-    GameView.prototype.onEnterHandler = function () {
-        cc.log("GameView:onEnterHandler");
-        var co = new CharacterAssetFactory_1.CharacterAssetCreationOptions(AssetTypes_1.CharacterAssetTypes.PLAYER);
-        var ca = this._characterAssetFactory.create(co);
-        ca.setPosition(this._display.middleMiddle().x, this._display.middleMiddle().y);
-        this.addChild(ca, 0);
-        var button = new ccui.Button();
-        button.setTitleText("Exit Game");
-        button.setTouchEnabled(true);
-        button.addTouchEventListener(this.touchEvent, this);
-        button.setName("exitGameButton");
-        button.setPosition(this._display.topRight().x - 50, this._display.topRight().y - 50);
-        this.addChild(button, 0);
-    };
-    GameView.prototype.touchEvent = function (sender, type) {
-        switch (type) {
-            case ccui.Widget.TOUCH_BEGAN:
-                break;
-            case ccui.Widget.TOUCH_MOVED:
-                break;
-            case ccui.Widget.TOUCH_ENDED:
-                cc.log(sender.getName() + " pressed");
-                switch (sender.getName()) {
-                    case "exitGameButton":
-                        this._viewEventBus.dispatch("exitGameButtonPressed");
-                        break;
-                }
-                break;
-            case ccui.Widget.TOUCH_CANCELED:
-                break;
-        }
-    };
-    GameView.prototype.onEnterTransitionDidFinishHandler = function () {
-    };
-    GameView.prototype.onExitHandler = function () {
-        cc.log("GameView:onExithandler");
-        this.removeLifeCycleListeners();
-        this.setAsset(null);
-    };
-    GameView.prototype.onExitTransitionDidStartHandler = function () {
-    };
-    return GameView;
-}(SceneView_1.SceneView));
-exports.GameView = GameView;
-
+eval("\r\nvar __extends = (this && this.__extends) || (function () {\r\n    var extendStatics = Object.setPrototypeOf ||\r\n        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||\r\n        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };\r\n    return function (d, b) {\r\n        extendStatics(d, b);\r\n        function __() { this.constructor = d; }\r\n        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());\r\n    };\r\n})();\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nvar SceneView_1 = __webpack_require__(2);\r\nvar GameViewScene_1 = __webpack_require__(17);\r\nvar GameView = (function (_super) {\r\n    __extends(GameView, _super);\r\n    function GameView() {\r\n        var _this = _super !== null && _super.apply(this, arguments) || this;\r\n        //inject\r\n        _this._display = undefined;\r\n        return _this;\r\n    }\r\n    GameView.prototype.show = function (parent) {\r\n        this.setAsset(new GameViewScene_1.GameViewScene());\r\n        this.initLifecycleListeners();\r\n        cc.director.runScene(this.getAsset());\r\n    };\r\n    GameView.prototype.onEnterHandler = function () {\r\n        cc.log(\"GameView:onEnterHandler\");\r\n        var button = new ccui.Button();\r\n        button.setTitleText(\"Exit Game\");\r\n        button.setTouchEnabled(true);\r\n        button.addTouchEventListener(this.touchEvent, this);\r\n        button.setName(\"exitGameButton\");\r\n        button.setPosition(this._display.topRight().x - 50, this._display.topRight().y - 50);\r\n        this.addChild(button, 0);\r\n    };\r\n    GameView.prototype.touchEvent = function (sender, type) {\r\n        switch (type) {\r\n            case ccui.Widget.TOUCH_BEGAN:\r\n                break;\r\n            case ccui.Widget.TOUCH_MOVED:\r\n                break;\r\n            case ccui.Widget.TOUCH_ENDED:\r\n                cc.log(sender.getName() + \" pressed\");\r\n                switch (sender.getName()) {\r\n                    case \"exitGameButton\":\r\n                        this._viewEventBus.dispatch(\"exitGameButtonPressed\");\r\n                        break;\r\n                }\r\n                break;\r\n            case ccui.Widget.TOUCH_CANCELED:\r\n                break;\r\n        }\r\n    };\r\n    GameView.prototype.onEnterTransitionDidFinishHandler = function () {\r\n    };\r\n    GameView.prototype.onExitHandler = function () {\r\n        cc.log(\"GameView:onExithandler\");\r\n        this.removeLifeCycleListeners();\r\n        this.setAsset(null);\r\n    };\r\n    GameView.prototype.onExitTransitionDidStartHandler = function () {\r\n    };\r\n    return GameView;\r\n}(SceneView_1.SceneView));\r\nexports.GameView = GameView;\r\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./view/GameView.ts\n// module id = 13\n// module chunks = 0\n\n//# sourceURL=webpack:///./view/GameView.ts?");
 
 /***/ }),
 /* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var ViewController_1 = __webpack_require__(3);
-var ApplicationEvents_1 = __webpack_require__(0);
-var GameViewController = (function (_super) {
-    __extends(GameViewController, _super);
-    function GameViewController() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        //inject
-        _this._characterAssetFactory = null;
-        //inject
-        _this._display = undefined;
-        return _this;
-    }
-    GameViewController.prototype.onViewReady = function () {
-        this.getView().getEventBus().add(this.onViewEvent, this);
-        this.getView().getEnterSignal().add(this.onViewEnter, this);
-        this.getView().getExitSignal().add(this.onViewExit, this);
-        this.getView().getEnterTransitionDidFinishSignal().add(this.onViewEnterTransitionDidFinish, this);
-        this.getView().getExitTransitionDidStartSignal().add(this.onViewExitTransitionDidStart, this);
-    };
-    GameViewController.prototype.onViewEnter = function () {
-        cc.log("GameViewController::onViewEnter");
-    };
-    GameViewController.prototype.onViewEnterTransitionDidFinish = function () {
-        cc.log("GameViewController::onViewEnterTransitionDidFinish");
-    };
-    GameViewController.prototype.onViewExit = function () {
-        cc.log("GameViewController::onViewExit");
-    };
-    GameViewController.prototype.onViewExitTransitionDidStart = function () {
-        cc.log("GameViewController::onViewExitTransitionDidStart");
-    };
-    GameViewController.prototype.onViewEvent = function (event) {
-        switch (event) {
-            case "exitGameButtonPressed":
-                this._system.notify(ApplicationEvents_1.ApplicationEvents.APP_GOTO_SPLASH_SCENE);
-                break;
-        }
-    };
-    return GameViewController;
-}(ViewController_1.ViewController));
-exports.GameViewController = GameViewController;
-
+eval("\r\nvar __extends = (this && this.__extends) || (function () {\r\n    var extendStatics = Object.setPrototypeOf ||\r\n        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||\r\n        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };\r\n    return function (d, b) {\r\n        extendStatics(d, b);\r\n        function __() { this.constructor = d; }\r\n        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());\r\n    };\r\n})();\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nvar ViewController_1 = __webpack_require__(3);\r\nvar ApplicationEvents_1 = __webpack_require__(0);\r\nvar AssetTypes_1 = __webpack_require__(5);\r\nvar CharacterAssetFactory_1 = __webpack_require__(4);\r\nvar GameViewController = (function (_super) {\r\n    __extends(GameViewController, _super);\r\n    function GameViewController() {\r\n        var _this = _super !== null && _super.apply(this, arguments) || this;\r\n        //inject\r\n        _this._characterAssetFactory = null;\r\n        //inject\r\n        _this._display = undefined;\r\n        return _this;\r\n    }\r\n    GameViewController.prototype.onViewReady = function () {\r\n        this.getView().getEventBus().add(this.onViewEvent, this);\r\n        this.getView().getEnterSignal().add(this.onViewEnter, this);\r\n        this.getView().getExitSignal().add(this.onViewExit, this);\r\n        this.getView().getEnterTransitionDidFinishSignal().add(this.onViewEnterTransitionDidFinish, this);\r\n        this.getView().getExitTransitionDidStartSignal().add(this.onViewExitTransitionDidStart, this);\r\n    };\r\n    GameViewController.prototype.onViewEnter = function () {\r\n        cc.log(\"GameViewController::onViewEnter\");\r\n        var co = new CharacterAssetFactory_1.CharacterAssetCreationOptions(AssetTypes_1.CharacterAssetTypes.PLAYER, \"player\");\r\n        var ca = this._characterAssetFactory.create(co);\r\n        ca.setPosition(this._display.middleMiddle().x, this._display.middleMiddle().y);\r\n        this.getView().addChild(ca, 0);\r\n        var c2 = new CharacterAssetFactory_1.CharacterAssetCreationOptions(AssetTypes_1.CharacterAssetTypes.NPC, \"enemy\");\r\n        var cb = this._characterAssetFactory.create(c2);\r\n        cb.setPosition(this._display.middleMiddle().x, this._display.middleMiddle().y - 100);\r\n        cc.log(\"cb2\");\r\n        this.getView().addChild(cb, 1);\r\n    };\r\n    GameViewController.prototype.onViewEnterTransitionDidFinish = function () {\r\n        cc.log(\"GameViewController::onViewEnterTransitionDidFinish\");\r\n    };\r\n    GameViewController.prototype.onViewExit = function () {\r\n        cc.log(\"GameViewController::onViewExit\");\r\n    };\r\n    GameViewController.prototype.onViewExitTransitionDidStart = function () {\r\n        cc.log(\"GameViewController::onViewExitTransitionDidStart\");\r\n    };\r\n    GameViewController.prototype.onViewEvent = function (event) {\r\n        switch (event) {\r\n            case \"exitGameButtonPressed\":\r\n                this._system.notify(ApplicationEvents_1.ApplicationEvents.APP_GOTO_SPLASH_SCENE);\r\n                break;\r\n        }\r\n    };\r\n    return GameViewController;\r\n}(ViewController_1.ViewController));\r\nexports.GameViewController = GameViewController;\r\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./view/GameViewController.ts\n// module id = 14\n// module chunks = 0\n\n//# sourceURL=webpack:///./view/GameViewController.ts?");
 
 /***/ }),
 /* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var SceneView_1 = __webpack_require__(2);
-var SplashScreenViewScene_1 = __webpack_require__(18);
-var SplashScreenView = (function (_super) {
-    __extends(SplashScreenView, _super);
-    function SplashScreenView() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        //inject
-        _this._display = undefined;
-        return _this;
-    }
-    SplashScreenView.prototype.show = function (parent) {
-        this.setAsset(new SplashScreenViewScene_1.SplashScreenViewScene());
-        this.initLifecycleListeners();
-        cc.director.runScene(this.getAsset());
-    };
-    SplashScreenView.prototype.onEnterHandler = function () {
-        cc.log("SplashScreenView:onEnterHandler");
-        var button = new ccui.Button();
-        button.setTitleText("Play Game");
-        button.setTouchEnabled(true);
-        button.addTouchEventListener(this.touchEvent, this);
-        button.setName("playGameButton");
-        button.setPosition(this._display.middleMiddle().x, this._display.middleMiddle().y);
-        this.addChild(button, 0);
-    };
-    SplashScreenView.prototype.onEnterTransitionDidFinishHandler = function () {
-        cc.log("SplashScreenView::onEnterTransitionDidFinishHandler");
-    };
-    SplashScreenView.prototype.onExitHandler = function () {
-        cc.log("SplashScreenView:onExitHandler");
-        this.removeLifeCycleListeners();
-        this.setAsset(null);
-    };
-    SplashScreenView.prototype.onExitTransitionDidStartHandler = function () {
-        cc.log("SplashScreenView::onExitTransitionDidStartHandler");
-    };
-    SplashScreenView.prototype.touchEvent = function (sender, type) {
-        switch (type) {
-            case ccui.Widget.TOUCH_BEGAN:
-                break;
-            case ccui.Widget.TOUCH_MOVED:
-                break;
-            case ccui.Widget.TOUCH_ENDED:
-                switch (sender.getName()) {
-                    case "playGameButton":
-                        this._viewEventBus.dispatch("playGameButtonPressed");
-                        break;
-                }
-                break;
-            case ccui.Widget.TOUCH_CANCELED:
-                break;
-        }
-    };
-    return SplashScreenView;
-}(SceneView_1.SceneView));
-exports.SplashScreenView = SplashScreenView;
-
+eval("\r\nvar __extends = (this && this.__extends) || (function () {\r\n    var extendStatics = Object.setPrototypeOf ||\r\n        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||\r\n        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };\r\n    return function (d, b) {\r\n        extendStatics(d, b);\r\n        function __() { this.constructor = d; }\r\n        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());\r\n    };\r\n})();\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nvar SceneView_1 = __webpack_require__(2);\r\nvar SplashScreenViewScene_1 = __webpack_require__(18);\r\nvar SplashScreenView = (function (_super) {\r\n    __extends(SplashScreenView, _super);\r\n    function SplashScreenView() {\r\n        var _this = _super !== null && _super.apply(this, arguments) || this;\r\n        //inject\r\n        _this._display = undefined;\r\n        return _this;\r\n    }\r\n    SplashScreenView.prototype.show = function (parent) {\r\n        this.setAsset(new SplashScreenViewScene_1.SplashScreenViewScene());\r\n        this.initLifecycleListeners();\r\n        cc.director.runScene(this.getAsset());\r\n    };\r\n    SplashScreenView.prototype.onEnterHandler = function () {\r\n        cc.log(\"SplashScreenView:onEnterHandler\");\r\n        var button = new ccui.Button();\r\n        button.setTitleText(\"Play Game\");\r\n        button.setTouchEnabled(true);\r\n        button.addTouchEventListener(this.touchEvent, this);\r\n        button.setName(\"playGameButton\");\r\n        button.setPosition(this._display.middleMiddle().x, this._display.middleMiddle().y);\r\n        this.addChild(button, 0);\r\n    };\r\n    SplashScreenView.prototype.onEnterTransitionDidFinishHandler = function () {\r\n        cc.log(\"SplashScreenView::onEnterTransitionDidFinishHandler\");\r\n    };\r\n    SplashScreenView.prototype.onExitHandler = function () {\r\n        cc.log(\"SplashScreenView:onExitHandler\");\r\n        this.removeLifeCycleListeners();\r\n        this.setAsset(null);\r\n    };\r\n    SplashScreenView.prototype.onExitTransitionDidStartHandler = function () {\r\n        cc.log(\"SplashScreenView::onExitTransitionDidStartHandler\");\r\n    };\r\n    SplashScreenView.prototype.touchEvent = function (sender, type) {\r\n        switch (type) {\r\n            case ccui.Widget.TOUCH_BEGAN:\r\n                break;\r\n            case ccui.Widget.TOUCH_MOVED:\r\n                break;\r\n            case ccui.Widget.TOUCH_ENDED:\r\n                switch (sender.getName()) {\r\n                    case \"playGameButton\":\r\n                        this._viewEventBus.dispatch(\"playGameButtonPressed\");\r\n                        break;\r\n                }\r\n                break;\r\n            case ccui.Widget.TOUCH_CANCELED:\r\n                break;\r\n        }\r\n    };\r\n    return SplashScreenView;\r\n}(SceneView_1.SceneView));\r\nexports.SplashScreenView = SplashScreenView;\r\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./view/SplashScreenView.ts\n// module id = 15\n// module chunks = 0\n\n//# sourceURL=webpack:///./view/SplashScreenView.ts?");
 
 /***/ }),
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var ViewController_1 = __webpack_require__(3);
-var ApplicationEvents_1 = __webpack_require__(0);
-var SplashScreenViewController = (function (_super) {
-    __extends(SplashScreenViewController, _super);
-    function SplashScreenViewController() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        //inject
-        _this._display = undefined;
-        return _this;
-    }
-    SplashScreenViewController.prototype.onViewReady = function () {
-        this.getView().getEventBus().add(this.onViewEvent, this);
-        this.getView().getEnterSignal().add(this.onViewEnter, this);
-        this.getView().getExitSignal().add(this.onViewExit, this);
-        this.getView().getEnterTransitionDidFinishSignal().add(this.onViewEnterTransitionDidFinish, this);
-        this.getView().getExitTransitionDidStartSignal().add(this.onViewExitTransitionDidStart, this);
-    };
-    SplashScreenViewController.prototype.onViewEnter = function () {
-        cc.log("SplashScreenViewController::onViewEnter");
-    };
-    SplashScreenViewController.prototype.onViewEnterTransitionDidFinish = function () {
-        cc.log("SplashScreenViewController::onViewEnterTransitionDidFinish");
-    };
-    SplashScreenViewController.prototype.onViewExit = function () {
-        cc.log("SplashScreenViewController::onViewExit");
-    };
-    SplashScreenViewController.prototype.onViewExitTransitionDidStart = function () {
-        cc.log("SplashScreenViewController::onViewExitTransitionDidStart");
-    };
-    SplashScreenViewController.prototype.onViewEvent = function (event) {
-        switch (event) {
-            case "playGameButtonPressed":
-                this._system.notify(ApplicationEvents_1.ApplicationEvents.APP_GOTO_PLAY_SCENE);
-                break;
-        }
-    };
-    return SplashScreenViewController;
-}(ViewController_1.ViewController));
-exports.SplashScreenViewController = SplashScreenViewController;
-
+eval("\r\nvar __extends = (this && this.__extends) || (function () {\r\n    var extendStatics = Object.setPrototypeOf ||\r\n        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||\r\n        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };\r\n    return function (d, b) {\r\n        extendStatics(d, b);\r\n        function __() { this.constructor = d; }\r\n        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());\r\n    };\r\n})();\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nvar ViewController_1 = __webpack_require__(3);\r\nvar ApplicationEvents_1 = __webpack_require__(0);\r\nvar SplashScreenViewController = (function (_super) {\r\n    __extends(SplashScreenViewController, _super);\r\n    function SplashScreenViewController() {\r\n        var _this = _super !== null && _super.apply(this, arguments) || this;\r\n        //inject\r\n        _this._display = undefined;\r\n        return _this;\r\n    }\r\n    SplashScreenViewController.prototype.onViewReady = function () {\r\n        this.getView().getEventBus().add(this.onViewEvent, this);\r\n        this.getView().getEnterSignal().add(this.onViewEnter, this);\r\n        this.getView().getExitSignal().add(this.onViewExit, this);\r\n        this.getView().getEnterTransitionDidFinishSignal().add(this.onViewEnterTransitionDidFinish, this);\r\n        this.getView().getExitTransitionDidStartSignal().add(this.onViewExitTransitionDidStart, this);\r\n    };\r\n    SplashScreenViewController.prototype.onViewEnter = function () {\r\n        cc.log(\"SplashScreenViewController::onViewEnter\");\r\n    };\r\n    SplashScreenViewController.prototype.onViewEnterTransitionDidFinish = function () {\r\n        cc.log(\"SplashScreenViewController::onViewEnterTransitionDidFinish\");\r\n    };\r\n    SplashScreenViewController.prototype.onViewExit = function () {\r\n        cc.log(\"SplashScreenViewController::onViewExit\");\r\n    };\r\n    SplashScreenViewController.prototype.onViewExitTransitionDidStart = function () {\r\n        cc.log(\"SplashScreenViewController::onViewExitTransitionDidStart\");\r\n    };\r\n    SplashScreenViewController.prototype.onViewEvent = function (event) {\r\n        switch (event) {\r\n            case \"playGameButtonPressed\":\r\n                this._system.notify(ApplicationEvents_1.ApplicationEvents.APP_GOTO_PLAY_SCENE);\r\n                break;\r\n        }\r\n    };\r\n    return SplashScreenViewController;\r\n}(ViewController_1.ViewController));\r\nexports.SplashScreenViewController = SplashScreenViewController;\r\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./view/SplashScreenViewController.ts\n// module id = 16\n// module chunks = 0\n\n//# sourceURL=webpack:///./view/SplashScreenViewController.ts?");
 
 /***/ }),
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var SceneExtended_1 = __webpack_require__(1);
-var GameViewScene = (function (_super) {
-    __extends(GameViewScene, _super);
-    function GameViewScene() {
-        // 1. super init first
-        return _super.call(this) || this;
-        //super.ctor(); //always call this for compatibility with cocos2dx JS Javascript class system
-    }
-    return GameViewScene;
-}(SceneExtended_1.SceneExtended));
-exports.GameViewScene = GameViewScene;
-
+eval("\r\nvar __extends = (this && this.__extends) || (function () {\r\n    var extendStatics = Object.setPrototypeOf ||\r\n        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||\r\n        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };\r\n    return function (d, b) {\r\n        extendStatics(d, b);\r\n        function __() { this.constructor = d; }\r\n        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());\r\n    };\r\n})();\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nvar SceneExtended_1 = __webpack_require__(1);\r\nvar GameViewScene = (function (_super) {\r\n    __extends(GameViewScene, _super);\r\n    function GameViewScene() {\r\n        // 1. super init first\r\n        return _super.call(this) || this;\r\n        //super.ctor(); //always call this for compatibility with cocos2dx JS Javascript class system\r\n    }\r\n    return GameViewScene;\r\n}(SceneExtended_1.SceneExtended));\r\nexports.GameViewScene = GameViewScene;\r\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./view/scenes/GameViewScene.ts\n// module id = 17\n// module chunks = 0\n\n//# sourceURL=webpack:///./view/scenes/GameViewScene.ts?");
 
 /***/ }),
 /* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var SceneExtended_1 = __webpack_require__(1);
-var SplashScreenViewScene = (function (_super) {
-    __extends(SplashScreenViewScene, _super);
-    function SplashScreenViewScene() {
-        return _super.call(this) || this;
-    }
-    return SplashScreenViewScene;
-}(SceneExtended_1.SceneExtended));
-exports.SplashScreenViewScene = SplashScreenViewScene;
-
+eval("\r\nvar __extends = (this && this.__extends) || (function () {\r\n    var extendStatics = Object.setPrototypeOf ||\r\n        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||\r\n        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };\r\n    return function (d, b) {\r\n        extendStatics(d, b);\r\n        function __() { this.constructor = d; }\r\n        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());\r\n    };\r\n})();\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nvar SceneExtended_1 = __webpack_require__(1);\r\nvar SplashScreenViewScene = (function (_super) {\r\n    __extends(SplashScreenViewScene, _super);\r\n    function SplashScreenViewScene() {\r\n        return _super.call(this) || this;\r\n    }\r\n    return SplashScreenViewScene;\r\n}(SceneExtended_1.SceneExtended));\r\nexports.SplashScreenViewScene = SplashScreenViewScene;\r\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./view/scenes/SplashScreenViewScene.ts\n// module id = 18\n// module chunks = 0\n\n//# sourceURL=webpack:///./view/scenes/SplashScreenViewScene.ts?");
 
 /***/ })
 /******/ ]);

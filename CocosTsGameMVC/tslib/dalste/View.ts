@@ -5,7 +5,7 @@ import { IView } from "./IView";
 import { IViewController } from "./IViewController";
 
 /**
- * @description Virtual class - must be subclassed, the onInitView function must be overriden
+ * @description Virtual class - must be subclassed, the show  function must be overriden
  */
 export class View implements IView {
 
@@ -62,7 +62,10 @@ export class View implements IView {
         this._viewController.viewReady(this, this._viewModel);
     }
 
-
+    /**
+     * @description adds lifecycle listeners to this views (INodeLifeCycleExtensions) asset
+     * 
+     */
     initLifecycleListeners(): void {
         var ass = this.getAsset() as INodeLifeCycleExtensions;
         ass.onEnterSignal.add(this.onEnter, this);
@@ -71,7 +74,10 @@ export class View implements IView {
         ass.onExitTransitionDidStartSignal.add(this.onExitTransitionDidStart, this);
 
     }
-
+    /**
+     * @description removes lifecycle listeners to this views (INodeLifeCycleExtensions) asset
+     * 
+     */
     removeLifeCycleListeners(): void {
         var ass = this.getAsset() as INodeLifeCycleExtensions;
         ass.onEnterSignal.removeAll();
@@ -99,19 +105,28 @@ export class View implements IView {
         this.onExitTransitionDidStartHandler();
     }
     
+    /**
+     * @description optionally override  to handle the views main asset's (cc.Node) onEnter life cycle event
+     */
     protected onEnterHandler(): void {
 
     }
-
+    /**
+     * @description optionally override  to handle the views main asset's (cc.Node) onEnterTransitionDidFinish life cycle event
+     */
     protected onEnterTransitionDidFinishHandler(): void {
 
     }
-
+    /**
+     * @description optionally override  to handle the views main asset's (cc.Node) onExit life cycle event
+     */
     protected onExitHandler(): void {
 
 
     }
-
+    /**
+     * @description optionally override  to handle the views main asset's (cc.Node) onExitTransitionDidStart life cycle event
+     */
     protected onExitTransitionDidStartHandler(): void {
 
     }
@@ -148,16 +163,13 @@ export class View implements IView {
         return this._exitTransitionDidStartSignal;
     }
 
-          /**
+    /**
      * @description returns the signals.Signal that represents this views main asset's  onEnterTransitionDidFinish event
      * @see cc.Node:onEnter
      */
     getEnterTransitionDidFinishSignal(): signals.Signal {
         return this._enterTransitionDidFinishSignal;
     }
-
-
-
 
     /**
      * @description returns the main asset for this view
@@ -186,7 +198,7 @@ export class View implements IView {
     }
 
     /**
-     * @description displays the view on screen
+     * @description displays the view on screen (pure virtual/abstract function) - must be overriden
      *
      * @param cc.Node  - optional parent node
      */

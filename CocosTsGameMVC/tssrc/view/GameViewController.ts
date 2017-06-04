@@ -25,6 +25,17 @@ export class GameViewController extends ViewController {
 
     onViewEnter(): void {
         cc.log("GameViewController::onViewEnter");
+        var co = new CharacterAssetCreationOptions(CharacterAssetTypes.PLAYER,"player");
+        var ca = this._characterAssetFactory.create(co);
+        ca.setPosition(this._display.middleMiddle().x,this._display.middleMiddle().y);
+
+        this.getView().addChild(ca, 0);
+
+         var c2 = new CharacterAssetCreationOptions(CharacterAssetTypes.NPC,"enemy");
+        var cb = this._characterAssetFactory.create(c2);
+        cb.setPosition(this._display.middleMiddle().x,this._display.middleMiddle().y-100);
+        cc.log("cb2");
+        this.getView().addChild(cb, 1);
     }
     onViewEnterTransitionDidFinish(): void {
         cc.log("GameViewController::onViewEnterTransitionDidFinish");

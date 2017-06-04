@@ -5,6 +5,7 @@ import {IModel} from "./IModel";
 
 /**
  * @description Virtual class - must be subclassed, the onViewReady function must be overriden
+ * provides base functionality for a view controller , contains properties for respective view and model
  */
 export class ViewController implements IViewController {
     /**
@@ -25,10 +26,10 @@ export class ViewController implements IViewController {
     }
 
     /**
-     * @description only override if you need to, this function assigns the associated view to _view class variable and calls onViewReady() 
+     * @description only override if you need to, this function assigns the associated view and model to respective _view/_model  class variables and calls onViewReady() 
      * @param view:IView
      */
-    viewReady(view:IView, model:IModel): void{
+     viewReady(view:IView, model:IModel): void{
         this._view =view;
         this._model = model;
         this.onViewReady();
@@ -38,7 +39,7 @@ export class ViewController implements IViewController {
         return this._view;
     }
     /**
-     * @description Virtual function that is called after the view is assigned to teh controllers _view,
+     * @description Virtual function that is called after the view is assigned to the controllers _view,
      *  it is here that you should initialise listeners and do futher view setup 
      */
     onViewReady(){
