@@ -26,7 +26,7 @@ export class GameplaySystem extends System {
 
 
     refreshEntityLists() {
-        this._playerEntities = this.world.getEntities(GameComponentTypes.PLAYER);
+        this._playerEntities = this.world.getEntities(GameComponentTypes.PLAYER, GameComponentTypes.STATE);
         this._inputEffectedEntities = this.world.getEntities(GameComponentTypes.PLAYER_INPUT);
     }
 
@@ -36,11 +36,11 @@ export class GameplaySystem extends System {
         this.initialiseGame();
         var scope = this;
 
-        this.world.entityAdded(GameComponentTypes.PLAYER).add(function (entity: Entity) {
+        this.world.entityAdded(GameComponentTypes.PLAYER, GameComponentTypes.STATE).add(function (entity: Entity) {
             scope.refreshEntityLists();
         });
 
-        this.world.entityRemoved(GameComponentTypes.PLAYER).add(function (entity: Entity) {
+        this.world.entityRemoved(GameComponentTypes.PLAYER, GameComponentTypes.STATE).add(function (entity: Entity) {
             scope.refreshEntityLists();
 
         });

@@ -26,6 +26,12 @@ export class SplashScreenViewController extends ViewController {
         cc.log("SplashScreenViewController::onViewEnterTransitionDidFinish");
     }
 
+    /**
+     * @function onViewExit 
+     * @description recommended here that you free any resources allocated for the view/scene 
+     * ---- TIP here you could also save the game state
+     * @see cc.Node onEnter
+     */
     onViewExit(): void {
         cc.log("SplashScreenViewController::onViewExit");
     }

@@ -22,6 +22,40 @@ export class StateComponent extends Component {
     secondaryState: StateMachine;
 }
 /**
+ * overrides StateMachine interface with events for enemy primary state
+ */
+export interface EnemyPrimaryState extends StateMachine
+{
+    start():void;
+    die():void;
+}
+/**
+ * @class EnemyStateComponent overrides StateComponent to provide  EnemyPrimaryState as primaryState
+ * @description   wraps two Statemachine objects for an entities Primary State and Secondary State
+ */
+export class EnemyStateComponent extends Component {
+    primaryState: EnemyPrimaryState;
+}
+
+/**
+ * overrides StateMachine interface with events for enemy primary state
+ */
+export interface PlayerPrimaryState extends StateMachine
+{
+   
+    die():void;
+}
+/**
+ * @class PlayerStateComponent overrides StateComponent to provide  PlayerPrimaryState primaryState
+ * @description   wraps two Statemachine objects for an entities Primary State and Secondary State
+ */
+export class PlayerStateComponent extends Component {
+    primaryState: PlayerPrimaryState;
+}
+
+
+
+/**
  * @class ScriptedNPCAI
  * @description  identifies an entity as having Scripted AI
  */

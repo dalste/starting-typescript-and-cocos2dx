@@ -1,4 +1,6 @@
 import { IFactory } from "./../IFactory";
+
+import { StateComponent } from "./../../component/GameComponents";
 import { PlayerInput } from "./../../component/GameComponents";
 import { CharacterAssetTypes } from "./../../types/AssetTypes";
 import { CharacterAssetCreationOptions } from "./../view/CharacterAssetFactory";
@@ -7,8 +9,9 @@ import { Entity } from "./../../../tslib/moon/src/Entity";
 import { CharacterEntityTypes } from "./../../types/EntityTypes";
 import { ICreationOptions } from "./../ICreationOptions";
 
-import { CocosRenderNode, Player, NPC } from "./../../component/GameComponents";
+import { CocosRenderNode, Player, NPC,EnemyStateComponent, PlayerStateComponent,PlayerPrimaryState,EnemyPrimaryState } from "./../../component/GameComponents";
 import { Display } from "./../../../tslib/dalste/util/Display";
+import  {StateMachine,StateMachineConfig} from "javascript-state-machine";
 
 /**
  * @class CharacterEntityCreationOptions
@@ -63,6 +66,17 @@ export class CharacterEntityFactory implements IFactory<CharacterEntityCreationO
                 cc.node = asset;
                 e.addComponent(cc);
 
+                var sc = new EnemyStateComponent();
+                var smc:StateMachineConfig = {
+                    initial:"idle",
+                    events: [
+                        { name: 'start',  from: 'idle',  to: 'moving' },
+                        { name: 'die', from: 'moving', to: 'dead'    },
+                    ]
+                };
+                sc.primaryState =  StateMachine.create(smc) as EnemyPrimaryState;
+                e.addComponent(sc);
+
                 var npc = new NPC();
                 e.addComponent(npc);
 
@@ -80,7 +94,16 @@ export class CharacterEntityFactory implements IFactory<CharacterEntityCreationO
 
                 var pc = new Player();
                 e.addComponent(pc);
-
+                var psc = new PlayerStateComponent();
+                var smc:StateMachineConfig = {
+                    initial:"alive",
+                    events: [
+                
+                        { name: 'die', from: 'alive', to: 'dead'   },
+                    ]
+                };
+                psc.primaryState =  StateMachine.create(smc) as PlayerPrimaryState;
+                e.addComponent(psc);
                 
                 var pi = new PlayerInput(); //register for input events
                 e.addComponent(pi);

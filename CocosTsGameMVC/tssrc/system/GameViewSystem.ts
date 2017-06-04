@@ -44,7 +44,9 @@ export class GameViewSystem extends System {
             scope.refreshEntityLists();
             cc.log("render node removed ");
             var crnc = entity.getComponent(GameComponentTypes.COCOS_RENDER_NODE) as CocosRenderNode;
+            
             scope._container.removeChild(crnc.node);
+            crnc.node = null;
 
         });
 

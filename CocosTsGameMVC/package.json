@@ -39,5 +39,8 @@
     "webpack-dev-server": "^2.4.5",
     "webpack-stream": "^3.2.0",
     "write-file-webpack-plugin": "^4.0.2"
+  },
+  "dependencies": {
+    "javascript-state-machine": "^2.4.0"
   }
 }

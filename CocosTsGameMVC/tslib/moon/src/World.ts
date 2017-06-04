@@ -38,10 +38,10 @@ import { Signal } from "./Signal";
         cleanUp():void{
 
             var entities  = this.entities.toArray();
-              for(var i= entities.length-1; i>0; i--){
+              for(var i= entities.length-1; i>=0; i--){
                 this.removeEntity(entities[i]);
             }
-            for(var i= this.systems.length-1; i>0; i--){
+            for(var i= this.systems.length-1; i>=0; i--){
                 this.removeSystem(this.systems[i]);
             }
 

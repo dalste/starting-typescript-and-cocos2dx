@@ -15,7 +15,7 @@ export class NPCAISystem extends System {
 
 
     refreshEntityLists() {
-        this._renderEntities = this.world.getEntities(GameComponentTypes.SCRIPTED_NPC_AI);
+        this._renderEntities = this.world.getEntities(GameComponentTypes.SCRIPTED_NPC_AI,GameComponentTypes.STATE);
     }
 
     addedToWorld(world: World) {
@@ -23,11 +23,11 @@ export class NPCAISystem extends System {
         cc.log("NPCAISystem Added");
         var scope = this;
 
-        this.world.entityAdded(GameComponentTypes.SCRIPTED_NPC_AI).add(function (entity: Entity) {
+        this.world.entityAdded(GameComponentTypes.SCRIPTED_NPC_AI,GameComponentTypes.STATE).add(function (entity: Entity) {
             scope.refreshEntityLists();
         });
 
-        this.world.entityRemoved(GameComponentTypes.SCRIPTED_NPC_AI).add(function (entity: Entity) {
+        this.world.entityRemoved(GameComponentTypes.SCRIPTED_NPC_AI,GameComponentTypes.STATE).add(function (entity: Entity) {
             scope.refreshEntityLists();
 
         });
