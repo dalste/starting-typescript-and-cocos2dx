@@ -35,6 +35,11 @@ import { Signal } from "./Signal";
            // this.systemEventBusSignal = new signals.Signal;
         }
 
+        /**
+         * removes all entities and systems
+         * removes all listeners from systems and families
+         * clears families 
+         */
         cleanUp():void{
 
             var entities  = this.entities.toArray();
@@ -59,13 +64,6 @@ import { Signal } from "./Signal";
                 }
  
             }
-
-            
-            
-
-            
-
-
         }
 
         dispatchWorldEvent(eventName:string, eventData:any){

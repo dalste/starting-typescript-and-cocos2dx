@@ -1,4 +1,8 @@
 import { IFactory } from "./../IFactory";
+import { EnemySecondaryState } from "./../../component/GameComponents";
+import { EnemySecondaryStates } from "./../../component/GameComponents";
+import { EnemyPrimaryStates } from "./../../component/GameComponents";
+import { PositionComponent } from "./../../component/GameComponents";
 
 import { StateComponent } from "./../../component/GameComponents";
 import { PlayerInput } from "./../../component/GameComponents";
@@ -62,20 +66,34 @@ export class CharacterEntityFactory implements IFactory<CharacterEntityCreationO
                 var asset = this._characterAssetFactory.create(caco);
                 asset.setPosition(this._display.middleMiddle().x,this._display.middleMiddle().y+100);
 
-                var cc = new CocosRenderNode();
-                cc.node = asset;
-                e.addComponent(cc);
+                var posc = new PositionComponent();
+                posc.position = cc.p(asset.getPositionX(),asset.getPositionY());
+                e.addComponent(posc);
+
+                var crnc = new CocosRenderNode();
+                crnc.node = asset;
+                e.addComponent(crnc);
 
                 var sc = new EnemyStateComponent();
-                var smc:StateMachineConfig = {
-                    initial:"idle",
+                var psmc:StateMachineConfig = {
+                    initial:EnemyPrimaryStates.IDLE,
                     events: [
-                        { name: 'start',  from: 'idle',  to: 'moving' },
-                        { name: 'die', from: 'moving', to: 'dead'    },
+                        { name: 'start',  from: EnemyPrimaryStates.IDLE,  to: EnemyPrimaryStates.MOVING },
+                        { name: 'die', from: EnemyPrimaryStates.MOVING , to: EnemyPrimaryStates.DEAD   },
                     ]
                 };
-                sc.primaryState =  StateMachine.create(smc) as EnemyPrimaryState;
+                sc.primaryState =  StateMachine.create(psmc) as EnemyPrimaryState;
+
+                var ssmc:StateMachineConfig = {
+                    initial:EnemySecondaryStates.NONE,
+                    events: [
+                        { name: 'moveLeft',  from:[ EnemySecondaryStates.NONE, EnemySecondaryStates.MOVING_RIGHT],  to: EnemySecondaryStates.MOVING_LEFT },
+                        { name: 'moveRight', from: [ EnemySecondaryStates.NONE, EnemySecondaryStates.MOVING_LEFT] , to: EnemySecondaryStates.MOVING_RIGHT   },
+                    ]
+                };
+                sc.secondaryState =  StateMachine.create(ssmc) as EnemySecondaryState;
                 e.addComponent(sc);
+
 
                 var npc = new NPC();
                 e.addComponent(npc);
@@ -87,10 +105,14 @@ export class CharacterEntityFactory implements IFactory<CharacterEntityCreationO
                 var caco = new CharacterAssetCreationOptions(CharacterAssetTypes.PLAYER, "PLAYER");
                 var asset = this._characterAssetFactory.create(caco);
                 asset.setPosition(this._display.middleMiddle().x,this._display.middleMiddle().y);
+                
+                var posc = new PositionComponent();
+                posc.position = cc.p(asset.getPositionX(),asset.getPositionY());
+                e.addComponent(posc);
 
-                var cc = new CocosRenderNode();
-                cc.node = asset;
-                e.addComponent(cc);
+                var crnc = new CocosRenderNode();
+                crnc.node = asset;
+                e.addComponent(crnc);
 
                 var pc = new Player();
                 e.addComponent(pc);

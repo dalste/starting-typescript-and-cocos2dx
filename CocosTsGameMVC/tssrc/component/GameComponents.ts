@@ -21,35 +21,61 @@ export class StateComponent extends Component {
     primaryState: StateMachine;
     secondaryState: StateMachine;
 }
+
+/**
+ * describes allowable enemy states
+ */
+export class EnemyPrimaryStates {
+    static DEAD: string = "dead";
+    static MOVING: string = "moving";
+    static IDLE: string = "idle";
+}
 /**
  * overrides StateMachine interface with events for enemy primary state
  */
-export interface EnemyPrimaryState extends StateMachine
-{
-    start():void;
-    die():void;
+export interface EnemyPrimaryState extends StateMachine {
+
+    start(): void;
+    die(): void;
+}
+
+/**
+ * describes allowable enemy secondary states
+ */
+export class EnemySecondaryStates {
+    static NONE: string = "none";
+    static MOVING_LEFT: string = "movingLeft";
+    static MOVING_RIGHT: string = "movingRight";
+}
+
+/**
+ * overrides StateMachine interface with events for enemy secondary state
+ */
+export interface EnemySecondaryState extends StateMachine {
+    moveLeft(): void;
+    moveRight(): void;
 }
 /**
  * @class EnemyStateComponent overrides StateComponent to provide  EnemyPrimaryState as primaryState
  * @description   wraps two Statemachine objects for an entities Primary State and Secondary State
  */
-export class EnemyStateComponent extends Component {
+export class EnemyStateComponent extends StateComponent {
     primaryState: EnemyPrimaryState;
+    secondaryState: EnemySecondaryState;
 }
 
 /**
  * overrides StateMachine interface with events for enemy primary state
  */
-export interface PlayerPrimaryState extends StateMachine
-{
-   
-    die():void;
+export interface PlayerPrimaryState extends StateMachine {
+
+    die(): void;
 }
 /**
  * @class PlayerStateComponent overrides StateComponent to provide  PlayerPrimaryState primaryState
  * @description   wraps two Statemachine objects for an entities Primary State and Secondary State
  */
-export class PlayerStateComponent extends Component {
+export class PlayerStateComponent extends StateComponent {
     primaryState: PlayerPrimaryState;
 }
 

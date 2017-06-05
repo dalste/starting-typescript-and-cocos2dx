@@ -1,17 +1,30 @@
 import { GameComponentTypes } from "./../types/GameComponentTypes";
+import { PositionComponent } from "./../component/GameComponents";
 import { World } from "./../../tslib/moon/src/World";
 import { Entity } from "./../../tslib/moon/src/Entity";
 import { System } from "./../../tslib/moon/src/System";
 import { CocosRenderNode } from "./../component/GameComponents";
+
 export class GameViewSystem extends System {
     /**
-     * cached list of the COCOS_RENDER_NODE entities this system operates upon 
+     * cached list of the GameComponentTypes.COCOS_RENDER_NODE entities this system operates upon 
      */
     protected _renderEntities: Entity[];
+
+
+    /**
+   * cached list of the GameComponentTypes.COCOS_RENDER_NODE && GameComponentTypes.POSITIONentities this system operates upon 
+   */
+    protected _renderPositionEntities: Entity[];
     /**
      * the cc.Node container for our render nodes
      */
     protected _container: cc.Node;
+
+
+    /**
+    * @description called by dijon IOC container after instance is created and dependencies injected
+    */
     setup() {
 
     }
@@ -22,47 +35,79 @@ export class GameViewSystem extends System {
 
     }
 
-
+    /**
+     * @description maintains the lists of entities that we are interested in 
+     */
     refreshEntityLists() {
         this._renderEntities = this.world.getEntities(GameComponentTypes.COCOS_RENDER_NODE);
+        this._renderPositionEntities = this.world.getEntities(GameComponentTypes.COCOS_RENDER_NODE, GameComponentTypes.POSITION);
     }
 
+    /**
+    * called when this system is added to the MOON CES World here you should do system initialisation
+    * @param world 
+    */
     addedToWorld(world: World) {
         super.addedToWorld(world);
         cc.log("GameViewSystem Added");
         var scope = this;
 
-        this.world.entityAdded(GameComponentTypes.COCOS_RENDER_NODE).add(function (entity: Entity) {
-            scope.refreshEntityLists();
-            cc.log("render node added ");
-            var crnc = entity.getComponent(GameComponentTypes.COCOS_RENDER_NODE) as CocosRenderNode;
-            scope._container.addChild(crnc.node);
+        this.world.entityAdded(GameComponentTypes.COCOS_RENDER_NODE).add(this.onEntityWithRenderNodeComponentAdded, this);
 
-        });
+        this.world.entityRemoved(GameComponentTypes.COCOS_RENDER_NODE).add(this.onEntityWithRenderNodeComponentRemoved, this);
 
-        this.world.entityRemoved(GameComponentTypes.COCOS_RENDER_NODE).add(function (entity: Entity) {
-            scope.refreshEntityLists();
-            cc.log("render node removed ");
-            var crnc = entity.getComponent(GameComponentTypes.COCOS_RENDER_NODE) as CocosRenderNode;
-            
-            scope._container.removeChild(crnc.node);
-            crnc.node = null;
+        this.world.entityAdded(GameComponentTypes.COCOS_RENDER_NODE, GameComponentTypes.POSITION).add(this.onEntityWithRenderNodeAndPositionComponentAdded, this);
 
-        });
-
+        this.world.entityRemoved(GameComponentTypes.COCOS_RENDER_NODE, GameComponentTypes.POSITION).add(this.onEntityWithRenderNodeAndPositionComponentRemoved, this);
+        this.refreshEntityLists();
     }
 
-    update(dt: number) {
+    onEntityWithRenderNodeComponentAdded(e: Entity): void {
+        this.refreshEntityLists();
+        cc.log("render node added ");
+        var crnc = e.getComponent(GameComponentTypes.COCOS_RENDER_NODE) as CocosRenderNode;
+        this._container.addChild(crnc.node);
+    }
 
+    onEntityWithRenderNodeComponentRemoved(e: Entity): void {
+        this.refreshEntityLists();
+        cc.log("render node removed ");
+        var crnc = e.getComponent(GameComponentTypes.COCOS_RENDER_NODE) as CocosRenderNode;
+
+        this._container.removeChild(crnc.node);
+        crnc.node = null;
+    }
+
+    onEntityWithRenderNodeAndPositionComponentAdded(e: Entity): void {
+        cc.log("onEntityWithRenderNodeAndPositionComponentAdded");
+        this.refreshEntityLists();
+    }
+
+    onEntityWithRenderNodeAndPositionComponentRemoved(e: Entity): void {
+
+        cc.log("onEntityWithRenderNodeAndPositionComponentRemoved");
+        this.refreshEntityLists();
+    }
+
+
+    update(dt: number) {
+        for (var i = 0; i < this._renderPositionEntities.length; i++) {
+            var e = this._renderPositionEntities[i];
+            var pc: PositionComponent = e.getComponent(GameComponentTypes.POSITION) as PositionComponent;
+            var sc: CocosRenderNode = e.getComponent(GameComponentTypes.COCOS_RENDER_NODE) as CocosRenderNode;
+            //cc.log(pc.position.x);
+            sc.setPosition(cc.p(pc.position.x, pc.position.y));
+        }
 
     }
 
     /**
-     * do all cleanup here
-     */
-    removedFromWorld():void{
+    * called when this system is removed fromthe MOON CES World here you should do system cleanup
+    * @param world 
+    */
+    removedFromWorld(): void {
         super.removedFromWorld();
-        this._renderEntities =null;
+        this._renderEntities = null;
         this._container = null;
     }
 

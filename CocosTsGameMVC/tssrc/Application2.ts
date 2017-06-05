@@ -1,4 +1,5 @@
 import { IApplication } from "./IApplication";
+import { NPCAISystem } from "./system/NPCAISystem";
 import { GameplaySystem } from "./system/GameplaySystem";
 import { CharacterEntityFactory } from "./factory/entity/CharacterEntityFactory";
 import { GameModel } from "./model/GameModel";
@@ -12,7 +13,24 @@ import { GameController } from "./controller/GameController";
 import { GameViewController } from "./view/GameViewController";
 import { CharacterAssetFactory } from "./factory/view/CharacterAssetFactory"
 
-
+/**
+ * @class Application2 
+ * @description this Application shows and exampleof setting up an MVC framework using the dijon 
+ * IOC container.
+ * 
+ * - we map a number of singleton utility classes such as Display to be injected as required
+ * 
+ * - we map our factories as singletons 
+ * 
+ * - we tie together our views and view controllers 
+ * 
+ * - we map our game model as a singleton
+ * 
+ * - we map a singleton GameController to handle application wide events and handle the wider application logic 
+ * for example: loading the applications core scenes
+ * 
+ * @see https://github.com/creynders/dijon
+ */
 export class Application2 implements IApplication {
 
 
@@ -81,6 +99,13 @@ export class Application2 implements IApplication {
          */
 
         this._system.mapClass("GameplaySystem", GameplaySystem);
+
+         /**
+         * map the NPCAISystem system class so that we may inject the display utility upon creation
+         */
+
+        this._system.mapClass("NPCAISystem", NPCAISystem);
+
         /**
         * initialise the splash screen view and its controller
         * first we map our SplashScreenView and SplashScreenViewController classes to class identifiers holding the same name 

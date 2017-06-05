@@ -57,7 +57,7 @@ export class GameViewController extends ViewController {
         * adds a PlayerInputEvent coponent to all entities that contain a PlayerInput Component
         */
         var gps = this._system.getObject("GameplaySystem");//new GameplaySystem();
-        var npcs = new NPCAISystem();
+        var npcs = this._system.getObject("NPCAISystem"); //new NPCAISystem();
         var gvs = new GameViewSystem(this.getView().getAsset());
         var pis = new PlayerInputSystem();
 

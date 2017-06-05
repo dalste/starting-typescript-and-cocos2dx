@@ -7,15 +7,34 @@ import { Entity } from "./../../tslib/moon/src/Entity";
 import { IFactory } from "./../factory/IFactory";
 import { CharacterEntityTypes } from "./../types/EntityTypes";
 
+
+/**
+ * @class GameplaySystem
+ * @description this system handles the core game logic, and player input logic 
+ */
 export class GameplaySystem extends System {
 
+    /**
+     * used to create character entities injected by dijon IOC container
+     */
     //inject
     protected _characterEntityFactory: IFactory<CharacterEntityCreationOptions, Entity> = null;
 
+    /**
+     * cached list of entities with GameComponentTypes.PLAYER component
+     */
     protected _playerEntities: Entity[];
 
+
+    /**
+     * cached list of entities with GameComponentTypes.PLAYER_INPUT component
+     */
     protected _inputEffectedEntities: Entity[];
 
+
+    /**
+     * @description called by dijon IOC container after instance is created and dependencies injected
+     */
     setup() {
 
     }
@@ -25,8 +44,9 @@ export class GameplaySystem extends System {
     }
 
 
+    
     /**
-     * we maintain  lists of entities that we are interested in 
+     * @description maintains the lists of entities that we are interested in 
      */
     refreshEntityLists() {
         this._playerEntities = this.world.getEntities(GameComponentTypes.PLAYER, GameComponentTypes.STATE);
@@ -34,7 +54,7 @@ export class GameplaySystem extends System {
     }
 
     /**
-     * called when this system is added to the MOON CES World here you should to system initialisation
+     * called when this system is added to the MOON CES World here you should do system initialisation
      * @param world 
      */
     addedToWorld(world: World) {
@@ -52,19 +72,36 @@ export class GameplaySystem extends System {
 
     }
 
+    /**
+     * @description handles component added events for entities with GameComponentTypes.PLAYER_INPUT component
+     * @param entity 
+     */
     onEntityWithInputComponentAdded(entity: Entity) {
         this.refreshEntityLists();
-        entity.onComponentAdded.add(this.onEntityWithInputComponentNewComponentAdded, this);
-    }
-    onEntityWithInputComponentRemoved(entity:Entity){
-        entity.onComponentAdded.remove(this.onEntityWithInputComponentNewComponentAdded, this);
+        entity.onComponentAdded.add(this.onEntityWithInputComponentComponentAdded, this);
     }
 
+    /**
+     * @description handles component removed events for entities with GameComponentTypes.PLAYER_INPUT component
+     * @param entity 
+     */
+    onEntityWithInputComponentRemoved(entity:Entity){
+        entity.onComponentAdded.remove(this.onEntityWithInputComponentComponentAdded, this);
+    }
+
+    /**
+     * @description general handler for the adding and removal of entities we are interested in 
+     * @param entity 
+     */
     onEntityWeAreInterestedInAddedRemoved(entity: Entity) {
         this.refreshEntityLists();
     }
 
-    onEntityWithInputComponentNewComponentAdded(entity: Entity, componentName: string) {
+    /**
+     * @description  handles componentAdded events for entities with with GameComponentTypes.PLAYER_INPUT component
+     * @param entity 
+     */
+    onEntityWithInputComponentComponentAdded(entity: Entity, componentName: string) {
         switch (componentName) {
             case GameComponentTypes.PLAYER_INPUT_EVENT:
                 //handle entity input event here
@@ -92,7 +129,10 @@ export class GameplaySystem extends System {
         this.world.addEntity(npc);
     }
 
-
+    /**
+     * 
+     * @param dt 
+     */
     update(dt: number) {
 
 

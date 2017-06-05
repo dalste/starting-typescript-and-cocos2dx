@@ -22,6 +22,11 @@ export class PlayerInputSystem extends System {
 
     protected _listener:cc.EventListener;
     //  protected _target: cc.Node;
+
+
+     /**
+     * @description called by dijon IOC container after instance is created and dependencies injected
+     */
     setup() {
 
     }
@@ -31,10 +36,17 @@ export class PlayerInputSystem extends System {
     }
 
 
+    /**
+     * @description maintains the lists of entities that we are interested in 
+     */
     refreshEntityLists() {
         this._inputControlledEntities = this.world.getEntities(GameComponentTypes.PLAYER_INPUT);
     }
 
+    /**
+     * called when this system is added to the MOON CES World here you should do system initialisation
+     * @param world 
+     */
     addedToWorld(world: World) {
         super.addedToWorld(world);
         cc.log("PlayerInputSystem Added");
@@ -166,8 +178,9 @@ export class PlayerInputSystem extends System {
             cc.eventManager.addListener(this._listener, container);
     }
 
-    /**
-     * do all cleanup here
+      /**
+     * called when this system is removed fromthe MOON CES World here you should do system cleanup
+     * @param world 
      */
     removedFromWorld():void{
         super.removedFromWorld();
