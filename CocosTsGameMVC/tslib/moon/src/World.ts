@@ -39,11 +39,31 @@ import { Signal } from "./Signal";
 
             var entities  = this.entities.toArray();
               for(var i= entities.length-1; i>=0; i--){
-                this.removeEntity(entities[i]);
+                  var e = entities[i];
+                this.removeEntity(e);
+                e.onComponentAdded.removeAll();
+                e.onComponentRemoved.removeAll();
             }
             for(var i= this.systems.length-1; i>=0; i--){
-                this.removeSystem(this.systems[i]);
+                var s = this.systems[i];
+                this.removeSystem(s);
+                
             }
+            for(var key in this.families) {
+
+                if (Object.prototype.hasOwnProperty.call(this.families, key)) {
+                    var family:Family = this.families[key];
+                    family.entityAdded.removeAll();
+                    family.entityRemoved.removeAll();
+                    this.families[key] = null;
+                }
+ 
+            }
+
+            
+            
+
+            
 
 
         }

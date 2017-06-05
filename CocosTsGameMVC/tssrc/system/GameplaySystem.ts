@@ -25,52 +25,63 @@ export class GameplaySystem extends System {
     }
 
 
+    /**
+     * we maintain  lists of entities that we are interested in 
+     */
     refreshEntityLists() {
         this._playerEntities = this.world.getEntities(GameComponentTypes.PLAYER, GameComponentTypes.STATE);
         this._inputEffectedEntities = this.world.getEntities(GameComponentTypes.PLAYER_INPUT);
     }
 
+    /**
+     * called when this system is added to the MOON CES World here you should to system initialisation
+     * @param world 
+     */
     addedToWorld(world: World) {
         super.addedToWorld(world);
         cc.log("GameplaySystem Added");
         this.initialiseGame();
         var scope = this;
 
-        this.world.entityAdded(GameComponentTypes.PLAYER, GameComponentTypes.STATE).add(function (entity: Entity) {
-            scope.refreshEntityLists();
-        });
-
-        this.world.entityRemoved(GameComponentTypes.PLAYER, GameComponentTypes.STATE).add(function (entity: Entity) {
-            scope.refreshEntityLists();
-
-        });
-
-        this.world.entityAdded(GameComponentTypes.PLAYER_INPUT).add(function (entity: Entity) {
-            scope.refreshEntityLists();
-
-            //handle input events
-            entity.onComponentAdded.add(function (entity: Entity, componentName: string) {
-                switch (componentName) {
-                    case GameComponentTypes.PLAYER_INPUT_EVENT:
-                        //handle player input event here
-                        cc.log("player input event occured");
-                        //remove event component
-                        entity.removeComponent(GameComponentTypes.PLAYER_INPUT_EVENT);
-                        break;
-                }
-            });
-        });
-
-        this.world.entityRemoved(GameComponentTypes.PLAYER_INPUT).add(function (entity: Entity) {
-            scope.refreshEntityLists();
-
-        });
+        this.world.entityAdded(GameComponentTypes.PLAYER, GameComponentTypes.STATE).add(this.onEntityWeAreInterestedInAddedRemoved, this);
+        this.world.entityRemoved(GameComponentTypes.PLAYER, GameComponentTypes.STATE).add(this.onEntityWeAreInterestedInAddedRemoved, this);
+        this.world.entityAdded(GameComponentTypes.PLAYER_INPUT).add(this.onEntityWithInputComponentAdded, this);
+        this.world.entityRemoved(GameComponentTypes.PLAYER_INPUT).add(this.onEntityWithInputComponentRemoved, this);
 
         scope.refreshEntityLists();
 
     }
 
-    protected initialiseGame() {
+    onEntityWithInputComponentAdded(entity: Entity) {
+        this.refreshEntityLists();
+        entity.onComponentAdded.add(this.onEntityWithInputComponentNewComponentAdded, this);
+    }
+    onEntityWithInputComponentRemoved(entity:Entity){
+        entity.onComponentAdded.remove(this.onEntityWithInputComponentNewComponentAdded, this);
+    }
+
+    onEntityWeAreInterestedInAddedRemoved(entity: Entity) {
+        this.refreshEntityLists();
+    }
+
+    onEntityWithInputComponentNewComponentAdded(entity: Entity, componentName: string) {
+        switch (componentName) {
+            case GameComponentTypes.PLAYER_INPUT_EVENT:
+                //handle entity input event here
+                cc.log("entity input event occured");
+                //remove event component
+                entity.removeComponent(GameComponentTypes.PLAYER_INPUT_EVENT);
+                break;
+        }
+    }
+
+
+
+    /**
+     * do our game initialisation
+     * @description create and add player and NPC to world
+     */
+    protected initialiseGame(): void {
         var ceco = new CharacterEntityCreationOptions(CharacterEntityTypes.PLAYER, "Player");
         var player: Entity = this._characterEntityFactory.create(ceco);
 
@@ -88,9 +99,9 @@ export class GameplaySystem extends System {
     }
 
     /**
-     * do all cleanup here
+     * called when the system is removed from the world, do all cleanup here
      */
-    removedFromWorld():void{
+    removedFromWorld(): void {
         super.removedFromWorld();
         this._inputEffectedEntities = null;
         this._playerEntities = null;

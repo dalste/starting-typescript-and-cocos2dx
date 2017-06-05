@@ -30,7 +30,7 @@ declare namespace signals {
          * @param {Number} [priority] The priority level of the event listener. Listeners with higher priority will be executed before listeners with lower priority. Listeners with same priority level will be executed at the same order as they were added. (default = 0)
          * @return {SignalBinding} An Object representing the binding between the Signal and listener.
          */
-        add  (listener:Function, listenerContext:any, priority?:number):any;
+        add  (listener:Function, listenerContext?:any, priority?:number):any;
            /**
          * Add listener to the signal that should be removed after first execution (will be executed only once).
          * @param {Function} listener Signal handler function.
@@ -38,14 +38,14 @@ declare namespace signals {
          * @param {Number} [priority] The priority level of the event listener. Listeners with higher priority will be executed before listeners with lower priority. Listeners with same priority level will be executed at the same order as they were added. (default = 0)
          * @return {SignalBinding} An Object representing the binding between the Signal and listener.
          */
-        addOnce  (listener:Function, listenerContext:any, priority:number):any;
+        addOnce  (listener:Function, listenerContext?:any, priority?:number):any;
              /**
          * Remove a single listener from the dispatch queue.
          * @param {Function} listener Handler function that should be removed.
          * @param {Object} [context] Execution context (since you can add the same handler multiple times if executing in a different context).
          * @return {Function} Listener handler function.
          */
-        remove  (listener:Function, context:any):any;
+        remove  (listener:Function, context?:any):any;
           /**
          * Remove all listeners from the Signal.
          */
