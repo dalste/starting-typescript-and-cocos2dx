@@ -1,4 +1,4 @@
-export class ApplicationEvents{
+export class ApplicationEvents {
 
     static APP_STARTUP: string = "App:startup";
     static APP_STARTUP_COMPLETE: string = "App:startupComplete";

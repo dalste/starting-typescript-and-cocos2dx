@@ -1,9 +1,9 @@
-export enum CharacterEntityTypes{
+export enum CharacterEntityTypes {
     PLAYER,
     NPC
 }
 
-export enum GameObjectEntityTypes{
+export enum GameObjectEntityTypes {
     PLAYER_BULLET,
     NPC_BULLET
 }

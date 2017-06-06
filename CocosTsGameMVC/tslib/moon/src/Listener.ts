@@ -1,5 +1,5 @@
 
-    export interface Listener {
-        (...messages: any[]): void;
-    }
+export interface Listener {
+    (...messages: any[]): void;
+}
 

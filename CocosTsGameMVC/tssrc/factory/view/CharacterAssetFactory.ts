@@ -8,23 +8,23 @@ import { MockAsset, MockAssetColours } from "./MockAsset";
  * @description provides creation options to CharacterAssetFactory
  */
 export class CharacterAssetCreationOptions implements ICreationOptions<CharacterAssetTypes>{
-    private _type:CharacterAssetTypes; 
-    private _name:string;
+    private _type: CharacterAssetTypes;
+    private _name: string;
 
     /**
      * 
      * @param type - the type of object to create 
      * @param name -the name assigned to the cc.node see cc.node.name
      */
-    constructor(type:CharacterAssetTypes, name:string){
-            this._type= type;
-            this._name = name;
+    constructor(type: CharacterAssetTypes, name: string) {
+        this._type = type;
+        this._name = name;
     }
-    getType():CharacterAssetTypes{
+    getType(): CharacterAssetTypes {
         return this._type;
     }
 
-    getName():string{
+    getName(): string {
         return this._name;
     }
 }
@@ -35,22 +35,22 @@ export class CharacterAssetCreationOptions implements ICreationOptions<Character
  * Uses the returned type from character creation options to create the appropriate cc.Node derived asset
  * 
  */
-export  class CharacterAssetFactory implements IFactory<CharacterAssetCreationOptions,cc.Node> { 
+export class CharacterAssetFactory implements IFactory<CharacterAssetCreationOptions, cc.Node> {
 
-    create(options:CharacterAssetCreationOptions):cc.Node{
+    create(options: CharacterAssetCreationOptions): cc.Node {
 
-        switch( options.getType()){
+        switch (options.getType()) {
             case CharacterAssetTypes.NPC:
-                return new MockAsset<CharacterAssetTypes>(options,50,MockAssetColours.PINK,"NPC");
- 
+                return new MockAsset<CharacterAssetTypes>(options, 50, MockAssetColours.PINK, "NPC");
+
             case CharacterAssetTypes.NPC_MOCK:
-                return new MockAsset<CharacterAssetTypes>(options,50,MockAssetColours.PINK,"NPC MOCK");
- 
+                return new MockAsset<CharacterAssetTypes>(options, 50, MockAssetColours.PINK, "NPC MOCK");
+
             case CharacterAssetTypes.PLAYER:
-                return new MockAsset<CharacterAssetTypes>(options,50,MockAssetColours.GREEN,"PLAYER");
+                return new MockAsset<CharacterAssetTypes>(options, 50, MockAssetColours.GREEN, "PLAYER");
 
             case CharacterAssetTypes.PLAYER_MOCK:
-                return new MockAsset<CharacterAssetTypes>(options,50,MockAssetColours.GREEN,"PLAYER MOCK");
+                return new MockAsset<CharacterAssetTypes>(options, 50, MockAssetColours.GREEN, "PLAYER MOCK");
 
         }
 

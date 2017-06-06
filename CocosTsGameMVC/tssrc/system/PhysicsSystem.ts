@@ -1,4 +1,5 @@
 import { GameComponentTypes } from "./../types/GameComponentTypes";
+import { Player } from "./../component/GameComponents";
 import { PhysicsComponent } from "./../component/GameComponents";
 import { Display } from "./../../tslib/dalste/util/Display";
 import { PositionComponent } from "./../component/GameComponents";
@@ -12,6 +13,7 @@ import { Entity } from "./../../tslib/moon/src/Entity";
 import { IFactory } from "./../factory/IFactory";
 import { CharacterEntityTypes } from "./../types/EntityTypes";
 import { MovementComponent } from "./../component/GameComponents";
+import { GameModel } from "./../model/GameModel";
 
 
 /**
@@ -34,6 +36,14 @@ export class PhysicsSystem extends System {
 
     //inject 
     protected _display: Display = undefined;
+
+
+    //inject 
+    protected _collisionEventBus: signals.Signal = undefined;
+
+
+    //inject
+    protected _gameModel: GameModel = undefined;
 
     /**
      * cached list of entities with GameComponentTypes.MOVEMENT, GameComponentTypes.PHYSICS, && GameComponentTypes.POSITION components
@@ -79,6 +89,8 @@ export class PhysicsSystem extends System {
 
         this.refreshEntityLists();
 
+
+
     }
 
     onEntityWeAreInterestedInAdded(entity: Entity) {
@@ -95,13 +107,16 @@ export class PhysicsSystem extends System {
 
 
 
+
+
     /**
      * 
      * @param dt 
      */
     update(dt: number) {
 
-        for (var i = 0; i < this._physicsEntities.length; i++) {
+        var collisions = new Array();
+        for (var i = this._physicsEntities.length - 1; i >= 0; i--) {
             var e: Entity = this._physicsEntities[i];
             var phyc = e.getComponent(GameComponentTypes.PHYSICS) as PhysicsComponent;
             var posc = e.getComponent(GameComponentTypes.POSITION) as PositionComponent;
@@ -137,13 +152,54 @@ export class PhysicsSystem extends System {
             }
 
             //remove npc and player bullets upon collision with game bounds
-            if(boundsCollision){
-                if(e.hasComponent(GameComponentTypes.NPC_BULLET) || e.hasComponent(GameComponentTypes.PLAYER_BULLET)){
+            if (boundsCollision) {
+                if (e.hasComponent(GameComponentTypes.NPC_BULLET) || e.hasComponent(GameComponentTypes.PLAYER_BULLET)) {
                     this.world.removeEntity(e);
+                    continue;
                 }
-            } 
+            }
+
+            //detect npc bullet vs player collisions 
+
+            if (e.hasComponent(GameComponentTypes.NPC_BULLET)) {
+                var players = this.world.getEntities(GameComponentTypes.PLAYER);
+                var player = players[0]; //only a single player 
+
+                var ppc = player.getComponent(GameComponentTypes.POSITION) as PositionComponent;
+
+                var distVect = cc.pSub(posc.position, ppc.position);
+                var distMag = cc.pLength(distVect);
+
+                if (distMag <= 50) //normally would be sum of the bounding radius or some other bounding volumes - we cheat for brievity
+                {
+                    collisions.push([player, e]);
+                }
+
+            }
+
+            //detect player bullet vs npc collisions 
+            if (e.hasComponent(GameComponentTypes.PLAYER_BULLET)) {
+                var npcs = this.world.getEntities(GameComponentTypes.NPC);
+                var npc = npcs[0]; //only a single player 
+
+                var npcpc = npc.getComponent(GameComponentTypes.POSITION) as PositionComponent;
+
+                var distVect = cc.pSub(posc.position, npcpc.position);
+                var distMag = cc.pLength(distVect);
+
+                if (distMag <= 50) //normally would be sum of the bounding radius or some other bounding volumes - we cheat for brievity
+                {
+                    collisions.push([npc, e]);
+                }
+
+            }
 
 
+        }
+
+        //dispatch all collisions via collision event bus
+        for (var j = 0; j < collisions.length; j++) {
+            this._collisionEventBus.dispatch(collisions[j][0], collisions[j][1]);
         }
 
 
@@ -154,6 +210,7 @@ export class PhysicsSystem extends System {
      */
     removedFromWorld(): void {
         super.removedFromWorld();
+
         this._physicsEntities = null;
         this._gameObjectEntityFactory = null;
     }

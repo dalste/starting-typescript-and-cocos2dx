@@ -20,13 +20,13 @@ export class PlayerInputSystem extends System {
     protected _gestureRecogniser: DirectionalSwipeGestureRecogniser;
 
 
-    protected _listener:cc.EventListener;
+    protected _listener: cc.EventListener;
     //  protected _target: cc.Node;
 
 
-     /**
-     * @description called by dijon IOC container after instance is created and dependencies injected
-     */
+    /**
+    * @description called by dijon IOC container after instance is created and dependencies injected
+    */
     setup() {
 
     }
@@ -82,7 +82,7 @@ export class PlayerInputSystem extends System {
 
         var scope = this;
 
-            this._listener = cc.EventListener.create({
+        this._listener = cc.EventListener.create({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
             swallowTouches: false,
             onTouchBegan: function (touch: any, event: any) {
@@ -150,7 +150,7 @@ export class PlayerInputSystem extends System {
                     case SwipeDirections.SWIPE_LEFT:
                     case SwipeDirections.SWIPE_RIGHT:
                         cc.warn("PlayerInputSystem:createTapListeners->onTouchEnded swipe " + swipeResult + " not implemented");
-           
+
                         break;
 
                 }
@@ -173,16 +173,16 @@ export class PlayerInputSystem extends System {
             cc.eventManager.addListener(this._listener, container);
     }
 
-      /**
-     * called when this system is removed from the MOON CES World here you should do system cleanup
-     * @param world 
-     */
-    removedFromWorld():void{
+    /**
+   * called when this system is removed from the MOON CES World here you should do system cleanup
+   * @param world 
+   */
+    removedFromWorld(): void {
         super.removedFromWorld();
-         cc.eventManager.removeListener(this._listener);
-         this._inputControlledEntities = null;
-         this._gestureRecogniser = null;
-         this._listener = null;
+        cc.eventManager.removeListener(this._listener);
+        this._inputControlledEntities = null;
+        this._gestureRecogniser = null;
+        this._listener = null;
     }
 
 

@@ -1,32 +1,32 @@
 declare namespace dijon {
 
-   type Callback = (...args: any[]) => void
-   export class System  {
+    type Callback = (...args: any[]) => void
+    export class System {
         constructor();
 
 
 
-         /**
-         * When <code>true</code> injections are made only if an object has a property with the mapped outlet name.<br/>
-         * <strong>Set to <code>false</code> at own risk</strong>, may have quite undesired side effects.
-         * @example
-         * system.strictInjections = true
-         * var o = {};
-         * system.mapSingleton( 'userModel', UserModel );
-         * system.mapOutlet( 'userModel' );
-         * system.injectInto( o );
-         *
-         * //o is unchanged
-         *
-         * system.strictInjections = false;
-         * system.injectInto( o );
-         *
-         * //o now has a member 'userModel' which holds a reference to the singleton instance
-         * //of UserModel
-         * @type Boolean
-         * @default true
-         */
-        strictInjections:boolean ;
+        /**
+        * When <code>true</code> injections are made only if an object has a property with the mapped outlet name.<br/>
+        * <strong>Set to <code>false</code> at own risk</strong>, may have quite undesired side effects.
+        * @example
+        * system.strictInjections = true
+        * var o = {};
+        * system.mapSingleton( 'userModel', UserModel );
+        * system.mapOutlet( 'userModel' );
+        * system.injectInto( o );
+        *
+        * //o is unchanged
+        *
+        * system.strictInjections = false;
+        * system.injectInto( o );
+        *
+        * //o now has a member 'userModel' which holds a reference to the singleton instance
+        * //of UserModel
+        * @type Boolean
+        * @default true
+        */
+        strictInjections: boolean;
 
         /**
          * Enables the automatic mapping of outlets for mapped values, singletons and classes
@@ -43,18 +43,18 @@ declare namespace dijon {
          * @type Boolean
          * @default false
          */
-        autoMapOutlets:boolean;
+        autoMapOutlets: boolean;
 
         /**
          * The name of the method that will be called for all instances, right after injection has occured.
          * @type String
          * @default 'setup'
          */
-        postInjectionHook:string;
+        postInjectionHook: string;
 
 
 
-  
+
         /**
          * defines <code>outletName</code> as an injection point in <code>targetKey</code>for the object mapped to <code>sourceKey</code>
          * @example
@@ -96,9 +96,9 @@ declare namespace dijon {
          * @return {dijon.System}
          * @see dijon.System#unmapOutlet
          */
-        mapOutlet ( sourceKey:string,
-                              targetKey?:string,
-                              outletName?:string ):dijon.System;
+        mapOutlet(sourceKey: string,
+            targetKey?: string,
+            outletName?: string): dijon.System;
         /**
          * Retrieve (or create) the object mapped to <code>key</code>
          * @example
@@ -107,7 +107,7 @@ declare namespace dijon {
          * @param {Object} key
          * @return {Object}
          */
-        getObject ( key:any ):any;
+        getObject(key: any): any;
 
         /**
          * Maps <code>useValue</code> to <code>key</code>
@@ -118,8 +118,8 @@ declare namespace dijon {
          * @param {Object} useValue
          * @return {dijon.System}
          */
-        mapValue ( key:string,
-                             useValue:any ): dijon.System;
+        mapValue(key: string,
+            useValue: any): dijon.System;
         /**
          * Returns whether the key is mapped to an object
          * @example
@@ -128,7 +128,7 @@ declare namespace dijon {
          * @param {String} key
          * @return {Boolean}
          */
-        hasMapping ( key:string ):boolean;
+        hasMapping(key: string): boolean;
 
         /**
          * Maps <code>clazz</code> as a factory to <code>key</code>
@@ -146,8 +146,8 @@ declare namespace dijon {
          * @param {Function} clazz
          * @return {dijon.System}
          */
-        mapClass <T>( key:string,
-                             clazz : new () => T):dijon.System;
+        mapClass<T>(key: string,
+            clazz: new () => T): dijon.System;
 
         /**
          * Maps <code>clazz</code> as a singleton factory to <code>key</code>
@@ -165,9 +165,9 @@ declare namespace dijon {
          * @param {Function} clazz
          * @return {dijon.System}
          */
-        mapSingleton<T>( key:String ,
-                                 clazz: new () => T ):dijon.System;
-           
+        mapSingleton<T>(key: String,
+            clazz: new () => T): dijon.System;
+
 
         /**
          * Force instantiation of the class mapped to <code>key</code>, whether it was mapped as a singleton or not.
@@ -185,7 +185,7 @@ declare namespace dijon {
          * @param {String} key
          * @return {Object}
          */
-        instantiate ( key:string ):any;
+        instantiate(key: string): any;
 
         /**
          * Perform an injection into an object's mapped outlets, satisfying all it's dependencies
@@ -211,14 +211,14 @@ declare namespace dijon {
          * mapped outlets will be used.
          * @return {dijon.System}
          */
-        injectInto( instance: any,
-                               key:string ):dijon.System;
+        injectInto(instance: any,
+            key: string): dijon.System;
         /**
          * Remove the mapping of <code>key</code> from the system
          * @param {String} key
          * @return {dijon.System}
          */
-        unmap ( key:string ):dijon.System;
+        unmap(key: string): dijon.System;
 
         /**
          * removes an injection point mapping for a given object mapped to <code>key</code>
@@ -227,8 +227,8 @@ declare namespace dijon {
          * @return {dijon.System}
          * @see dijon.System#addOutlet
          */
-        unmapOutlet ( target:string,
-                                outlet:string ):dijon.System;
+        unmapOutlet(target: string,
+            outlet: string): dijon.System;
 
         /**
          * maps a handler for an event/route.<br/>
@@ -310,11 +310,11 @@ declare namespace dijon {
          * @see dijon.System#notify
          * @see dijon.System#unmapHandler
          */
-        mapHandler ( eventName:string,
-                               key?:string,
-                               handler?: string | Callback,
-                               oneShot?:boolean,
-                               passEvent?:boolean ):dijon.System; 
+        mapHandler(eventName: string,
+            key?: string,
+            handler?: string | Callback,
+            oneShot?: boolean,
+            passEvent?: boolean): dijon.System;
         /**
          * Unmaps the handler for a specific event/route.
          * @param {String} eventName Name of the event/route
@@ -325,9 +325,9 @@ declare namespace dijon {
          * @return {dijon.System}
          * @see dijon.System#mapHandler
          */
-        unmapHandler ( eventName:string,
-                                 key?:string,
-                                 handler? : string | Callback ):dijon.System;
+        unmapHandler(eventName: string,
+            key?: string,
+            handler?: string | Callback): dijon.System;
 
         /**
          * calls all handlers mapped to <code>eventName/route</code>
@@ -335,9 +335,9 @@ declare namespace dijon {
          * @return {dijon.System}
          * @see dijon.System#mapHandler
          */
-        notify ( eventName:String ):dijon.System; 
+        notify(eventName: String): dijon.System;
 
-        
 
-   }
+
+    }
 }

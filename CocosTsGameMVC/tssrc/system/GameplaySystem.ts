@@ -1,4 +1,5 @@
 import { GameComponentTypes } from "./../types/GameComponentTypes";
+import { GameModel } from "./../model/GameModel";
 import { GameObjectEntityTypes } from "./../types/EntityTypes";
 import { GameObjectEntityCreationOptions } from "./../factory/entity/GameObjectEntityFactory";
 import { Display } from "./../../tslib/dalste/util/Display";
@@ -32,6 +33,13 @@ export class GameplaySystem extends System {
 
     //inject 
     protected _display: Display = undefined;
+
+    //inject 
+    protected _gameModel: GameModel = undefined;
+
+
+    //inject 
+    protected _collisionEventBus: signals.Signal = undefined;
 
     /**
      * cached list of entities with GameComponentTypes.PLAYER component
@@ -80,7 +88,9 @@ export class GameplaySystem extends System {
         this.world.entityAdded(GameComponentTypes.PLAYER_INPUT, GameComponentTypes.MOVEMENT, GameComponentTypes.POSITION).add(this.onEntityWithInputComponentAdded, this);
         this.world.entityRemoved(GameComponentTypes.PLAYER_INPUT, GameComponentTypes.MOVEMENT, GameComponentTypes.POSITION).add(this.onEntityWithInputComponentRemoved, this);
 
+        this._collisionEventBus.add(this.onCollisionEvent, this);
         this.initialiseGame();
+
         this.refreshEntityLists();
 
     }
@@ -127,6 +137,7 @@ export class GameplaySystem extends System {
         }
     }
 
+
     handleInputEvent(e: Entity) {
         var pie: PlayerInputEvent = e.getComponent(GameComponentTypes.PLAYER_INPUT_EVENT) as PlayerInputEvent;
         var mc: MovementComponent = e.getComponent(GameComponentTypes.MOVEMENT) as MovementComponent;
@@ -145,7 +156,7 @@ export class GameplaySystem extends System {
                     powerProportion = Math.abs(dir.y) / this._display.screenHeight();
 
                 var maxPower = 10;
-                var powerToApply = maxPower * powerProportion;
+                var powerToApply = Math.max(maxPower * powerProportion, 5);
 
                 mc.movementDirectionNorm = cc.pNormalize(dir);
                 mc.movementDirectionMag = powerToApply;
@@ -154,7 +165,7 @@ export class GameplaySystem extends System {
 
                 break;
             case InputTypes.TOUCH_TAP:
-                var dir = cc.pSub( pie.location,pc.position);
+                var dir = cc.pSub(pie.location, pc.position);
                 var dirNorm = cc.pNormalize(dir);
                 this.spawnBullet(dirNorm, pc.position);
                 cc.log("InputTypes.TOUCH_TAP");
@@ -164,22 +175,56 @@ export class GameplaySystem extends System {
 
     }
 
+
+
+    /**
+     * creats a PLAYER_BULLET bullet entity and adds it to the world
+     * @param dirNorm 
+     * @param location 
+     */
     spawnBullet(dirNorm: cc.Point, location: cc.Point) {
         cc.log("spawn bullet");
 
-        var goeco = new GameObjectEntityCreationOptions(GameObjectEntityTypes.PLAYER_BULLET, "PlayerBullet",location);
+        var goeco = new GameObjectEntityCreationOptions(GameObjectEntityTypes.PLAYER_BULLET, "PlayerBullet", location);
         var bullet: Entity = this._gameObjectEntityFactory.create(goeco);
-        var mc:MovementComponent = bullet.getComponent(GameComponentTypes.MOVEMENT) as MovementComponent;
-        mc.movementDamping =1.1; //for run instead of damping lets accelorate
-        mc.movementDirectionMag =10;
+        var mc: MovementComponent = bullet.getComponent(GameComponentTypes.MOVEMENT) as MovementComponent;
+        mc.movementDamping = 1.1; //for run instead of damping lets accelorate
+        mc.movementDirectionMag = 10;
         mc.movementDirectionNorm = dirNorm;
 
 
 
-         this.world.addEntity(bullet);
+        this.world.addEntity(bullet);
     }
 
+    /**
+     * Handle collision events dispatched from physics system (or elsewhere)
+     * @param e1 
+     * @param e2 
+     */
+    onCollisionEvent(e1: Entity, e2: Entity): void {
 
+        //player shot
+        if (e1.hasComponent(GameComponentTypes.PLAYER) && e2.hasComponent(GameComponentTypes.NPC_BULLET)) {
+            this.world.removeEntity(e2);
+            this._gameModel.setNpcScore(this._gameModel.getNpcScore() + 1);
+        }
+        if (e2.hasComponent(GameComponentTypes.PLAYER) && e1.hasComponent(GameComponentTypes.NPC_BULLET)) {
+            this.world.removeEntity(e1);
+            this._gameModel.setNpcScore(this._gameModel.getNpcScore() + 1);
+        }
+
+        //npc shot
+        if (e1.hasComponent(GameComponentTypes.NPC) && e2.hasComponent(GameComponentTypes.PLAYER_BULLET)) {
+            this.world.removeEntity(e2);
+            this._gameModel.setPlayerScore(this._gameModel.getPlayerScore() + 1);
+        }
+
+        if (e2.hasComponent(GameComponentTypes.NPC) && e1.hasComponent(GameComponentTypes.PLAYER_BULLET)) {
+            this.world.removeEntity(e1);
+            this._gameModel.setPlayerScore(this._gameModel.getPlayerScore() + 1);
+        }
+    }
 
     /**
      * do our game initialisation
@@ -210,6 +255,7 @@ export class GameplaySystem extends System {
      */
     removedFromWorld(): void {
         super.removedFromWorld();
+        this._collisionEventBus.remove(this.onCollisionEvent, this);
         this._inputEffectedEntities = null;
         this._playerEntities = null;
         this._characterEntityFactory = null;

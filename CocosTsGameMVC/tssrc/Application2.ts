@@ -101,6 +101,14 @@ export class Application2 implements IApplication {
 
 
         /**
+        * map a signal as a singleton to dispatch collision events - 
+        *these events will be fired by physics system and handled primarily by Gameplaysystem 
+        * 
+        */
+        this._system.mapSingleton("_collisionEventBus", signals.Signal);
+
+
+        /**
          * map the systems that we need to inkect dependencies into (other systems are just instantiated as normal)
          */
 

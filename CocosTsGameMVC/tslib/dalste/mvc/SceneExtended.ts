@@ -1,5 +1,5 @@
 
-import {INodeLifecycleExtensions} from "./INodeLifecycleExtensions";
+import { INodeLifecycleExtensions } from "./INodeLifecycleExtensions";
 /**
  * @class SceneExtensions -  provides subscribable signal wrappers around scene lifecycle events
  * onEnter
@@ -7,7 +7,7 @@ import {INodeLifecycleExtensions} from "./INodeLifecycleExtensions";
  * onExit
  * onExitTransitionDidStart
  */
-export class SceneExtended extends cc.Scene implements INodeLifecycleExtensions{
+export class SceneExtended extends cc.Scene implements INodeLifecycleExtensions {
 
     /**
      * Event callback that is invoked every time when CCNode enters the 'stage'.
@@ -30,7 +30,7 @@ export class SceneExtended extends cc.Scene implements INodeLifecycleExtensions{
     constructor() {
         super();
         super.ctor();//always call this for compatibility with cocos2dx JS Javascript class system
- 
+
         this.onEnterSignal = new signals.Signal();
         this.onEnterTransitionDidFinishSignal = new signals.Signal();
 
@@ -44,14 +44,14 @@ export class SceneExtended extends cc.Scene implements INodeLifecycleExtensions{
 
 
     onEnterTransitionDidFinish(): void {
-         super.onEnterTransitionDidFinish();
+        super.onEnterTransitionDidFinish();
         this.onEnterTransitionDidFinishSignal.dispatch();
     }
 
 
 
     onExit(): void {
-    
+
         this.onExitSignal.dispatch();
         super.onExit();
     }

@@ -28,23 +28,23 @@ export class View implements IView {
      * @description dispatched when the views asset onEnter event is fired 
      * @see cc.Node:onEnter
      */
-    protected _enterSignal:signals.Signal;
-   /**
-     * @description dispatched when the views asset onExit event is fired 
-     * @see cc.Node:onExit
-     */
-    protected _exitSignal:signals.Signal;
+    protected _enterSignal: signals.Signal;
+    /**
+      * @description dispatched when the views asset onExit event is fired 
+      * @see cc.Node:onExit
+      */
+    protected _exitSignal: signals.Signal;
 
     /**
      * @description dispatched when the views asset onEnter event is fired 
      * @see cc.Node:onEnter
      */
-    protected _enterTransitionDidFinishSignal:signals.Signal;
-   /**
-     * @description dispatched when the views asset onExit event is fired 
-     * @see cc.Node:onExit
-     */
-    protected _exitTransitionDidStartSignal:signals.Signal;
+    protected _enterTransitionDidFinishSignal: signals.Signal;
+    /**
+      * @description dispatched when the views asset onExit event is fired 
+      * @see cc.Node:onExit
+      */
+    protected _exitTransitionDidStartSignal: signals.Signal;
 
     //the identifier for the  main asset for this view to contain the views controls
     protected _asset: cc.Node;
@@ -58,7 +58,7 @@ export class View implements IView {
         this._exitSignal = new signals.Signal();
         this._enterTransitionDidFinishSignal = new signals.Signal();
         this._exitTransitionDidStartSignal = new signals.Signal();
-       
+
         this._viewController.viewReady(this, this._viewModel);
     }
 
@@ -104,7 +104,7 @@ export class View implements IView {
     private onExitTransitionDidStart(): void {
         this.onExitTransitionDidStartHandler();
     }
-    
+
     /**
      * @description optionally override  to handle the views main asset's (cc.Node) onEnter life cycle event
      */
@@ -147,18 +147,18 @@ export class View implements IView {
         return this._exitSignal;
     }
 
-          /**
-     * @description returns the signals.Signal that represents this view onEnter event
-     * @see cc.Node:onEnter
-     */
+    /**
+* @description returns the signals.Signal that represents this view onEnter event
+* @see cc.Node:onEnter
+*/
     getEnterSignal(): signals.Signal {
         return this._enterSignal;
     }
 
-/**
-     * @description returns the signals.Signal that represents this views main asset's onExitTransitionDidStart event
-     * @see cc.Node:onExit
-     */
+    /**
+         * @description returns the signals.Signal that represents this views main asset's onExitTransitionDidStart event
+         * @see cc.Node:onExit
+         */
     getExitTransitionDidStartSignal(): signals.Signal {
         return this._exitTransitionDidStartSignal;
     }

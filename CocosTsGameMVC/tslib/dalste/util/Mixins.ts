@@ -1,4 +1,4 @@
-export class Mixins{
+export class Mixins {
 
     static applyMixins(derivedCtor: any, baseCtors: any[]) {
         baseCtors.forEach(baseCtor => {
@@ -7,6 +7,6 @@ export class Mixins{
                     derivedCtor.prototype[name] = baseCtor.prototype[name];
                 }
             });
-        }); 
+        });
     }
 }

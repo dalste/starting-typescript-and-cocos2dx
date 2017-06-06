@@ -19,7 +19,7 @@ export class GameController {
         this.onDoNavigation(ScreenTypes.SPLASH_SCREEN);
 
     }
-    
+
     /**
      *  handler for the ApplicationEvents.APP_GOTO_PLAY_SCENE event
      */

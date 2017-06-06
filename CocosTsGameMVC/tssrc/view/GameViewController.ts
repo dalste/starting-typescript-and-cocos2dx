@@ -9,6 +9,8 @@ import { CharacterAssetTypes } from "./../types/AssetTypes";
 import { CharacterAssetCreationOptions } from "./../factory/view/CharacterAssetFactory";
 import { IFactory } from "./../factory/IFactory";
 import { Display } from "./../../tslib/dalste/util/Display";
+import { GameModel } from "./../model/GameModel";
+import { GameView } from "./GameView";
 
 declare var ccui: any;
 export class GameViewController extends ViewController {
@@ -17,6 +19,9 @@ export class GameViewController extends ViewController {
 
     //inject
     private _display: Display = undefined;
+
+    //inject
+    protected _gameModel: GameModel = undefined;
 
 
     private _world: World;
@@ -38,6 +43,10 @@ export class GameViewController extends ViewController {
      */
     onViewEnter(): void {
         cc.log("GameViewController::onViewEnter");
+        this._gameModel.bind(GameModel.NPC_SCORE, this.onNpcScoreUpdated, this);
+        this._gameModel.bind(GameModel.PLAYER_SCORE, this.onPlayerScoreUpdated, this);
+        this._gameModel.setPlayerScore(0);
+        this._gameModel.setNpcScore(0);
         this.initialiseGameWorld();
     }
 
@@ -103,6 +112,8 @@ export class GameViewController extends ViewController {
         cc.director.getScheduler().unscheduleUpdateForTarget(this);
         this._world.cleanUp();
         this._world = null;
+        this._gameModel.unbind(GameModel.NPC_SCORE, this.onNpcScoreUpdated, this);
+        this._gameModel.unbind(GameModel.PLAYER_SCORE, this.onPlayerScoreUpdated, this);
         cc.log("GameViewController::onViewExit");
     }
 
@@ -110,6 +121,15 @@ export class GameViewController extends ViewController {
         cc.log("GameViewController::onViewExitTransitionDidStart");
     }
 
+    onNpcScoreUpdated(oldVal: number, newVal: number): void {
+        var gv = this.getView() as GameView;
+        gv.setNpcScore(newVal);
+    }
+
+    onPlayerScoreUpdated(oldVal: number, newVal: number): void {
+        var gv = this.getView() as GameView;
+        gv.setPlayerScore(newVal);
+    }
     onViewUIEvent(event: string): void {
         switch (event) {
             case "exitGameButtonPressed":

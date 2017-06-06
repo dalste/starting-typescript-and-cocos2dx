@@ -174,9 +174,9 @@ export class CharacterEntityFactory implements IFactory<CharacterEntityCreationO
                 mv.movementDamping = 0.01;
                 e.addComponent(mv);
 
-                 /**
-                 * create and add physics component so its picked up by physics system
-                 */
+                /**
+                * create and add physics component so its picked up by physics system
+                */
                 var phyc = new PhysicsComponent();
                 phyc.boundingRadius = 10;
                 e.addComponent(phyc);
