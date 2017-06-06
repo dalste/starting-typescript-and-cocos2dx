@@ -1,4 +1,6 @@
 import { GameComponentTypes } from "./../types/GameComponentTypes";
+import { GameObjectEntityTypes } from "./../types/EntityTypes";
+import { GameObjectEntityCreationOptions } from "./../factory/entity/GameObjectEntityFactory";
 import { Display } from "./../../tslib/dalste/util/Display";
 import { PositionComponent } from "./../component/GameComponents";
 import { InputTypes } from "./../types/InputTypes";
@@ -24,6 +26,9 @@ export class GameplaySystem extends System {
      */
     //inject
     protected _characterEntityFactory: IFactory<CharacterEntityCreationOptions, Entity> = null;
+
+    //inject 
+    protected _gameObjectEntityFactory: IFactory<GameObjectEntityCreationOptions, Entity> = null;
 
     //inject 
     protected _display: Display = undefined;
@@ -138,8 +143,8 @@ export class GameplaySystem extends System {
                     powerProportion = Math.abs(dir.x) / this._display.screenWidth();
                 else
                     powerProportion = Math.abs(dir.y) / this._display.screenHeight();
-                
-                var maxPower =10;
+
+                var maxPower = 10;
                 var powerToApply = maxPower * powerProportion;
 
                 mc.movementDirectionNorm = cc.pNormalize(dir);
@@ -149,9 +154,9 @@ export class GameplaySystem extends System {
 
                 break;
             case InputTypes.TOUCH_TAP:
-                var dir = cc.pSub(pc.position, pie.location);
+                var dir = cc.pSub( pie.location,pc.position);
                 var dirNorm = cc.pNormalize(dir);
-                this.spawnBullet(dirNorm, pie.location);
+                this.spawnBullet(dirNorm, pc.position);
                 cc.log("InputTypes.TOUCH_TAP");
                 break;
         }
@@ -160,7 +165,18 @@ export class GameplaySystem extends System {
     }
 
     spawnBullet(dirNorm: cc.Point, location: cc.Point) {
-            cc.log("spawn bullet");
+        cc.log("spawn bullet");
+
+        var goeco = new GameObjectEntityCreationOptions(GameObjectEntityTypes.PLAYER_BULLET, "PlayerBullet",location);
+        var bullet: Entity = this._gameObjectEntityFactory.create(goeco);
+        var mc:MovementComponent = bullet.getComponent(GameComponentTypes.MOVEMENT) as MovementComponent;
+        mc.movementDamping =1.1; //for run instead of damping lets accelorate
+        mc.movementDirectionMag =10;
+        mc.movementDirectionNorm = dirNorm;
+
+
+
+         this.world.addEntity(bullet);
     }
 
 

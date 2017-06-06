@@ -91,7 +91,7 @@ export class Application2 implements IApplication {
         * 
         */
         this._system.mapSingleton("_characterEntityFactory", CharacterEntityFactory);
-        this._system.mapSingleton("_gameOjectEntityFactory", GameObjectEntityFactory);
+        this._system.mapSingleton("_gameObjectEntityFactory", GameObjectEntityFactory);
 
         /**
         * map the display utility class as a singleton 

@@ -116,20 +116,32 @@ export class PhysicsSystem extends System {
 
             mvc.movementDirectionMag = mvc.movementDirectionMag * mvc.movementDamping;
 
+            var boundsCollision = false;
             //ensure movement is contained within screen
             if (posc.position.y > this._display.topMiddle().y) {
+                boundsCollision = true;
                 posc.position.y = this._display.topMiddle().y;
             }
             if (posc.position.y < this._display.bottomMiddle().y) {
+                boundsCollision = true;
                 posc.position.y = this._display.bottomMiddle().y;
             }
 
             if (posc.position.x > this._display.middleRight().x) {
+                boundsCollision = true;
                 posc.position.x = this._display.middleRight().x;
             }
             if (posc.position.x < this._display.middleLeft().x) {
+                boundsCollision = true;
                 posc.position.x = this._display.middleLeft().x;
             }
+
+            //remove npc and player bullets upon collision with game bounds
+            if(boundsCollision){
+                if(e.hasComponent(GameComponentTypes.NPC_BULLET) || e.hasComponent(GameComponentTypes.PLAYER_BULLET)){
+                    this.world.removeEntity(e);
+                }
+            } 
 
 
         }

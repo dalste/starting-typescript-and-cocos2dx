@@ -89,6 +89,7 @@ export interface EnemySecondaryState extends StateMachine {
 export class EnemyStateComponent extends StateComponent {
     primaryState: EnemyPrimaryState;
     secondaryState: EnemySecondaryState;
+    timeLastBulletShot: number =0;
 }
 
 /**
@@ -184,6 +185,25 @@ export class Player extends Component {
  */
 export class NPC extends Component {
     name: string = GameComponentTypes.NPC;
+}
+
+
+/**
+ * @class Player
+ * @description  identifies an entity as being a Player bullet
+ */
+export class PlayerBullet extends Component {
+    name: string = GameComponentTypes.PLAYER_BULLET;
+
+    
+}
+
+/**
+ * @class NPC
+ * @description  identifies an entity as being an NPC bullet
+ */
+export class NPCBullet extends Component {
+    name: string = GameComponentTypes.NPC_BULLET;
 }
 
 

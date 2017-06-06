@@ -9,4 +9,6 @@ export class GameComponentTypes {
     static PLAYER = "plyer";
     static NPC = "npc";
     static PLAYER_INPUT_EVENT = "ply_in_evt";
+    static PLAYER_BULLET ="player_bllt";
+    static NPC_BULLET ="npc_bllt";
 }

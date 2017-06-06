@@ -1,4 +1,6 @@
 
+import { MovementComponent } from "./../component/GameComponents";
+import { GameObjectEntityCreationOptions,GameObjectEntityFactory } from "./../factory/entity/GameObjectEntityFactory";
 import { EnemySecondaryStates } from "./../component/GameComponents";
 import { EnemyStateComponent } from "./../component/GameComponents";
 import { EnemyPrimaryStates,EnemyPrimaryState } from "./../component/GameComponents";
@@ -9,12 +11,16 @@ import { System } from "./../../tslib/moon/src/System";
 import { World } from "./../../tslib/moon/src/World";
 import { Entity } from "./../../tslib/moon/src/Entity";
 import { Display } from "./../../tslib/dalste/util/Display";
+import { GameObjectEntityTypes } from "./../types/EntityTypes";
 export class NPCAISystem extends System {
     protected _npcEntities: Entity[];
 
 
     //inject
     protected _display:Display = undefined;
+
+    //inject 
+    protected _gameObjectEntityFactory:GameObjectEntityFactory = undefined;
 
     /**
     * @description called by dijon IOC container after instance is created and dependencies injected
@@ -82,7 +88,7 @@ export class NPCAISystem extends System {
                     this.handleEnemyIdleState(e);
                     break;
                 case EnemyPrimaryStates.MOVING:
-                    this.handleEnemyMovingState(e);
+                    this.handleEnemyMovingState(e,dt);
                     break;
                 case EnemyPrimaryStates.DEAD:
                     this.handleEnemyDeadState(e);
@@ -105,7 +111,7 @@ export class NPCAISystem extends System {
              sc.secondaryState.moveRight();
         }
     }
-    handleEnemyMovingState(e: Entity) {
+    handleEnemyMovingState(e: Entity,dt:number) {
 
         var pc: PositionComponent = e.getComponent(GameComponentTypes.POSITION) as PositionComponent;
         var sc: EnemyStateComponent = e.getComponent(GameComponentTypes.STATE) as EnemyStateComponent;
@@ -123,6 +129,42 @@ export class NPCAISystem extends System {
                     }
                 break ;
          }
+
+         this.checkFireBullet(e,dt);
+    }
+
+
+    checkFireBullet(e:Entity,dt:number){
+        var pc: PositionComponent = e.getComponent(GameComponentTypes.POSITION) as PositionComponent;
+        var sc: EnemyStateComponent = e.getComponent(GameComponentTypes.STATE) as EnemyStateComponent;
+        sc.timeLastBulletShot+=dt;
+        cc.log(sc.timeLastBulletShot);
+        if(sc.timeLastBulletShot >= 1){
+            sc.timeLastBulletShot =0;
+            var players  = this.world.getEntities(GameComponentTypes.PLAYER);
+            var player = players[0];
+            var playerPos =  player.getComponent(GameComponentTypes.POSITION) as PositionComponent;
+                var dir = cc.pSub( playerPos.position,pc.position);
+                var dirNorm = cc.pNormalize(dir);
+                this.spawnBullet(dirNorm, pc.position);
+        }
+    }
+      
+  
+
+    spawnBullet(dirNorm: cc.Point, location: cc.Point) {
+        cc.log("spawn bullet");
+
+        var goeco = new GameObjectEntityCreationOptions(GameObjectEntityTypes.NPC_BULLET, "PlayerBullet",location);
+        var bullet: Entity = this._gameObjectEntityFactory.create(goeco);
+        var mc:MovementComponent = bullet.getComponent(GameComponentTypes.MOVEMENT) as MovementComponent;
+        mc.movementDamping =1.001; //for run instead of damping lets accelorate
+        mc.movementDirectionMag =5;
+        mc.movementDirectionNorm = dirNorm;
+
+
+
+         this.world.addEntity(bullet);
     }
 
     handleEnemyDeadState(e: Entity) {

@@ -1,4 +1,6 @@
 import { IFactory } from "./../IFactory";
+import { PlayerBullet } from "./../../component/GameComponents";
+import { NPCBullet } from "./../../component/GameComponents";
 import { PhysicsComponent } from "./../../component/GameComponents";
 import { GameObjectAssetTypes } from "./../../types/AssetTypes";
 import { GameObjectAssetCreationOptions } from "./../view/GameObjectAssetFactory";
@@ -22,7 +24,7 @@ import { StateMachine, StateMachineConfig } from "javascript-state-machine";
 export class GameObjectEntityCreationOptions implements ICreationOptions<GameObjectEntityTypes>{
     private _type: GameObjectEntityTypes;
     private _name: string;
-    private _spawnPosition: cc.Node;
+    private _spawnPosition: cc.Point;
 
 
 
@@ -31,7 +33,7 @@ export class GameObjectEntityCreationOptions implements ICreationOptions<GameObj
      * @param type - the type of object to create 
      * @param name -the name assigned to the cc.node see cc.node.name
      */
-    constructor(type: GameObjectEntityTypes, name: string, spawnPosition: cc.Node) {
+    constructor(type: GameObjectEntityTypes, name: string, spawnPosition: cc.Point) {
         this._type = type;
         this._name = name;
         this._spawnPosition = spawnPosition;
@@ -40,11 +42,11 @@ export class GameObjectEntityCreationOptions implements ICreationOptions<GameObj
         return this._type;
     }
 
-    getSpawnPosition(): cc.Node {
+    getSpawnPosition(): cc.Point {
         return this._spawnPosition;
     }
 
-     getName():  string {
+    getName(): string {
         return this._name;
     }
 }
@@ -77,10 +79,16 @@ export class GameObjectEntityFactory implements IFactory<GameObjectEntityCreatio
                  */
 
                 var caco = null;
-                if (options.getType() == GameObjectEntityTypes.NPC_BULLET)
+                if (options.getType() == GameObjectEntityTypes.NPC_BULLET) {
+                    var npcbc = new NPCBullet(); //identify entity npc bullet
+                    e.addComponent(npcbc);
                     caco = new GameObjectAssetCreationOptions(GameObjectAssetTypes.NPC_BULLET, "npcb_" + (this._bulletCount++));
-                else
+                }
+                else {
+                    var plyb = new PlayerBullet(); //identify entity as player bullet
+                    e.addComponent(plyb);
                     caco = new GameObjectAssetCreationOptions(GameObjectAssetTypes.PLAYER_BULLET, "pb_" + (this._bulletCount++));
+                }
 
                 var asset = this._gameObjectAssetFactory.create(caco);
                 asset.setPosition(options.getSpawnPosition());
