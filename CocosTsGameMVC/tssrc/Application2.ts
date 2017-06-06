@@ -77,7 +77,7 @@ export class Application2 implements IApplication {
          * map the game model as a singleton 
          * the main data model for the game
          */
-        this._system.mapSingleton("GameModel", GameModel);
+        this._system.mapSingleton("_gameModel", GameModel);
 
         /**
          * map the character and game object asset factories as a singletons
