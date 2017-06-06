@@ -104,7 +104,7 @@
          /**
          * @returns {Number} - the width of the visible portion of the screen
          */
-        screenWidth():Number {
+        screenWidth():number {
             var sz = cc.director.getVisibleSize();
 
             return sz.width;
@@ -112,7 +112,7 @@
         /**
          * @returns {Number} - the design resolution height
          */
-        designResolutionHeight():Number {
+        designResolutionHeight():number {
             var sz = cc.view.getDesignResolutionSize();
 
             return sz.height;
@@ -120,7 +120,7 @@
         /**
          * @returns {Number} - the design resolution width
          */
-        designResolutionWidth():Number {
+        designResolutionWidth():number {
             var sz = cc.view.getDesignResolutionSize();
 
             return sz.width;

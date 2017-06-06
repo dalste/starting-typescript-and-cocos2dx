@@ -1,7 +1,7 @@
 import { IFactory } from "./../IFactory";
 import { ICreationOptions } from "./../ICreationOptions";
 import { CharacterAssetTypes } from "./../../types/AssetTypes";
-import { MockAsset, MockAssetColours } from "./characterassetfactory/MockAsset";
+import { MockAsset, MockAssetColours } from "./MockAsset";
 
 /**
  * @class CharacterAssetCreationOptions

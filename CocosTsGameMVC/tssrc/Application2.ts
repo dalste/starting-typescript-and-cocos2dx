@@ -1,7 +1,11 @@
 import { IApplication } from "./IApplication";
+import { PhysicsSystem } from "./system/PhysicsSystem";
+import { GameObjectEntityCreationOptions } from "./factory/entity/GameObjectEntityFactory";
+import { GameObjectAssetCreationOptions } from "./factory/view/GameObjectAssetFactory";
 import { NPCAISystem } from "./system/NPCAISystem";
 import { GameplaySystem } from "./system/GameplaySystem";
 import { CharacterEntityFactory } from "./factory/entity/CharacterEntityFactory";
+import { GameObjectEntityFactory } from "./factory/entity/GameObjectEntityFactory";
 import { GameModel } from "./model/GameModel";
 import { ApplicationEvents } from "./events/ApplicationEvents";
 import { SplashScreenViewController } from "./view/SplashScreenViewController";
@@ -12,6 +16,7 @@ import { GameView } from "./view/GameView";
 import { GameController } from "./controller/GameController";
 import { GameViewController } from "./view/GameViewController";
 import { CharacterAssetFactory } from "./factory/view/CharacterAssetFactory"
+import { GameObjectAssetFactory } from "./factory/view/GameObjectAssetFactory";
 
 /**
  * @class Application2 
@@ -75,17 +80,18 @@ export class Application2 implements IApplication {
         this._system.mapSingleton("GameModel", GameModel);
 
         /**
-         * map the character asset factory as a singleton 
+         * map the character and game object asset factories as a singletons
          * 
          */
         this._system.mapSingleton("_characterAssetFactory", CharacterAssetFactory);
-
+        this._system.mapSingleton("_gameObjectAssetFactory", GameObjectAssetFactory);
 
         /**
-        * map the character entity factory as a singleton 
+        * map the character and game object entity  factories as singletons 
         * 
         */
         this._system.mapSingleton("_characterEntityFactory", CharacterEntityFactory);
+        this._system.mapSingleton("_gameOjectEntityFactory", GameObjectEntityFactory);
 
         /**
         * map the display utility class as a singleton 
@@ -95,16 +101,12 @@ export class Application2 implements IApplication {
 
 
         /**
-         * map the gameplay system class so that we may inject the entity factory upon creation
+         * map the systems that we need to inkect dependencies into (other systems are just instantiated as normal)
          */
 
         this._system.mapClass("GameplaySystem", GameplaySystem);
-
-         /**
-         * map the NPCAISystem system class so that we may inject the display utility upon creation
-         */
-
         this._system.mapClass("NPCAISystem", NPCAISystem);
+        this._system.mapClass("PhysicsSystem", PhysicsSystem);
 
         /**
         * initialise the splash screen view and its controller

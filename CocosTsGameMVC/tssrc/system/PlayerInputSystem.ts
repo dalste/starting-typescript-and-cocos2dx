@@ -139,7 +139,7 @@ export class PlayerInputSystem extends System {
                             pevent.type = InputTypes.TOUCH_TAP;
                             pevent.positions.push(cc.p(location.x, location.y));
                             pevent.location = touch.getLocation();
-                            pevent.target = container;
+                            pevent.target = container != null ? container : cc.director.getRunningScene();
 
                             scope._inputControlledEntities[i].addComponent(pevent);
                         }
@@ -149,13 +149,8 @@ export class PlayerInputSystem extends System {
                     case SwipeDirections.SWIPE_UP:
                     case SwipeDirections.SWIPE_LEFT:
                     case SwipeDirections.SWIPE_RIGHT:
-                        cc.log("swpe " + swipeResult);
-                        for (var i = 0; i < scope._inputControlledEntities.length; i++) {
-                            var pevent = new PlayerInputEvent();
-                            pevent.type = InputTypes.TOUCH_SWIPE;
-                            pevent.swipeDir = swipeResult;
-                            scope._inputControlledEntities[i].addComponent(pevent);
-                        }
+                        cc.warn("PlayerInputSystem:createTapListeners->onTouchEnded swipe " + swipeResult + " not implemented");
+           
                         break;
 
                 }
@@ -179,7 +174,7 @@ export class PlayerInputSystem extends System {
     }
 
       /**
-     * called when this system is removed fromthe MOON CES World here you should do system cleanup
+     * called when this system is removed from the MOON CES World here you should do system cleanup
      * @param world 
      */
     removedFromWorld():void{

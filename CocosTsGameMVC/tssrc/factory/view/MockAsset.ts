@@ -1,6 +1,5 @@
 declare var ccui: any;
-import { ICreationOptions } from "./../../ICreationOptions";
-
+import  { ICreationOptions } from "./../ICreationOptions";
 /**
  * @description emum providing identifiable colour options for MockAsset
  */
@@ -54,7 +53,7 @@ export class MockAsset<T> extends cc.Node {
 
     }
 
-    getColour(colour: MockAssetColours) {
+    getColour(colour: MockAssetColours):cc.Color {
 
         switch (colour) {
             case MockAssetColours.RED:

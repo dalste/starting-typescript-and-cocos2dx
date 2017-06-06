@@ -1,4 +1,6 @@
 import { IFactory } from "./../IFactory";
+import { PhysicsComponent } from "./../../component/GameComponents";
+import { MovementComponent } from "./../../component/GameComponents";
 import { EnemySecondaryState } from "./../../component/GameComponents";
 import { EnemySecondaryStates } from "./../../component/GameComponents";
 import { EnemyPrimaryStates } from "./../../component/GameComponents";
@@ -13,9 +15,9 @@ import { Entity } from "./../../../tslib/moon/src/Entity";
 import { CharacterEntityTypes } from "./../../types/EntityTypes";
 import { ICreationOptions } from "./../ICreationOptions";
 
-import { CocosRenderNode, Player, NPC,EnemyStateComponent, PlayerStateComponent,PlayerPrimaryState,EnemyPrimaryState } from "./../../component/GameComponents";
+import { CocosRenderNode, Player, NPC, EnemyStateComponent, PlayerStateComponent, PlayerPrimaryState, EnemyPrimaryState } from "./../../component/GameComponents";
 import { Display } from "./../../../tslib/dalste/util/Display";
-import  {StateMachine,StateMachineConfig} from "javascript-state-machine";
+import { StateMachine, StateMachineConfig } from "javascript-state-machine";
 
 /**
  * @class CharacterEntityCreationOptions
@@ -56,45 +58,59 @@ export class CharacterEntityFactory implements IFactory<CharacterEntityCreationO
     private _characterAssetFactory: IFactory<CharacterAssetCreationOptions, cc.Node> = null;
 
     //inject 
-    private _display:Display = undefined;
+    private _display: Display = undefined;
 
     create(options: CharacterEntityCreationOptions): Entity {
         var e = new Entity();
         switch (options.getType()) {
             case CharacterEntityTypes.NPC:
+                /**
+                 * create the NPC  asset
+                 */
                 var caco = new CharacterAssetCreationOptions(CharacterAssetTypes.NPC, "NPC");
                 var asset = this._characterAssetFactory.create(caco);
-                asset.setPosition(this._display.middleMiddle().x,this._display.middleMiddle().y+100);
+                asset.setPosition(this._display.middleMiddle().x, this._display.middleMiddle().y + 100);
 
+                /**
+                 * create and add position component
+                 */
                 var posc = new PositionComponent();
-                posc.position = cc.p(asset.getPositionX(),asset.getPositionY());
+                posc.position = cc.p(asset.getPositionX(), asset.getPositionY());
                 e.addComponent(posc);
 
+                /**
+                 * create and add cocos render node component to contain asset
+                 */
                 var crnc = new CocosRenderNode();
                 crnc.node = asset;
                 e.addComponent(crnc);
 
+                /**
+                 * create and add enemy state component  with primary and secondary state
+                 */
                 var sc = new EnemyStateComponent();
-                var psmc:StateMachineConfig = {
-                    initial:EnemyPrimaryStates.IDLE,
+                var psmc: StateMachineConfig = {
+                    initial: EnemyPrimaryStates.IDLE,
                     events: [
-                        { name: 'start',  from: EnemyPrimaryStates.IDLE,  to: EnemyPrimaryStates.MOVING },
-                        { name: 'die', from: EnemyPrimaryStates.MOVING , to: EnemyPrimaryStates.DEAD   },
+                        { name: 'start', from: EnemyPrimaryStates.IDLE, to: EnemyPrimaryStates.MOVING },
+                        { name: 'die', from: EnemyPrimaryStates.MOVING, to: EnemyPrimaryStates.DEAD },
                     ]
                 };
-                sc.primaryState =  StateMachine.create(psmc) as EnemyPrimaryState;
+                sc.primaryState = StateMachine.create(psmc) as EnemyPrimaryState;
 
-                var ssmc:StateMachineConfig = {
-                    initial:EnemySecondaryStates.NONE,
+                var ssmc: StateMachineConfig = {
+                    initial: EnemySecondaryStates.NONE,
                     events: [
-                        { name: 'moveLeft',  from:[ EnemySecondaryStates.NONE, EnemySecondaryStates.MOVING_RIGHT],  to: EnemySecondaryStates.MOVING_LEFT },
-                        { name: 'moveRight', from: [ EnemySecondaryStates.NONE, EnemySecondaryStates.MOVING_LEFT] , to: EnemySecondaryStates.MOVING_RIGHT   },
+                        { name: 'moveLeft', from: [EnemySecondaryStates.NONE, EnemySecondaryStates.MOVING_RIGHT], to: EnemySecondaryStates.MOVING_LEFT },
+                        { name: 'moveRight', from: [EnemySecondaryStates.NONE, EnemySecondaryStates.MOVING_LEFT], to: EnemySecondaryStates.MOVING_RIGHT },
                     ]
                 };
-                sc.secondaryState =  StateMachine.create(ssmc) as EnemySecondaryState;
+                sc.secondaryState = StateMachine.create(ssmc) as EnemySecondaryState;
                 e.addComponent(sc);
 
-
+                /**
+                 * create and add NPC  component to identify entity as an NPC/Enemy
+                 */
                 var npc = new NPC();
                 e.addComponent(npc);
 
@@ -102,33 +118,68 @@ export class CharacterEntityFactory implements IFactory<CharacterEntityCreationO
 
 
             case CharacterEntityTypes.PLAYER:
+                /**
+                 * create the players asset
+                 */
                 var caco = new CharacterAssetCreationOptions(CharacterAssetTypes.PLAYER, "PLAYER");
                 var asset = this._characterAssetFactory.create(caco);
-                asset.setPosition(this._display.middleMiddle().x,this._display.middleMiddle().y);
-                
+                asset.setPosition(this._display.middleMiddle().x, this._display.middleMiddle().y);
+
+                /**
+                 * create and add position component
+                 */
                 var posc = new PositionComponent();
-                posc.position = cc.p(asset.getPositionX(),asset.getPositionY());
+                posc.position = cc.p(asset.getPositionX(), asset.getPositionY());
                 e.addComponent(posc);
 
+                /**
+                 * create and add cocos render node component to contain asset
+                 */
                 var crnc = new CocosRenderNode();
                 crnc.node = asset;
                 e.addComponent(crnc);
 
+                /**
+                * create and add player  component to identify entity as a player
+                */
                 var pc = new Player();
                 e.addComponent(pc);
+
+                /**
+                * create and add player state component 
+                */
                 var psc = new PlayerStateComponent();
-                var smc:StateMachineConfig = {
-                    initial:"alive",
+                var smc: StateMachineConfig = {
+                    initial: "alive",
                     events: [
-                
-                        { name: 'die', from: 'alive', to: 'dead'   },
+
+                        { name: 'die', from: 'alive', to: 'dead' },
                     ]
                 };
-                psc.primaryState =  StateMachine.create(smc) as PlayerPrimaryState;
+                psc.primaryState = StateMachine.create(smc) as PlayerPrimaryState;
                 e.addComponent(psc);
-                
+
+                /**
+                * create and add input component  to register entity for input events 
+                */
                 var pi = new PlayerInput(); //register for input events
                 e.addComponent(pi);
+
+                /**
+                 * create and add input movement component to support movement
+                 */
+                var mv = new MovementComponent();
+                mv.movementDirectionMag = 0;
+                mv.movementDirectionNorm = cc.p(0, 0);
+                mv.movementDamping = 0.01;
+                e.addComponent(mv);
+
+                 /**
+                 * create and add physics component so its picked up by physics system
+                 */
+                var phyc = new PhysicsComponent();
+                phyc.boundingRadius = 10;
+                e.addComponent(phyc);
                 break;
         }
         return e;

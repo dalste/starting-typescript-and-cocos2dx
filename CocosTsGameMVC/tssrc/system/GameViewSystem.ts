@@ -102,7 +102,7 @@ export class GameViewSystem extends System {
     }
 
     /**
-    * called when this system is removed fromthe MOON CES World here you should do system cleanup
+    * called when this system is removed from the MOON CES World. Here you should do system cleanup
     * @param world 
     */
     removedFromWorld(): void {

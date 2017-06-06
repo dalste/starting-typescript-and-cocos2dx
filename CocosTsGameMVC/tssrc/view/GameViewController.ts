@@ -58,6 +58,7 @@ export class GameViewController extends ViewController {
         */
         var gps = this._system.getObject("GameplaySystem");//new GameplaySystem();
         var npcs = this._system.getObject("NPCAISystem"); //new NPCAISystem();
+        var ps = this._system.getObject("PhysicsSystem"); //new NPCAISystem();
         var gvs = new GameViewSystem(this.getView().getAsset());
         var pis = new PlayerInputSystem();
 
@@ -68,6 +69,7 @@ export class GameViewController extends ViewController {
         this._world.addSystem(gvs);
         this._world.addSystem(npcs);
         this._world.addSystem(pis);
+        this._world.addSystem(ps);
         this._world.addSystem(gps);
 
 
@@ -84,7 +86,6 @@ export class GameViewController extends ViewController {
      */
     update(dt: number) {
         this._world.update(dt);
-        cc.log("update");
     }
 
     onViewEnterTransitionDidFinish(): void {

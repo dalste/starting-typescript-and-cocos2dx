@@ -3,6 +3,33 @@ import { Component } from "./../../tslib/moon/src/Component";
 import { GameComponentTypes } from "./../types/GameComponentTypes";
 import { StateMachine } from "javascript-state-machine";
 
+export class MovementComponent extends Component{
+       name: string = GameComponentTypes.MOVEMENT;
+    /**
+     * @description the normalised vector of the  movement direction
+     */
+    movementDirectionNorm:cc.Point;
+    /**
+     * the magnitude of the  movement direction i.e  speed
+     */
+    movementDirectionMag:number
+
+    /**
+     * the damping to apply to  movement over time
+     */
+    movementDamping: number;
+}
+
+/**
+ * @class PhysicsComponent
+ * @description  identifies an entity to be processed by physics system
+ */
+export class PhysicsComponent extends Component {
+    name: string = GameComponentTypes.PHYSICS;
+    boundingRadius: number = 30;
+}
+
+
 /**
  * @class PositionComponent
  * @description  wraps a cc.Point to describe an entities position
@@ -147,6 +174,8 @@ export class PlayerInputEvent extends Component {
  */
 export class Player extends Component {
     name: string = GameComponentTypes.PLAYER;
+
+    
 }
 
 /**
