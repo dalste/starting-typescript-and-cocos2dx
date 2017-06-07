@@ -9,8 +9,11 @@ declare var ccui: any;
 export class GameView extends View {
 
     //inject
-    private _display: Display=undefined;
-  
+    private _display: Display = undefined;
+
+    protected _playerScoreText: any = null;
+    protected _npcScoreText: any = null;
+
 
     show(parent?: cc.Node): void {
         this.setAsset(new GameViewScene());
@@ -19,29 +22,68 @@ export class GameView extends View {
     }
 
     protected onEnterHandler(): void {
-
         cc.log("GameView:onEnterHandler");
-        
-
         var button = new ccui.Button();
         button.setTitleText("Exit Game");
         button.setTouchEnabled(true);
         button.addTouchEventListener(this.touchEvent, this);
         button.setName("exitGameButton");
-        button.setPosition(this._display.topRight().x-50,this._display.topRight().y-50);
-      
+        button.setPosition(this._display.topRight().x - 50, this._display.topRight().y - 50);
+        button.setTitleColor(cc.color("#ff0000"));    
+
         this.addChild(button, 0);
+
+        this._playerScoreText = new ccui.Text();
+        this._playerScoreText.boundingWidth = 100;
+        this._playerScoreText.boundingHeight = 30;
+        this._playerScoreText.attr({
+            textAlign: cc.TEXT_ALIGNMENT_LEFT,
+            string: "player Score",
+            font: "20px Ariel",
+            x: this._display.topLeft().x + this._playerScoreText.boundingWidth
+        });
+        this._playerScoreText.y = this._display.topLeft().y - this._playerScoreText.height;
+
+        this.addChild(this._playerScoreText);
+
+        this._npcScoreText = new ccui.Text();
+        this._npcScoreText.boundingWidth = 100;
+        this._npcScoreText.boundingHeight = 30;
+        this._npcScoreText.attr({
+            textAlign: cc.TEXT_ALIGNMENT_LEFT,
+            string: "NPC Score",
+            font: "20px Ariel",
+            x: this._display.topLeft().x + this._npcScoreText.boundingWidth
+        });
+        this._npcScoreText.y = this._playerScoreText.y - 30;//this._display.topLeft().y + this._npcScoreText.height;
+        this.addChild(this._npcScoreText);
     }
 
-    protected touchEvent (sender:cc.Node, type:any){
-        switch(type){
+    setNpcScore(val: number) {
+        this._npcScoreText.attr({
+
+            string: "NPC Score: " + val,
+
+        });
+    }
+
+    setPlayerScore(val: number) {
+        this._playerScoreText.attr({
+
+            string: "Player Score: " + val,
+
+        });
+    }
+
+    protected touchEvent(sender: cc.Node, type: any) {
+        switch (type) {
             case ccui.Widget.TOUCH_BEGAN:
                 break;
             case ccui.Widget.TOUCH_MOVED:
                 break;
             case ccui.Widget.TOUCH_ENDED:
-                    cc.log(sender.getName() + " pressed");
-                switch(sender.getName()){
+                cc.log(sender.getName() + " pressed");
+                switch (sender.getName()) {
                     case "exitGameButton":
                         this.getUIEventBus().dispatch("exitGameButtonPressed");
                         break;
@@ -54,12 +96,14 @@ export class GameView extends View {
     }
 
     protected onEnterTransitionDidFinishHandler(): void {
-        
+
     }
 
     protected onExitHandler(): void {
         cc.log("GameView:onExithandler");
         this.removeLifeCycleListeners();
+        this._npcScoreText = null;
+        this._playerScoreText = null;
         this.setAsset(null);
     }
 

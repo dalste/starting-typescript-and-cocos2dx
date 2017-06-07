@@ -1,32 +1,32 @@
-module CES {
+import { World } from "./World";
+/**
+ * The system is responsible for updating the entities.
+ * @class
+ */
+export class System {
+    public world: World;
+
+    constructor() {
+        this.world = null;
+    }
+
+    addedToWorld(world: World) {
+        this.world = world;
+
+
+    }
+
+    removedFromWorld() {
+        this.world = null;
+    }
+
     /**
-     * The system is responsible for updating the entities.
-     * @class
+     * Update the entities.
+     * @public
+     * @param {Number} dt time interval between updates
      */
-    export class System {
-        public world: CES.World;
-
-        constructor() {
-            this.world = null;
-        }
-
-        addedToWorld(world: CES.World) {
-            this.world = world;
-
-        
-        }
-
-        removedFromWorld() {
-            this.world = null;
-        }
-
-        /**
-         * Update the entities.
-         * @public
-         * @param {Number} dt time interval between updates
-         */
-        update(dt: number) {
-            throw new Error('Subclassed should override this method');
-        }
+    update(dt: number) {
+        throw new Error('Subclassed should override this method');
     }
 }
+

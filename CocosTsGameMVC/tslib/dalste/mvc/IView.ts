@@ -5,27 +5,27 @@ export interface IView {
      */
     getAsset(): cc.Node;
 
-     /**
-    * @description sets the main asset for this view
-    * @param cc.Node 
-    */
+    /**
+   * @description sets the main asset for this view
+   * @param cc.Node 
+   */
     setAsset(node: cc.Node): void;
-   
-     /**
-     * @description returns the signals.Signal that represents this views UI eventBus, you may use this Signal to subscribe to view events
-     */
+
+    /**
+    * @description returns the signals.Signal that represents this views UI eventBus, you may use this Signal to subscribe to view events
+    */
     getUIEventBus(): signals.Signal;
-         /**
-     * @description returns the signals.Signal that represents this views main asset onExit event
-     * @see cc.Node:onEnter
-     */
+    /**
+    * @description returns the signals.Signal that represents this views main asset onExit event
+    * @see cc.Node:onEnter
+    */
     getExitSignal(): signals.Signal;
 
-          /**
-     * @description returns the signals.Signal that represents this views main asset onEnter event
-     * @see cc.Node:onEnter
-     */
-    getEnterSignal(): signals.Signal; 
+    /**
+    * @description returns the signals.Signal that represents this views main asset onEnter event
+    * @see cc.Node:onEnter
+    */
+    getEnterSignal(): signals.Signal;
 
 
     /**
@@ -33,10 +33,10 @@ export interface IView {
      * @see cc.Node:onExit
      */
     getExitTransitionDidStartSignal(): signals.Signal;
-          /**
-     * @description returns the signals.Signal that represents this views main asset's  onEnterTransitionDidFinish event
-     * @see cc.Node:onEnter
-     */
+    /**
+    * @description returns the signals.Signal that represents this views main asset's  onEnterTransitionDidFinish event
+    * @see cc.Node:onEnter
+    */
     getEnterTransitionDidFinishSignal(): signals.Signal;
 
     /**

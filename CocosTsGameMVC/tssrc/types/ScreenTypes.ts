@@ -1,4 +1,5 @@
-export enum ScreenTypes{
+export enum ScreenTypes {
     SPLASH_SCREEN,
-    GAMEPLAY_SCREEN  
+    GAMEPLAY_SCREEN
+
 }

@@ -1,6 +1,5 @@
 declare var ccui: any;
-import { ICreationOptions } from "./../../ICreationOptions";
-
+import { ICreationOptions } from "./../ICreationOptions";
 /**
  * @description emum providing identifiable colour options for MockAsset
  */
@@ -21,12 +20,12 @@ export enum MockAssetColours {
  * Template option T is for the Type used to describe type generally string | int | enumtype
  */
 export class MockAsset<T> extends cc.Node {
-    _visibleNode: cc.Node= null;
+    _visibleNode: cc.Node = null;
     _objecttype: T = null;
     _circleNode: cc.DrawNode;
 
 
-    constructor(config: ICreationOptions<T>, radius: number =20, COLOUR: MockAssetColours = MockAssetColours.BLUE, text: string ="Text") {
+    constructor(config: ICreationOptions<T>, radius: number = 20, COLOUR: MockAssetColours = MockAssetColours.BLUE, text: string = "Text") {
         super();
         this.ctor();
 
@@ -36,7 +35,7 @@ export class MockAsset<T> extends cc.Node {
         this.setContentSize(radius * 2, radius * 2);
         this.setAnchorPoint(0.5, 0.5);
         this._circleNode = new cc.DrawNode();
-        this._circleNode.drawDot(cc.p(radius, radius), radius,this.getColour(COLOUR));
+        this._circleNode.drawDot(cc.p(radius, radius), radius, this.getColour(COLOUR));
         this.addChild(this._circleNode);
 
 
@@ -54,7 +53,7 @@ export class MockAsset<T> extends cc.Node {
 
     }
 
-    getColour(colour: MockAssetColours) {
+    getColour(colour: MockAssetColours): cc.Color {
 
         switch (colour) {
             case MockAssetColours.RED:

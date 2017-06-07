@@ -1,19 +1,19 @@
 
 import { CharacterAssetTypes } from "./../../../types/AssetTypes";
-import {CharacterAssetFactory, CharacterAssetCreationOptions} from "../../../factory/view/CharacterAssetFactory";
-declare var res:any;
-export class HelloWorldMainLayer extends  cc.Layer{
-    sprite:cc.Sprite;
+import { CharacterAssetFactory, CharacterAssetCreationOptions } from "../../../factory/view/CharacterAssetFactory";
+declare var res: any;
+export class HelloWorldMainLayer extends cc.Layer {
+    sprite: cc.Sprite;
     signal: signals.Signal;
-    assetFactory:CharacterAssetFactory;
-    constructor  () {
+    assetFactory: CharacterAssetFactory;
+    constructor() {
         //////////////////////////////
         // 1. super init first
         super();
         super.ctor(); // call the cocos super method in JS  this would be this._super()
 
         cc.log("Hello World Layer");
-        this.assetFactory  = new CharacterAssetFactory();
+        this.assetFactory = new CharacterAssetFactory();
         /////////////////////////////
         // 2. add a menu item with "X" image, which is clicked to quit the program
         //    you may modify it.
@@ -39,12 +39,12 @@ export class HelloWorldMainLayer extends  cc.Layer{
         });
         this.addChild(this.sprite, 0);
 
-        var co = new CharacterAssetCreationOptions(CharacterAssetTypes.PLAYER,"player");
+        var co = new CharacterAssetCreationOptions(CharacterAssetTypes.PLAYER, "player");
         var ca = this.assetFactory.create(co);
-        ca.setPosition(10,20);
+        ca.setPosition(10, 20);
         this.addChild(ca, 0);
-        
-    
+
+
 
     }
 }
