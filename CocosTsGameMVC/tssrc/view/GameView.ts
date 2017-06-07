@@ -29,6 +29,7 @@ export class GameView extends View {
         button.addTouchEventListener(this.touchEvent, this);
         button.setName("exitGameButton");
         button.setPosition(this._display.topRight().x - 50, this._display.topRight().y - 50);
+        button.setTitleColor(cc.color("#ff0000"));    
 
         this.addChild(button, 0);
 

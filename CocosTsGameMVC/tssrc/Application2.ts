@@ -20,7 +20,7 @@ import { GameObjectAssetFactory } from "./factory/view/GameObjectAssetFactory";
 
 /**
  * @class Application2 
- * @description this Application shows and exampleof setting up an MVC framework using the dijon 
+ * @description this Application shows and example of setting up an MVC framework using the dijon 
  * IOC container.
  * 
  * - we map a number of singleton utility classes such as Display to be injected as required

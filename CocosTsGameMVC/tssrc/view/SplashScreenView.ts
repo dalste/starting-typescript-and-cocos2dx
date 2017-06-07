@@ -25,7 +25,17 @@ export class SplashScreenView extends View {
         button.setName("playGameButton");
         button.setPosition(this._display.middleMiddle().x, this._display.middleMiddle().y);
 
+        button.setTitleColor(cc.color("#00ff00"));
+
         this.addChild(button, 0);
+
+
+        var instructionLabel = new cc.LabelTTF("Swipe the screen to move the player. Click in the direction you wish to fire", "Arial", 30, cc.size(this._display.screenWidth()-100,200),cc.ALIGN_CENTER);
+        // position the label on the center of the screen
+        instructionLabel.x = this._display.middleMiddle().x;
+        instructionLabel.y = this._display.middleMiddle().y + 200;
+        // add the label as a child to this layer
+        this.addChild(instructionLabel, 5);
     }
 
     protected onEnterTransitionDidFinishHandler(): void {
