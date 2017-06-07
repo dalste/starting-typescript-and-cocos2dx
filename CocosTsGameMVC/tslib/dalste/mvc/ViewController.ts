@@ -12,7 +12,7 @@ export class ViewController extends cc.Class implements IViewController {
      * @description the view associated with this controller, is assigned in viewReady(view:IView) function
       */
     protected _view: IView = undefined;
-    protected _model: IModel = undefined;
+    protected _viewModel: IModel = undefined;
 
 
     //inject 
@@ -29,15 +29,24 @@ export class ViewController extends cc.Class implements IViewController {
      * @description only override if you need to, this function assigns the associated view and model to respective _view/_model  class variables and calls onViewReady() 
      * @param view:IView
      */
-    viewReady(view: IView, model: IModel): void {
+    viewReady(view: IView, viewModel: IModel): void {
         this._view = view;
-        this._model = model;
+        this._viewModel = viewModel;
         this.onViewReady();
     }
 
     protected getView(): IView {
         return this._view;
     }
+
+     /**
+     * @description returns the View Model for this view controller
+     * @returns IModel
+     */
+    getViewModel(): IModel{
+        return this._viewModel;
+    }
+
     /**
      * @description Virtual function that is called after the view is assigned to the controllers _view,
      *  it is here that you should initialise listeners and do futher view setup 

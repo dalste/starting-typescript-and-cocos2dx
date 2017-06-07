@@ -1,4 +1,21 @@
+import { ModelCallBack, IModel } from "./IModel";
 export interface IView {
+
+
+
+
+    /**
+     * @description returns the View Model for this view
+     * @returns IModel
+     */
+    getViewModel(): IModel;
+
+    /**
+   * @description sets the view model for this view
+   * @param IModel
+   */
+    setViewModel(val: IModel): void;
+
     /**
      * @description returns the main asset for this view
      * @returns cc.Node 

@@ -62,6 +62,22 @@ export class View implements IView {
         this._viewController.viewReady(this, this._viewModel);
     }
 
+       /**
+     * @description returns the View Model for this view
+     * @returns IModel
+     */
+    getViewModel(): IModel{
+        return this._viewModel;
+    }
+
+    /**
+   * @description sets the view model for this view
+   * @param IModel
+   */
+    setViewModel(val: IModel): void{
+        this._viewModel = val;
+    }
+
     /**
      * @description adds lifecycle listeners to this views (INodeLifeCycleExtensions) asset
      * 

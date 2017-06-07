@@ -2,6 +2,12 @@ import { IView } from "./IView";
 import { IModel } from "./IModel";
 export interface IViewController {
 
+
+    /**
+    * @description returns the View Model for this view controller
+    * @returns IModel
+    */
+    getViewModel(): IModel;
     /**
      * @description only override if you need to, this function assigns the associated view to _view class variable and calls onViewReady() 
      * @param view:IView
