@@ -95,14 +95,14 @@ export class GameViewSystem extends System {
             var e = this._renderPositionEntities[i];
             var pc: PositionComponent = e.getComponent(GameComponentTypes.POSITION) as PositionComponent;
             var sc: CocosRenderNode = e.getComponent(GameComponentTypes.COCOS_RENDER_NODE) as CocosRenderNode;
-            //cc.log(pc.position.x);
+            cc.log();
             sc.setPosition(cc.p(pc.position.x, pc.position.y));
         }
 
     }
 
     /**
-    * called when this system is removed from the MOON CES World. Here you should do system cleanup
+    * called when this system is removed fromthe MOON CES World here you should do system cleanup
     * @param world 
     */
     removedFromWorld(): void {
