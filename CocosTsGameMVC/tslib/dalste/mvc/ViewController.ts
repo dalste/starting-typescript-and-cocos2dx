@@ -29,7 +29,7 @@ export class ViewController extends cc.Class implements IViewController {
      * @description only override if you need to, this function assigns the associated view and model to respective _view/_model  class variables and calls onViewReady() 
      * @param view:IView
      */
-    viewReady(view: IView, viewModel: IModel): void {
+    protected viewReady(view: IView, viewModel: IModel): void {
         this._view = view;
         this._viewModel = viewModel;
         this.onViewReady();

@@ -12,6 +12,7 @@ import { Display } from "./../../tslib/dalste/util/Display";
 import { GameModel } from "./../model/GameModel";
 import { GameView } from "./GameView";
 
+
 declare var ccui: any;
 export class GameViewController extends ViewController {
 
