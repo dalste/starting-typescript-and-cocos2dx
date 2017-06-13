@@ -18,6 +18,7 @@ import { ICreationOptions } from "./../ICreationOptions";
 import { CocosRenderNode, Player, NPC, EnemyStateComponent, PlayerStateComponent, PlayerPrimaryState, EnemyPrimaryState } from "./../../component/GameComponents";
 import { Display } from "./../../../tslib/dalste/util/Display";
 import { StateMachine, StateMachineConfig } from "javascript-state-machine";
+import {IAssetContainer} from "./../IAssetContainer";
 
 /**
  * @class CharacterEntityCreationOptions
@@ -55,7 +56,7 @@ export class CharacterEntityCreationOptions implements ICreationOptions<Characte
  */
 export class CharacterEntityFactory implements IFactory<CharacterEntityCreationOptions, Entity> {
     //inject
-    private _characterAssetFactory: IFactory<CharacterAssetCreationOptions, cc.Node> = null;
+    private _characterAssetFactory: IFactory<CharacterAssetCreationOptions, IAssetContainer <cc.Node> > = null;
 
     //inject 
     private _display: Display = undefined;
@@ -68,21 +69,22 @@ export class CharacterEntityFactory implements IFactory<CharacterEntityCreationO
                  * create the NPC  asset
                  */
                 var caco = new CharacterAssetCreationOptions(CharacterAssetTypes.NPC, "NPC");
-                var asset = this._characterAssetFactory.create(caco);
-                asset.setPosition(this._display.middleMiddle().x, this._display.middleMiddle().y + 100);
+                var assetContainer = this._characterAssetFactory.create(caco);
+                assetContainer.getAsset().setPosition(this._display.middleMiddle().x, this._display.middleMiddle().y + 100);
 
                 /**
                  * create and add position component
                  */
                 var posc = new PositionComponent();
-                posc.position = cc.p(asset.getPositionX(), asset.getPositionY());
+                posc.position = cc.p(assetContainer.getAsset().getPositionX(), assetContainer.getAsset().getPositionY());
                 e.addComponent(posc);
 
                 /**
                  * create and add cocos render node component to contain asset
                  */
                 var crnc = new CocosRenderNode();
-                crnc.node = asset;
+               
+                crnc.assetContainer = assetContainer;
                 e.addComponent(crnc);
 
                 /**
@@ -122,21 +124,21 @@ export class CharacterEntityFactory implements IFactory<CharacterEntityCreationO
                  * create the players asset
                  */
                 var caco = new CharacterAssetCreationOptions(CharacterAssetTypes.PLAYER, "PLAYER");
-                var asset = this._characterAssetFactory.create(caco);
-                asset.setPosition(this._display.middleMiddle().x, this._display.middleMiddle().y);
+                var assetContainer = this._characterAssetFactory.create(caco);
+                assetContainer.getAsset().setPosition(this._display.middleMiddle().x, this._display.middleMiddle().y);
 
                 /**
                  * create and add position component
                  */
                 var posc = new PositionComponent();
-                posc.position = cc.p(asset.getPositionX(), asset.getPositionY());
+                posc.position = cc.p(assetContainer.getAsset().getPositionX(), assetContainer.getAsset().getPositionY());
                 e.addComponent(posc);
 
                 /**
                  * create and add cocos render node component to contain asset
                  */
                 var crnc = new CocosRenderNode();
-                crnc.node = asset;
+                crnc.assetContainer = assetContainer;
                 e.addComponent(crnc);
 
                 /**

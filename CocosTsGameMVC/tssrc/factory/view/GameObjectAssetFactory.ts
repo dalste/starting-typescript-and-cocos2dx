@@ -1,4 +1,5 @@
 import { IFactory } from "./../IFactory";
+import { IAssetContainer } from "./../IAssetContainer";
 import { ICreationOptions } from "./../ICreationOptions";
 import { GameObjectAssetTypes } from "./../../types/AssetTypes";
 import { MockAsset, MockAssetColours } from "./MockAsset";
@@ -35,16 +36,16 @@ export class GameObjectAssetCreationOptions implements ICreationOptions<GameObje
  * Uses the returned type from GameObject creation options to create the appropriate cc.Node derived asset
  * 
  */
-export  class GameObjectAssetFactory implements IFactory<GameObjectAssetCreationOptions,cc.Node> { 
+export  class GameObjectAssetFactory implements IFactory<GameObjectAssetCreationOptions,IAssetContainer<cc.Node>> { 
 
-    create(options:GameObjectAssetCreationOptions):cc.Node{
+    create(options:GameObjectAssetCreationOptions):IAssetContainer<cc.Node>{
 
         switch( options.getType()){
             case GameObjectAssetTypes.NPC_BULLET:
-                return new MockAsset<GameObjectAssetTypes>(options,10,MockAssetColours.PINK,"nb");
+                return new MockAsset<GameObjectAssetTypes>(new cc.Node(), options,10,MockAssetColours.PINK,"nb");
  
             case GameObjectAssetTypes.PLAYER_BULLET:
-                return new MockAsset<GameObjectAssetTypes>(options,10,MockAssetColours.GREEN,"pb");
+                return new MockAsset<GameObjectAssetTypes>(new cc.Node(),options,10,MockAssetColours.GREEN,"pb");
 
            
 

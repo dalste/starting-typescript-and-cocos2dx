@@ -1,4 +1,5 @@
 import { IFactory } from "./../IFactory";
+import { IAssetContainer } from "./../IAssetContainer";
 import { ICreationOptions } from "./../ICreationOptions";
 import { CharacterAssetTypes } from "./../../types/AssetTypes";
 import { MockAsset, MockAssetColours } from "./MockAsset";
@@ -35,22 +36,22 @@ export class CharacterAssetCreationOptions implements ICreationOptions<Character
  * Uses the returned type from character creation options to create the appropriate cc.Node derived asset
  * 
  */
-export class CharacterAssetFactory implements IFactory<CharacterAssetCreationOptions, cc.Node> {
+export class CharacterAssetFactory implements IFactory<CharacterAssetCreationOptions, IAssetContainer<cc.Node>> {
 
-    create(options: CharacterAssetCreationOptions): cc.Node {
+    create(options: CharacterAssetCreationOptions):IAssetContainer <cc.Node> {
 
         switch (options.getType()) {
             case CharacterAssetTypes.NPC:
-                return new MockAsset<CharacterAssetTypes>(options, 50, MockAssetColours.PINK, "NPC");
+                return new MockAsset<CharacterAssetTypes>(new cc.Node(),options, 50, MockAssetColours.PINK, "NPC");
 
             case CharacterAssetTypes.NPC_MOCK:
-                return new MockAsset<CharacterAssetTypes>(options, 50, MockAssetColours.PINK, "NPC MOCK");
+                return new MockAsset<CharacterAssetTypes>(new cc.Node(),options, 50, MockAssetColours.PINK, "NPC MOCK");
 
             case CharacterAssetTypes.PLAYER:
-                return new MockAsset<CharacterAssetTypes>(options, 50, MockAssetColours.GREEN, "PLAYER");
+                return new MockAsset<CharacterAssetTypes>(new cc.Node(),options, 50, MockAssetColours.GREEN, "PLAYER");
 
             case CharacterAssetTypes.PLAYER_MOCK:
-                return new MockAsset<CharacterAssetTypes>(options, 50, MockAssetColours.GREEN, "PLAYER MOCK");
+                return new MockAsset<CharacterAssetTypes>(new cc.Node(),options, 50, MockAssetColours.GREEN, "PLAYER MOCK");
 
         }
 

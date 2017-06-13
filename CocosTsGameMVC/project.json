@@ -12,6 +12,9 @@
     "modules" : ["cocos2d","extensions"],
 
     "jsList" : [
+        "src/jslib/dalste/Dalste.js",
+            "src/jslib/dalste/mvc/SceneExtended.js",
+         "src/jslib/dalste/mvc/NodeExtended.js",
          "src/jslib/dijon.js",
          "src/jslib/signals.js",
          "src/jslib/state-machine.js",

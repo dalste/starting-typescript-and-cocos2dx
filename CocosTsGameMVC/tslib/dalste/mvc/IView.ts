@@ -70,7 +70,7 @@ export interface IView {
     * @param {number|string} [tag]  An integer or a name to identify the node easily. Please refer to setTag(int) and setName(string)
      */
 
-    addChild(child: cc.Node, localZOrder?: number, tag?: string | number): void;
+    addChild(child: cc.Node, localZOrder: number, tag?: string | number): void;
 }
 
 export default IView;

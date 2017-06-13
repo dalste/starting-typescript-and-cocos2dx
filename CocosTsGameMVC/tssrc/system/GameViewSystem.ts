@@ -66,7 +66,7 @@ export class GameViewSystem extends System {
         this.refreshEntityLists();
         cc.log("render node added ");
         var crnc = e.getComponent(GameComponentTypes.COCOS_RENDER_NODE) as CocosRenderNode;
-        this._container.addChild(crnc.node);
+        this._container.addChild(crnc.assetContainer.getAsset(), 0);
     }
 
     onEntityWithRenderNodeComponentRemoved(e: Entity): void {
@@ -74,8 +74,8 @@ export class GameViewSystem extends System {
         cc.log("render node removed ");
         var crnc = e.getComponent(GameComponentTypes.COCOS_RENDER_NODE) as CocosRenderNode;
 
-        this._container.removeChild(crnc.node);
-        crnc.node = null;
+        this._container.removeChild(crnc.assetContainer.getAsset());
+        crnc.assetContainer.clearAsset();
     }
 
     onEntityWithRenderNodeAndPositionComponentAdded(e: Entity): void {

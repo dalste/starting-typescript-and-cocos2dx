@@ -1,9 +1,10 @@
+
 import { View } from "./../../tslib/dalste/mvc/View";
 import { ApplicationEvents } from "./../events/ApplicationEvents";
 import { Display } from "./../../tslib/dalste/util/Display";
 import { IFactory } from "./../factory/IFactory";
-import { SceneExtended } from "./../../tslib/dalste/mvc/SceneExtended";
-import { GameViewScene } from "./scenes/GameViewScene";
+
+
 
 declare var ccui: any;
 export class GameView extends View {
@@ -16,7 +17,7 @@ export class GameView extends View {
 
 
     show(parent?: cc.Node): void {
-        this.setAsset(new GameViewScene());
+        this.setAsset(new dalste.mvc.SceneExtended());
         this.initLifecycleListeners();
         cc.director.runScene(this.getAsset());
     }
@@ -29,7 +30,7 @@ export class GameView extends View {
         button.addTouchEventListener(this.touchEvent, this);
         button.setName("exitGameButton");
         button.setPosition(this._display.topRight().x - 50, this._display.topRight().y - 50);
-        button.setTitleColor(cc.color("#ff0000"));    
+        button.setTitleColor(cc.color("#ff0000"));
 
         this.addChild(button, 0);
 
@@ -44,7 +45,7 @@ export class GameView extends View {
         });
         this._playerScoreText.y = this._display.topLeft().y - this._playerScoreText.height;
 
-        this.addChild(this._playerScoreText);
+        this.addChild(this._playerScoreText, 0);
 
         this._npcScoreText = new ccui.Text();
         this._npcScoreText.boundingWidth = 100;
@@ -56,7 +57,7 @@ export class GameView extends View {
             x: this._display.topLeft().x + this._npcScoreText.boundingWidth
         });
         this._npcScoreText.y = this._playerScoreText.y - 30;//this._display.topLeft().y + this._npcScoreText.height;
-        this.addChild(this._npcScoreText);
+        this.addChild(this._npcScoreText, 0);
     }
 
     setNpcScore(val: number) {
@@ -82,12 +83,10 @@ export class GameView extends View {
             case ccui.Widget.TOUCH_MOVED:
                 break;
             case ccui.Widget.TOUCH_ENDED:
-                cc.log(sender.getName() + " pressed");
-                switch (sender.getName()) {
-                    case "exitGameButton":
-                        this.getUIEventBus().dispatch("exitGameButtonPressed");
-                        break;
-                }
+
+                this.getUIEventBus().dispatch("exitGameButtonPressed");
+
+
                 break;
             case ccui.Widget.TOUCH_CANCELED:
                 break;

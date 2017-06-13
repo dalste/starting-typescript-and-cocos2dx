@@ -11,6 +11,7 @@ export class SplashScreenViewController extends ViewController {
     private _display: Display = undefined;
 
     onViewReady(): void {
+        
         this.getView().getUIEventBus().add(this.onViewEvent, this);
         this.getView().getEnterSignal().add(this.onViewEnter, this);
         this.getView().getExitSignal().add(this.onViewExit, this);

@@ -40,7 +40,7 @@ export class HelloWorldMainLayer extends cc.Layer {
         this.addChild(this.sprite, 0);
 
         var co = new CharacterAssetCreationOptions(CharacterAssetTypes.PLAYER, "player");
-        var ca = this.assetFactory.create(co);
+        var ca = this.assetFactory.create(co).getAsset();
         ca.setPosition(10, 20);
         this.addChild(ca, 0);
 

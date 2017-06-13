@@ -1,4 +1,5 @@
 import { IFactory } from "./../IFactory";
+import { IAssetContainer } from "./../IAssetContainer";
 import { PlayerBullet } from "./../../component/GameComponents";
 import { NPCBullet } from "./../../component/GameComponents";
 import { PhysicsComponent } from "./../../component/GameComponents";
@@ -59,7 +60,7 @@ export class GameObjectEntityCreationOptions implements ICreationOptions<GameObj
  */
 export class GameObjectEntityFactory implements IFactory<GameObjectEntityCreationOptions, Entity> {
     //inject
-    private _gameObjectAssetFactory: IFactory<GameObjectAssetCreationOptions, cc.Node> = null;
+    private _gameObjectAssetFactory: IFactory<GameObjectAssetCreationOptions,IAssetContainer<cc.Node>> = null;
 
     //inject 
     private _display: Display = undefined;
@@ -90,21 +91,21 @@ export class GameObjectEntityFactory implements IFactory<GameObjectEntityCreatio
                     caco = new GameObjectAssetCreationOptions(GameObjectAssetTypes.PLAYER_BULLET, "pb_" + (this._bulletCount++));
                 }
 
-                var asset = this._gameObjectAssetFactory.create(caco);
-                asset.setPosition(options.getSpawnPosition());
+                var assetContainer = this._gameObjectAssetFactory.create(caco);
+                assetContainer.getAsset().setPosition(options.getSpawnPosition());
 
                 /**
                  * create and add position component
                  */
                 var posc = new PositionComponent();
-                posc.position = cc.p(asset.getPositionX(), asset.getPositionY());
+                posc.position = cc.p(assetContainer.getAsset().getPositionX(), assetContainer.getAsset().getPositionY());
                 e.addComponent(posc);
 
                 /**
                  * create and add cocos render node component to contain asset
                  */
                 var crnc = new CocosRenderNode();
-                crnc.node = asset;
+                crnc.assetContainer = assetContainer;
                 e.addComponent(crnc);
 
 

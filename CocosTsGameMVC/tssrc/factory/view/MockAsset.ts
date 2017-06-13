@@ -1,4 +1,5 @@
 declare var ccui: any;
+import { IAssetContainer } from "./../IAssetContainer";
 import { ICreationOptions } from "./../ICreationOptions";
 /**
  * @description emum providing identifiable colour options for MockAsset
@@ -19,24 +20,23 @@ export enum MockAssetColours {
  * @description a cc.Node derived class for creating mock assets ,creates a circle with given radius, containing a label with optional  text
  * Template option T is for the Type used to describe type generally string | int | enumtype
  */
-export class MockAsset<T> extends cc.Node {
-    _visibleNode: cc.Node = null;
+export class MockAsset<T> implements IAssetContainer<cc.Node> {
+    _asset: cc.Node = null;
     _objecttype: T = null;
     _circleNode: cc.DrawNode;
 
 
-    constructor(config: ICreationOptions<T>, radius: number = 20, COLOUR: MockAssetColours = MockAssetColours.BLUE, text: string = "Text") {
-        super();
-        this.ctor();
+    constructor(asset: cc.Node, config: ICreationOptions<T>, radius: number = 20, COLOUR: MockAssetColours = MockAssetColours.BLUE, text: string = "Text") {
 
+        this._asset = asset;
         this._objecttype = config.getType();
-        this.setName(config.getName());
+        this._asset.setName(config.getName());
 
-        this.setContentSize(radius * 2, radius * 2);
-        this.setAnchorPoint(0.5, 0.5);
+        this._asset.setContentSize(radius * 2, radius * 2);
+        this._asset.setAnchorPoint(0.5, 0.5);
         this._circleNode = new cc.DrawNode();
-        this._circleNode.drawDot(cc.p(radius, radius), radius, this.getColour(COLOUR));
-        this.addChild(this._circleNode);
+        this._circleNode.drawDot(cc.p(radius, radius), radius, this.getMyColour(COLOUR));
+        this._asset.addChild(this._circleNode, 0);
 
 
         var textF = new ccui.Text();
@@ -49,11 +49,18 @@ export class MockAsset<T> extends cc.Node {
             x: radius
         });
         textF.y = radius - textF.height / 8;
-        this.addChild(textF);
+        this._asset.addChild(textF, 0);
 
     }
 
-    getColour(colour: MockAssetColours): cc.Color {
+    getAsset(): cc.Node {
+        return this._asset;
+    }
+    
+    clearAsset(): void {
+        this._asset = null;
+    }
+    getMyColour(colour: MockAssetColours): cc.Color {
 
         switch (colour) {
             case MockAssetColours.RED:

@@ -1,6 +1,8 @@
+
 import { IApplication } from "./IApplication";
 import { HelloWorldScene } from "./view/scenes/HelloWorldScene";
 export class Application1 implements IApplication {
+
 
     _config: {
         isdebug: boolean

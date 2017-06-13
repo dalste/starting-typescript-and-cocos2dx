@@ -1,23 +1,23 @@
 {
-    
     "compilerOptions": {
         "noImplicitAny": true,
         "moduleResolution": "node",
         "target": "es5",
         "module": "commonjs",
-        
-        "outDir":"tsdist/",
-
-         "sourceMap": true,
-    "jsx": "react",
-    "allowJs": true
-    
+        "outDir": "tsdist/",
+        "sourceMap": true,
+        "jsx": "react",
+        "allowJs": true,
+        "baseUrl": ".", 
+        "paths": {
+            "*": [
+                "dalste-mvc",
+                "tslib/dalste/mvc/SceneExtended"
+            ]
+        }
     },
-
-     "include": [
-         
+    "include": [
         "tslib/**/*",
-         "tssrc/**/*"
+        "tssrc/**/*"
     ]
-
 }

@@ -1,5 +1,3 @@
-
-import { INodeLifecycleExtensions } from "./INodeLifecycleExtensions";
 import { ModelCallBack, IModel } from "./IModel";
 import { IView } from "./IView";
 import { IViewController } from "./IViewController";
@@ -83,7 +81,7 @@ export class View implements IView {
      * 
      */
     initLifecycleListeners(): void {
-        var ass = this.getAsset() as INodeLifecycleExtensions;
+        var ass = this.getAsset() as dalste.mvc.INodeLifecycleExtensions;
         ass.onEnterSignal.add(this.onEnter, this);
         ass.onEnterTransitionDidFinishSignal.add(this.onEnterTransitionDidFinish, this);
         ass.onExitSignal.add(this.onExit, this);
@@ -95,7 +93,7 @@ export class View implements IView {
      * 
      */
     removeLifeCycleListeners(): void {
-        var ass = this.getAsset() as INodeLifecycleExtensions;
+        var ass = this.getAsset() as dalste.mvc.INodeLifecycleExtensions;
         ass.onEnterSignal.removeAll();
         ass.onEnterTransitionDidFinishSignal.removeAll();
         ass.onExitSignal.removeAll();
@@ -114,6 +112,7 @@ export class View implements IView {
     }
 
     private onEnterTransitionDidFinish(): void {
+        cc.log("onEnterTransitionDidFinish");
         this.onEnterTransitionDidFinishHandler();
     }
 
@@ -209,7 +208,7 @@ export class View implements IView {
     * @param {number|string} [tag]  An integer or a name to identify the node easily. Please refer to setTag(int) and setName(string)
      */
 
-    addChild(child: cc.Node, localZOrder?: number, tag?: string | number): void {
+    addChild(child: cc.Node, localZOrder: number, tag?: string | number): void {
         this._asset.addChild(child, localZOrder, tag);
     }
 

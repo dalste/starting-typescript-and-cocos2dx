@@ -1,4 +1,5 @@
 
+import { IAssetContainer } from "./../factory/IAssetContainer";
 import { Component } from "./../../tslib/moon/src/Component";
 import { GameComponentTypes } from "./../types/GameComponentTypes";
 import { StateMachine } from "javascript-state-machine";
@@ -123,11 +124,12 @@ export class ScriptedNPCAI extends Component {
  */
 export class CocosRenderNode extends Component {
     name: string = GameComponentTypes.COCOS_RENDER_NODE;
-    node: cc.Node;
-    positionConstOffset: cc.Point = new cc.Point(0, 0); //constant position offset when using setPosition
+   // node: cc.Node;
+    assetContainer: IAssetContainer<cc.Node>;
+    positionConstOffset: cc.Point =  cc.p(0, 0); //constant position offset when using setPosition
 
     getPosition(): cc.Point {
-        return this.node.getPosition();
+        return this.assetContainer.getAsset().getPosition();
     }
     setPosition(x: any, y?: any) {
         var posToSet: cc.Point = null;
@@ -136,7 +138,7 @@ export class CocosRenderNode extends Component {
         } else
             posToSet = x;
         posToSet = cc.pAdd(posToSet, this.positionConstOffset);
-        this.node.setPosition(posToSet);
+        this.assetContainer.getAsset().setPosition(posToSet);
 
     }
 }
