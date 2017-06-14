@@ -25,14 +25,11 @@ export class SplashScreenView extends View {
         button.setTouchScaleChangeEnabled(true);
          button.setName("playGameButton");
         button.addTouchEventListener(this.touchEvent, this);
- cc.log("bname " +button.getName());
-       
         button.setPosition(this._display.middleMiddle().x, this._display.middleMiddle().y);
 
         button.setColor(cc.color("#00ff00"));
 
         this.addChild(button, 0);
- cc.log("bname2 " +button.getName());
 
         var instructionLabel = new cc.LabelTTF("Swipe the screen to move the player. Click in the direction you wish to fire", "Arial", 30, cc.size(this._display.screenWidth()-100,200),cc.ALIGN_CENTER);
         // position the label on the center of the screen

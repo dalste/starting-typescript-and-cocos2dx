@@ -157,6 +157,7 @@ export class Application2 implements IApplication {
         this._system.mapHandler(ApplicationEvents.APP_GOTO_SPLASH_SCENE, 'GameController', 'onAppGoToSplashScene');
 
 
+
         /**
          * fire app:startup event
          */

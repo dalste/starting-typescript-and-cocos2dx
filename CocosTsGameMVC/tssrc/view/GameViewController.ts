@@ -132,7 +132,6 @@ export class GameViewController extends ViewController {
         gv.setPlayerScore(newVal);
     }
     onViewUIEvent(event: string): void {
-        cc.log("exitGameButtonPressed");
         switch (event) {
             case "exitGameButtonPressed":
                 this._system.notify(ApplicationEvents.APP_GOTO_SPLASH_SCENE);
